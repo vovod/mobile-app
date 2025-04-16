@@ -1,0 +1,12 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="#FFFBE7" /> <!-- pastel background -->
+    </item>
+    <!-- Optional image background -->
+    <!--<item>
+        <bitmap
+            android:src="@drawable/bg_pattern"
+            android:tileMode="repeat"
+            android:gravity="fill" />
+    </item>-->
+</layer-list>

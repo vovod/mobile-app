@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="blue">#03A9F4</color>
-    <color name="green">#01BA09</color>
-    <color name="darkblue">#0B416C</color>
-    <color name="milk">#F1F4E1</color>
+    <!-- Primary theme colors -->
+    <color name="primaryColor">#FFB74D</color> <!-- Orange pastel -->
+    <color name="primaryDarkColor">#F57C00</color>
+    <color name="accentColor">#4FC3F7</color> <!-- Sky Blue -->
+
+    <!-- Link text color -->
+    <color name="linkColor">#1976D2</color>
+
+    <!-- Backgrounds & Neutrals -->
+    <color name="backgroundLight">#FFFBE7</color>
+    <color name="inputBorder">#CCCCCC</color>
+    <color name="inputBackground">#FFFFFF</color>
+
+    <!-- Text colors -->
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
 </resources>
