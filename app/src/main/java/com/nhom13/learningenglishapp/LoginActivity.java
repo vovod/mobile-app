@@ -17,7 +17,6 @@ import com.nhom13.learningenglishapp.database.dao.UserDao;
 import com.nhom13.learningenglishapp.database.models.User;
 
 public class LoginActivity extends AppCompatActivity {
-    boolean isLogin = false;
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
@@ -39,9 +38,14 @@ public class LoginActivity extends AppCompatActivity {
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 //Kiểm tra tài khoản mật khẩu
-                isLogin = checkLogin(username, password);
+                boolean isLogin = checkLogin(username, password);
                 if(isLogin == true){
-                    GoToNextActivity();
+                    if(checkAdmin(username,password)==true){
+                        GoToNextAdminActivity();
+                    }
+                    else{
+                        GoToNextUserActivity();
+                    }
                 }
             }
         });
@@ -84,10 +88,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-    private void GoToNextActivity() {
+
+    private boolean checkAdmin(String username, String password){
+        if(username.equals("admin") && password.equals("admin")){
+            return true;
+        }
+        return false;
+    }
+    private void GoToNextUserActivity() {
         // Chuyển tới Activity khác
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish(); // đóng LoginActivity nếu muốn
+    }
+
+    private void GoToNextAdminActivity() {
+        // Chuyển tới Activity khác
+//        Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+//        startActivity(intent);
+//        finish(); // đóng LoginActivity nếu muốn
+        System.out.println("Admin");
     }
 }
