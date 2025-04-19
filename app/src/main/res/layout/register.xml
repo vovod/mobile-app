@@ -5,7 +5,7 @@
     android:id="@+id/register_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_kids_theme"
+    android:background="@drawable/bg_register"
     tools:context=".RegisterActivity">
 
     <LinearLayout
@@ -23,10 +23,10 @@
             android:layout_marginBottom="24dp" />
 
         <EditText
-            android:id="@+id/editTextEmail"
+            android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="Username"
             android:padding="12dp"
             android:background="@drawable/edittext_bg"
             android:textSize="18sp"
@@ -69,10 +69,10 @@
             android:id="@+id/textViewLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
             android:text="Already have an account? Login here"
-            android:textColor="@color/linkColor"
-            android:textSize="16sp"
-            android:layout_marginTop="200dp" />
+            android:textColor="@color/purple_700"
+            android:textSize="16sp" />
 
     </LinearLayout>
 </ScrollView>
