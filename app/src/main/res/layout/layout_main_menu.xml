@@ -29,15 +29,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layoutAnimation="@anim/layout_slide_up"/>
+            android:layoutAnimation="@anim/layout_slide_up" />
 
         <LinearLayout
             android:id="@+id/linear_layoutmenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:clipToPadding="false"
             android:layout_marginTop="10dp"
+            android:clipToPadding="false"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -59,15 +59,15 @@
                 <TextView
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/corner_shape"
+                    android:elevation="6dp"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="Học Tiếng Anh"
                     android:textAllCaps="false"
-                    android:background="@drawable/corner_shape"
-                    android:textStyle="bold"
                     android:textColor="@color/purple_700"
-                    android:elevation="6dp"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -89,17 +89,16 @@
                 <TextView
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:background="@drawable/corner_shape"
 
+                    android:elevation="6dp"
+                    android:gravity="center"
                     android:padding="5dp"
                     android:text="Video Tiếng Anh"
                     android:textAllCaps="false"
-                    android:background="@drawable/corner_shape"
-                    android:textStyle="bold"
-                    android:elevation="6dp"
                     android:textColor="@color/purple_700"
-                    android:textSize="20sp" />
-
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -121,15 +120,15 @@
                 <TextView
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/corner_shape"
+                    android:elevation="6dp"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="Chơi game"
-                    android:elevation="6dp"
                     android:textAllCaps="false"
-                    android:background="@drawable/corner_shape"
-                    android:textStyle="bold"
                     android:textColor="@color/purple_700"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -192,7 +191,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        android:background=""
+        android:background="@android:color/transparent"
         android:scaleType="centerCrop"
         android:src="@drawable/setting" />
 

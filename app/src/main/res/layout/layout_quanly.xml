@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="" />
+            android:src="@android:color/transparent" />
 
     </LinearLayout>
 
@@ -123,7 +123,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="10dp"
-        android:background=""
+        android:background="@android:color/transparent"
         android:backgroundTint="#00C809"
         android:scaleType="centerCrop"
         android:src="@drawable/icon_add"
@@ -138,7 +138,7 @@
         android:id="@+id/btnBack"
         android:layout_width="48dp"
         android:layout_height="43dp"
-        android:background=""
+        android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/icon_back"
         app:layout_constraintBottom_toBottomOf="parent"
