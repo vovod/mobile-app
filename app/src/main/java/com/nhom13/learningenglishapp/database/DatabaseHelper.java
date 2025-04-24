@@ -15,6 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_VOCABULARY = "vocabulary";
     public static final String TABLE_QUIZ = "quiz";
     public static final String TABLE_VIDEOS = "videos";
+    public static final String TABLE_QUIZ_RESULTS = "quiz_results";
 
     // User Table Columns
     public static final String KEY_USER_ID = "id";
@@ -44,6 +45,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_VIDEO_TITLE = "title";
     public static final String KEY_VIDEO_THUMBNAIL = "thumbnail";
     public static final String KEY_VIDEO_URL = "video_url";
+
+    // Quiz Results Table Columns
+    public static final String KEY_RESULT_ID = "id";
+    public static final String KEY_RESULT_USER_ID = "user_id";
+    public static final String KEY_RESULT_SCORE = "score";
+    public static final String KEY_RESULT_TOTAL_QUESTIONS = "total_questions";
+    public static final String KEY_RESULT_CORRECT_ANSWERS = "correct_answers";
+    public static final String KEY_RESULT_DATE = "date";
 
     private static DatabaseHelper instance;
 
@@ -100,17 +109,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 KEY_VIDEO_URL + " TEXT" +
                 ")";
 
+        String CREATE_QUIZ_RESULTS_TABLE = "CREATE TABLE " + TABLE_QUIZ_RESULTS +
+                "(" +
+                KEY_RESULT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                KEY_RESULT_USER_ID + " INTEGER," +
+                KEY_RESULT_SCORE + " INTEGER," +
+                KEY_RESULT_TOTAL_QUESTIONS + " INTEGER," +
+                KEY_RESULT_CORRECT_ANSWERS + " INTEGER," +
+                KEY_RESULT_DATE + " INTEGER," +
+                "FOREIGN KEY (" + KEY_RESULT_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")" +
+                ")";
+
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_CHAPTERS_TABLE);
         db.execSQL(CREATE_VOCABULARY_TABLE);
         db.execSQL(CREATE_QUIZ_TABLE);
         db.execSQL(CREATE_VIDEOS_TABLE);
+        db.execSQL(CREATE_QUIZ_RESULTS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion != newVersion) {
             // Drop older tables
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ_RESULTS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_VOCABULARY);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_VIDEOS);
