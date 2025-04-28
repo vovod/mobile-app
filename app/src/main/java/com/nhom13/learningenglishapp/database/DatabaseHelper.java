@@ -1,8 +1,14 @@
 package com.nhom13.learningenglishapp.database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Info
@@ -55,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_RESULT_DATE = "date";
 
     private static DatabaseHelper instance;
+    private Context context;
 
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (instance == null) {
@@ -65,6 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -126,20 +134,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_QUIZ_TABLE);
         db.execSQL(CREATE_VIDEOS_TABLE);
         db.execSQL(CREATE_QUIZ_RESULTS_TABLE);
+
+        // Chèn dữ liệu mẫu nếu database trống
+        if (isDatabaseEmpty(db)) {
+            insertSampleData(db);
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion != newVersion) {
-            // Drop older tables
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ_RESULTS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_VOCABULARY);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_VIDEOS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHAPTERS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-
-            // Recreate tables
             onCreate(db);
         }
     }
@@ -149,4 +159,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super.onConfigure(db);
         db.setForeignKeyConstraintsEnabled(true);
     }
+
+    private boolean isDatabaseEmpty(SQLiteDatabase db) {
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_CHAPTERS, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count == 0;
+    }
+
+    private void insertSampleData(SQLiteDatabase db) {
+        try {
+            InputStream inputStream = context.getAssets().open("sample_data.sql");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.trim().isEmpty()) {
+                    db.execSQL(line);
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
+
+

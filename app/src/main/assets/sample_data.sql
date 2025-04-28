@@ -1,0 +1,11 @@
+INSERT INTO chapters (id, name, image_path) VALUES (1, 'Alphabet', 'images/chapters/alphabet.png');
+INSERT INTO chapters (id, name, image_path) VALUES (2, 'Colors', 'images/chapters/colors.png');
+INSERT INTO chapters (id, name, image_path) VALUES (3, 'Fruits', 'images/chapters/fruits.png');
+INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('A', 1, 'images/vocabulary/a.png');
+INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('B', 1, 'images/vocabulary/b.png');
+INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('Red', 2, 'images/colors/red.png');
+INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('Blue', 2, 'images/colors/blue.png');
+INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('Apple', 3, 'images/fruits/apple.png');
+INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('Banana', 3, 'images/fruits/banana.png');
+INSERT INTO quiz (correct_answer, wrong_answer, image_path) VALUES ('He''s crying', 'He''s drinking', 'images/quiz/cry.png');
+INSERT INTO quiz (correct_answer, wrong_answer, image_path) VALUES ('This is a car', 'This is a cat', 'images/quiz/car.png');

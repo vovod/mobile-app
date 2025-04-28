@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "imgUrl": "images/quiz/cry.png",
+    "trueAns": "He's crying",
+    "wrongAns": "He's drinking"
+  },
+  {
+    "id": 2,
+    "imgUrl": "images/quiz/drinking.png",
+    "trueAns": "He's drinking",
+    "wrongAns": "He's eating"
+  },
+  {
+    "id": 3,
+    "imgUrl": "images/quiz/eating.png",
+    "trueAns": "He's eating",
+    "wrongAns": "He's reading"
+  },
+  {
+    "id": 4,
+    "imgUrl": "images/quiz/reading.png",
+    "trueAns": "He's reading",
+    "wrongAns": "He's eating"
+  },
+  {
+    "id": 5,
+    "imgUrl": "images/quiz/brushurteeth.png",
+    "trueAns": "I'm brushing my teeth",
+    "wrongAns": "I'm sleeping"
+  },
+  {
+    "id": 6,
+    "imgUrl": "images/quiz/sleeping.png",
+    "trueAns": "I'm sleeping",
+    "wrongAns": "He's reading"
+  },
+  {
+    "id": 7,
+    "imgUrl": "images/quiz/car.png",
+    "trueAns": "This is a car",
+    "wrongAns": "This is a cat"
+  },
+  {
+    "id": 8,
+    "imgUrl": "images/quiz/chair.png",
+    "trueAns": "This is a chair",
+    "wrongAns": "This is a pen"
+  },
+  {
+    "id": 9,
+    "imgUrl": "images/quiz/lion.png",
+    "trueAns": "This is a lion",
+    "wrongAns": "This is a Tiger"
+  }
+]

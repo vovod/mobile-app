@@ -1,0 +1,392 @@
+[
+  {
+    "word": "A",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/a.png"
+  },
+  {
+    "word": "B",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/b.png"
+  },
+  {
+    "word": "C",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/c.png"
+  },
+  {
+    "word": "D",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/d.png"
+  },
+  {
+    "word": "E",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/e.png"
+  },
+  {
+    "word": "F",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/f.png"
+  },
+  {
+    "word": "G",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/g.png"
+  },
+  {
+    "word": "H",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/h.png"
+  },
+  {
+    "word": "I",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/i.png"
+  },
+  {
+    "word": "J",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/j.png"
+  },
+  {
+    "word": "K",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/k.png"
+  },
+  {
+    "word": "L",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/l.png"
+  },
+  {
+    "word": "M",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/m.png"
+  },
+  {
+    "word": "N",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/n.png"
+  },
+  {
+    "word": "O",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/o.png"
+  },
+  {
+    "word": "P",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/p.png"
+  },
+  {
+    "word": "Q",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/q.png"
+  },
+  {
+    "word": "R",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/r.png"
+  },
+  {
+    "word": "S",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/s.png"
+  },
+  {
+    "word": "T",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/t.png"
+  },
+  {
+    "word": "U",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/u.png"
+  },
+  {
+    "word": "V",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/v.png"
+  },
+  {
+    "word": "W",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/w.png"
+  },
+  {
+    "word": "X",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/x.png"
+  },
+  {
+    "word": "Y",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/y.png"
+  },
+  {
+    "word": "Z",
+    "chapter_id": 1,
+    "image_path": "images/alphabet/z.png"
+  },
+  {
+    "word": "black",
+    "chapter_id": 2,
+    "image_path": "images/colors/black.png"
+  },
+  {
+    "word": "blue",
+    "chapter_id": 2,
+    "image_path": "images/colors/blue.png"
+  },
+  {
+    "word": "brown",
+    "chapter_id": 2,
+    "image_path": "images/colors/brown.png"
+  },
+  {
+    "word": "green",
+    "chapter_id": 2,
+    "image_path": "images/colors/green.png"
+  },
+  {
+    "word": "orange",
+    "chapter_id": 2,
+    "image_path": "images/colors/colorOrange.png"
+  },
+  {
+    "word": "pink",
+    "chapter_id": 2,
+    "image_path": "images/colors/pink.png"
+  },
+  {
+    "word": "purple",
+    "chapter_id": 2,
+    "image_path": "images/colors/purple.png"
+  },
+  {
+    "word": "red",
+    "chapter_id": 2,
+    "image_path": "images/colors/red.png"
+  },
+  {
+    "word": "violet",
+    "chapter_id": 2,
+    "image_path": "images/colors/Violet.jpg"
+  },
+  {
+    "word": "white",
+    "chapter_id": 2,
+    "image_path": "images/colors/white.png"
+  },
+  {
+    "word": "yellow",
+    "chapter_id": 2,
+    "image_path": "images/colors/yellow.png"
+  },
+  {
+    "word": "apple",
+    "chapter_id": 3,
+    "image_path": "images/fruits/apple.png"
+  },
+  {
+    "word": "avocado",
+    "chapter_id": 3,
+    "image_path": "images/fruits/avocado.png"
+  },
+  {
+    "word": "banana",
+    "chapter_id": 3,
+    "image_path": "images/fruits/banana.png"
+  },
+  {
+    "word": "cherry",
+    "chapter_id": 3,
+    "image_path": "images/fruits/cherry.png"
+  },
+  {
+    "word": "coconut",
+    "chapter_id": 3,
+    "image_path": "images/fruits/coconut.png"
+  },
+  {
+    "word": "grapefruit",
+    "chapter_id": 3,
+    "image_path": "images/fruits/grapefruit.png"
+  },
+  {
+    "word": "grapes",
+    "chapter_id": 3,
+    "image_path": "images/fruits/grapes.png"
+  },
+  {
+    "word": "kiwi",
+    "chapter_id": 3,
+    "image_path": "images/fruits/kiwi.png"
+  },
+  {
+    "word": "lemon",
+    "chapter_id": 3,
+    "image_path": "images/fruits/lemon.png"
+  },
+  {
+    "word": "lime",
+    "chapter_id": 3,
+    "image_path": "images/fruits/lime.png"
+  },
+  {
+    "word": "mango",
+    "chapter_id": 3,
+    "image_path": "images/fruits/mango.png"
+  },
+  {
+    "word": "melon",
+    "chapter_id": 3,
+    "image_path": "images/fruits/melon.png"
+  },
+  {
+    "word": "orange",
+    "chapter_id": 3,
+    "image_path": "images/fruits/orange.png"
+  },
+  {
+    "word": "papaya",
+    "chapter_id": 3,
+    "image_path": "images/fruits/papaya.png"
+  },
+  {
+    "word": "peach",
+    "chapter_id": 3,
+    "image_path": "images/fruits/peach.png"
+  },
+  {
+    "word": "pear",
+    "chapter_id": 3,
+    "image_path": "images/fruits/pear.png"
+  },
+  {
+    "word": "pineapple",
+    "chapter_id": 3,
+    "image_path": "images/fruits/pineapple.png"
+  },
+  {
+    "word": "plum",
+    "chapter_id": 3,
+    "image_path": "images/fruits/plum.png"
+  },
+  {
+    "word": "pomegranate",
+    "chapter_id": 3,
+    "image_path": "images/fruits/pomegranate.png"
+  },
+  {
+    "word": "raspberry",
+    "chapter_id": 3,
+    "image_path": "images/fruits/raspberry.png"
+  },
+  {
+    "word": "strawberry",
+    "chapter_id": 3,
+    "image_path": "images/fruits/strawberry.png"
+  },
+  {
+    "word": "watermelon",
+    "chapter_id": 3,
+    "image_path": "images/fruits/watermelon.png"
+  },
+  {
+    "word": "bear",
+    "chapter_id": 4,
+    "image_path": "images/animals/bear.png"
+  },
+  {
+    "word": "chicken",
+    "chapter_id": 4,
+    "image_path": "images/animals/chicken.png"
+  },
+  {
+    "word": "cow",
+    "chapter_id": 4,
+    "image_path": "images/animals/cow.png"
+  },
+  {
+    "word": "donkey",
+    "chapter_id": 4,
+    "image_path": "images/animals/donkey.png"
+  },
+  {
+    "word": "duck",
+    "chapter_id": 4,
+    "image_path": "images/animals/duck.png"
+  },
+  {
+    "word": "lion",
+    "chapter_id": 4,
+    "image_path": "images/animals/lion.png"
+  },
+  {
+    "word": "pig",
+    "chapter_id": 4,
+    "image_path": "images/animals/pig.png"
+  },
+  {
+    "word": "circle",
+    "chapter_id": 5,
+    "image_path": "images/shapes/circle.png"
+  },
+  {
+    "word": "cross",
+    "chapter_id": 5,
+    "image_path": "images/shapes/cross.png"
+  },
+  {
+    "word": "diamond",
+    "chapter_id": 5,
+    "image_path": "images/shapes/diamond.png"
+  },
+  {
+    "word": "ellipse",
+    "chapter_id": 5,
+    "image_path": "images/shapes/ellipse.png"
+  },
+  {
+    "word": "heart",
+    "chapter_id": 5,
+    "image_path": "images/shapes/heart.png"
+  },
+  {
+    "word": "heptagon",
+    "chapter_id": 5,
+    "image_path": "images/shapes/heptagon.png"
+  },
+  {
+    "word": "hexagon",
+    "chapter_id": 5,
+    "image_path": "images/shapes/hexagon.png"
+  },
+  {
+    "word": "octagon",
+    "chapter_id": 5,
+    "image_path": "images/shapes/octagon.png"
+  },
+  {
+    "word": "rectangle",
+    "chapter_id": 5,
+    "image_path": "images/shapes/rectangle.png"
+  },
+  {
+    "word": "square",
+    "chapter_id": 5,
+    "image_path": "images/shapes/square.png"
+  },
+  {
+    "word": "star",
+    "chapter_id": 5,
+    "image_path": "images/shapes/star.png"
+  },
+  {
+    "word": "triangle",
+    "chapter_id": 5,
+    "image_path": "images/shapes/triangle.png"
+  }
+]
