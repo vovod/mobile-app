@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp;
+package com.nhom13.learningenglishapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.nhom13.learningenglishapp.R;
 import com.nhom13.learningenglishapp.database.dao.UserDao;
 import com.nhom13.learningenglishapp.database.models.User;
 
@@ -75,15 +76,18 @@ public class LoginActivity extends AppCompatActivity {
         if (user == null) {
             // Username không tồn tại
             System.out.println("Username không tồn tại");
+            Toast.makeText(this, "Username không tồn tại", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             if (user.getPassword().equals(passwordInput)) {
                 // Đăng nhập thành công
                 System.out.println("Đăng nhập thành công");
+                Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                 return true;
             } else {
                 // Sai mật khẩu
                 System.out.println("Sai mật khẩu");
+                Toast.makeText(this, "Sai mật khẩu", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -97,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void GoToNextUserActivity(String username, int score) {
         // Chuyển tới Activity khác
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, UserHomePageActivity.class);
         intent.putExtra("username", username);
         intent.putExtra("score", score);
         startActivity(intent);
@@ -106,9 +110,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void GoToNextAdminActivity() {
         // Chuyển tới Activity khác
-//        Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
-//        startActivity(intent);
-//        finish(); // đóng LoginActivity nếu muốn
+        Intent intent = new Intent(LoginActivity.this, AdminHomePageActivity.class);
+        startActivity(intent);
+        finish(); // đóng LoginActivity nếu muốn
         System.out.println("Admin");
     }
 }

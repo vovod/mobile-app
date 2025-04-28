@@ -54,7 +54,8 @@
                     android:layout_width="170dp"
                     android:layout_height="200dp"
                     android:background="@drawable/reading"
-                    android:scaleType="centerInside" />
+                    android:scaleType="centerInside"
+                    android:contentDescription="Tự điển"/>
 
                 <TextView
                     android:layout_width="170dp"
@@ -84,7 +85,8 @@
                     android:layout_width="170dp"
                     android:layout_height="200dp"
                     android:background="@drawable/video"
-                    android:scaleType="centerInside" />
+                    android:scaleType="centerInside"
+                    android:contentDescription="Âm Nhạc"/>
 
                 <TextView
                     android:layout_width="170dp"
@@ -115,7 +117,8 @@
                     android:layout_width="170dp"
                     android:layout_height="200dp"
                     android:background="@drawable/jigsaw"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Kiểm tra"/>
 
                 <TextView
                     android:layout_width="170dp"
@@ -193,7 +196,8 @@
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:src="@drawable/setting" />
+        android:src="@drawable/setting"
+        android:contentDescription="Setting"/>
 
 
 </RelativeLayout>

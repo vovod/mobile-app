@@ -27,7 +27,8 @@
                 android:src="@drawable/icon_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="Quay lại danh sách từ vựng"/>
 
             <TextView
                 android:layout_width="250dp"
@@ -68,7 +69,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:layoutAnimation="@anim/layout_slide_up" />
+                android:layoutAnimation="@anim/layout_slide_up"
+                android:contentDescription="List Từ Vựng"/>
 
             <ImageButton
                 android:id="@+id/btnAddWord"
@@ -82,7 +84,8 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="Thêm từ"/>
 
         </RelativeLayout>
 

@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp;
+package com.nhom13.learningenglishapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.nhom13.learningenglishapp.R;
 import com.nhom13.learningenglishapp.database.dao.UserDao;
 import com.nhom13.learningenglishapp.database.models.User;
 
@@ -43,14 +45,17 @@ public class RegisterActivity extends AppCompatActivity {
                 String confirmPassword = ConfirmPasswordRegister.getText().toString();
                 if (!password.equals(confirmPassword)) {
                     System.out.println("Mật khẩu không khớp");
+                    PasswordRegister.setError("Mật khẩu không khớp");
                 }
                 else{
                     if(checkUsername(email,ud)==false){
                         System.out.println("Tài khoản đã tồn tại");
+                        UserNameRegister.setError("Tài khoản đã tồn tại");
                     }
                     else{
                         ud.createUser(new User(email, password));
                         System.out.println("Đăng ký thành công");
+                        Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                         ChangeToNextActivity();
                     }
 

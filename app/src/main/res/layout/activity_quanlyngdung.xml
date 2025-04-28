@@ -26,7 +26,8 @@
                 android:src="@drawable/icon_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="Trở về danh sách người dùng"/>
 
             <TextView
                 android:layout_width="250dp"
@@ -58,10 +59,6 @@
                 app:layout_constraintHorizontal_bias="0.842"
                 app:layout_constraintTop_toTopOf="parent">
 
-
-
-
-
             </LinearLayout>
 
 
@@ -80,7 +77,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginVertical="15dp"
-                android:layoutAnimation="@anim/layout_slide_up" />
+                android:layoutAnimation="@anim/layout_slide_up"
+                android:contentDescription="List User"/>
 
 
 
