@@ -44,7 +44,8 @@ public class LoginActivity extends AppCompatActivity {
                         GoToNextAdminActivity();
                     }
                     else{
-                        GoToNextUserActivity();
+                        User user = ud.getUserByUsername(username);
+                        GoToNextUserActivity(username, user.getScore());
                     }
                 }
             }
@@ -69,8 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean checkLogin(String usernameInput, String passwordInput) {
-        UserDao userDao = new UserDao(this);
-        User user = userDao.getUserByUsername(usernameInput);
+        User user =ud.getUserByUsername(usernameInput);
 
         if (user == null) {
             // Username không tồn tại
@@ -95,9 +95,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         return false;
     }
-    private void GoToNextUserActivity() {
+    private void GoToNextUserActivity(String username, int score) {
         // Chuyển tới Activity khác
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("username", username);
+        intent.putExtra("score", score);
         startActivity(intent);
         finish(); // đóng LoginActivity nếu muốn
     }

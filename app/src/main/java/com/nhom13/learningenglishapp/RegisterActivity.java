@@ -17,7 +17,7 @@ import com.nhom13.learningenglishapp.database.dao.UserDao;
 import com.nhom13.learningenglishapp.database.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText EmailRegister;
+    private EditText UserNameRegister;
     private EditText PasswordRegister;
     private Button RegisterButton;
     private EditText ConfirmPasswordRegister;
@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.register);
 
         ud = new UserDao(this);
-        EmailRegister = findViewById(R.id.editTextEmail);
+        UserNameRegister = findViewById(R.id.editTextUsername);
         PasswordRegister = findViewById(R.id.editTextPassword);
         ConfirmPasswordRegister = findViewById(R.id.editTextConfirmPassword);
 
@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = EmailRegister.getText().toString();
+                String email = UserNameRegister.getText().toString();
                 String password = PasswordRegister.getText().toString();
                 String confirmPassword = ConfirmPasswordRegister.getText().toString();
                 if (!password.equals(confirmPassword)) {
