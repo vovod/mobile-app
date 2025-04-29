@@ -188,10 +188,10 @@ public class VocabularyDao {
     public boolean deleteVocabulary(int vocabularyId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // First get the vocabulary to retrieve the image path
+        // First get the alphabet to retrieve the image path
         Vocabulary vocabulary = getVocabularyById(vocabularyId);
 
-        // Delete the vocabulary from database
+        // Delete the alphabet from database
         boolean success = db.delete(DatabaseHelper.TABLE_VOCABULARY,
                 DatabaseHelper.KEY_VOCABULARY_ID + " = ?",
                 new String[]{String.valueOf(vocabularyId)}) > 0;
@@ -207,10 +207,10 @@ public class VocabularyDao {
     public boolean deleteVocabularyByChapter(int chapterId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // First get all vocabulary items of this chapter to delete their images
+        // First get all alphabet items of this chapter to delete their images
         List<Vocabulary> vocabularyList = getVocabularyByChapter(chapterId);
 
-        // Delete all vocabulary items of this chapter from database
+        // Delete all alphabet items of this chapter from database
         boolean success = db.delete(DatabaseHelper.TABLE_VOCABULARY,
                 DatabaseHelper.KEY_VOCABULARY_CHAPTER_ID + " = ?",
                 new String[]{String.valueOf(chapterId)}) > 0;

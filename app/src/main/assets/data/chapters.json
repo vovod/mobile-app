@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Alphabet",
+    "url": "images/chapters/alphabet.png"
+  },
+  {
+    "id": 2,
+    "name": "Colors",
+    "url": "images/chapters/color.png"
+  },
+  {
+    "id": 3,
+    "name": "Fruits",
+    "url": "images/chapters/fruits.png"
+  },
+  {
+    "id": 4,
+    "name": "Animals",
+    "url": "images/chapters/animal.png"
+  },
+  {
+    "id": 5,
+    "name": "Shapes",
+    "url": "images/chapters/shapes.png"
+  }
+]
