@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        EdgeToEdge.enable(this);
-        setContentView(R.layout.register);
+        setContentView(R.layout.activity_register);
 
         ud = new UserDao(this);
         UserNameRegister = findViewById(R.id.editTextUsername);
