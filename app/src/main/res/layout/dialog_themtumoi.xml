@@ -142,5 +142,6 @@
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        android:contentDescription="Cancel"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

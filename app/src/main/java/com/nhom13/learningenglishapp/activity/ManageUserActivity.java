@@ -53,7 +53,7 @@ public class ManageUserActivity extends AppCompatActivity implements UserAdapter
 
     private void loadUserData() {
         userList.clear();
-        userList.addAll(userDao.getAllUsers());
+        userList.addAll(userDao.getAllNonAdminUsers());
         userAdapter.notifyDataSetChanged();
 
         if (userList.isEmpty()) {

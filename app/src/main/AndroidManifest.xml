@@ -55,6 +55,22 @@
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".activity.DictionaryActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".activity.GameActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".activity.GuessImageActivity"
+            android:exported="true">
+
+        </activity>
+
     </application>
 
 </manifest>

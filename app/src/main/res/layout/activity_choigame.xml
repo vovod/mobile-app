@@ -25,7 +25,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Trang chủ"/>
 
         <TextView
             android:id="@+id/textView4"
@@ -57,7 +58,8 @@
             android:src="@drawable/setting"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Setting"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -83,7 +85,8 @@
                 android:layout_height="200dp"
                 android:background="@drawable/item_shadow"
                 android:scaleType="centerCrop"
-                android:src="@drawable/yesno" />
+                android:src="@drawable/yesno"
+                android:contentDescription="Đúng hay Sai"/>
 
             <TextView
                 android:layout_width="170dp"
@@ -114,7 +117,8 @@
                 android:layout_height="200dp"
                 android:background="@drawable/item_shadow"
                 android:scaleType="centerCrop"
-                android:src="@drawable/problem" />
+                android:src="@drawable/problem"
+                android:contentDescription="Đoán hình ảnh"/>
 
             <TextView
                 android:layout_width="170dp"

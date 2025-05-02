@@ -81,7 +81,8 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/home" />
+                android:src="@drawable/home"
+                android:contentDescription="Home"/>
 
             <ImageButton
                 android:id="@+id/igbMusic"
@@ -90,7 +91,8 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/speaker" />
+                android:src="@drawable/speaker"
+                android:contentDescription="Music"/>
 
             <ImageButton
                 android:id="@+id/igbExit"
@@ -99,7 +101,8 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/exit" />
+                android:src="@drawable/exit"
+                android:contentDescription="Exit"/>
 
         </LinearLayout>
 
@@ -151,7 +154,8 @@
                 android:layout_marginVertical="15dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/facebook" />
+                android:src="@drawable/facebook"
+                android:contentDescription="Facebook"/>
 
             <ImageButton
                 android:id="@+id/igbINST"
@@ -160,7 +164,8 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/instagram" />
+                android:src="@drawable/instagram"
+                android:contentDescription="Instagram"/>
 
             <ImageButton
                 android:id="@+id/igbDiscord"
@@ -169,7 +174,9 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/discord" />
+                android:src="@drawable/discord"
+                android:contentDescription="Discord"
+                />
 
 
         </LinearLayout>

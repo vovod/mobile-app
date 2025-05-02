@@ -26,7 +26,8 @@
         android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
-        android:src="@drawable/checked" />
+        android:src="@drawable/checked"
+        android:contentDescription="Check"/>
 
     <ImageButton
         android:id="@+id/btncancelexit"
@@ -38,6 +39,7 @@
         android:layout_toStartOf="@+id/btncheckexit"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
-        android:src="@drawable/cancel" />
+        android:src="@drawable/cancel"
+        android:contentDescription="Cancel"/>
 
 </RelativeLayout>

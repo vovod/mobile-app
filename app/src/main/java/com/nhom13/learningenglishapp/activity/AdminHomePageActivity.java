@@ -2,6 +2,7 @@ package com.nhom13.learningenglishapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -11,25 +12,26 @@ import com.nhom13.learningenglishapp.R;
 
 public class AdminHomePageActivity extends AppCompatActivity {
 
-    private LinearLayout itemQlTu;
-    private LinearLayout itemQlUser;
+    private ImageButton igbQlTu;
+    private ImageButton igbQlUser;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_quanly);
+        setContentView(R.layout.activity_quanly);
 
         // Ánh xạ các view
-        itemQlTu = findViewById(R.id.itemQlTu);
-        itemQlUser = findViewById(R.id.itemQlUser);
+        igbQlTu = findViewById(R.id.igbQLTuVung);
+        igbQlUser = findViewById(R.id.igbQuanLyUser);
 
         // Thiết lập sự kiện click cho các mục quản lý
-        itemQlTu.setOnClickListener(v -> {
+        igbQlTu.setOnClickListener(v -> {
             Intent intent = new Intent(AdminHomePageActivity.this, ManageWordActivity.class);
             startActivity(intent);
         });
 
-        itemQlUser.setOnClickListener(v -> {
+        igbQlUser.setOnClickListener(v -> {
             Intent intent = new Intent(AdminHomePageActivity.this, ManageUserActivity.class);
             startActivity(intent);
         });

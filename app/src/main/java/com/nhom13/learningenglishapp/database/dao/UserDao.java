@@ -72,6 +72,39 @@ public class UserDao {
         return users;
     }
 
+    public List<User> getAllNonAdminUsers() {
+        List<User> users = new ArrayList<>();
+
+        // SELECT * FROM users WHERE username != 'admin'
+        String USERS_SELECT_QUERY = "SELECT * FROM " + DatabaseHelper.TABLE_USERS +
+                " WHERE " + DatabaseHelper.KEY_USER_USERNAME + " != 'admin'";
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(USERS_SELECT_QUERY, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    User user = new User();
+                    user.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_ID)));
+                    user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_USERNAME)));
+                    user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_PASSWORD)));
+                    user.setScore(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_SCORE)));
+
+                    users.add(user);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+
+        return users;
+    }
+
     public User getUserByUsername(String username) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 

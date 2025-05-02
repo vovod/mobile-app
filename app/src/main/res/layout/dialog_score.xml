@@ -84,7 +84,8 @@
                 android:layout_marginVertical="15dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/icon_back" />
+                android:src="@drawable/icon_back"
+                android:contentDescription="Trở về"/>
 
             <ImageButton
                 android:id="@+id/btnReplay"
@@ -94,7 +95,8 @@
                 android:layout_marginVertical="15dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/replay" />
+                android:src="@drawable/replay"
+                android:contentDescription="Chơi lại"/>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

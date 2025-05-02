@@ -50,15 +50,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.tvUsername.setText(user.getUsername());
         holder.tvScore.setText(String.valueOf(user.getScore()));
 
-        // Không cho phép xóa tài khoản admin
-        if ("admin".equals(user.getUsername())) {
-            holder.btnDeleteUser.setVisibility(View.INVISIBLE);
-        } else {
-            holder.btnDeleteUser.setVisibility(View.VISIBLE);
-            holder.btnDeleteUser.setOnClickListener(v -> {
-                showDeleteConfirmDialog(user.getUsername(), position);
-            });
-        }
+        // Tất cả người dùng trong danh sách đều có thể bị xóa (admin đã được loại trừ từ trước)
+        holder.btnDeleteUser.setVisibility(View.VISIBLE);
+        holder.btnDeleteUser.setOnClickListener(v -> {
+            showDeleteConfirmDialog(user.getUsername(), position);
+        });
     }
 
     private void showDeleteConfirmDialog(String username, int position) {

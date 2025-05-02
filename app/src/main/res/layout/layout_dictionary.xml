@@ -50,7 +50,9 @@
             android:layoutAnimation="@anim/layout_slide_up"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="List từ vựng"
+            />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -84,7 +86,8 @@
         android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:src="@drawable/home" />
+        android:src="@drawable/home"
+        android:contentDescription="Trang chủ"/>
 
 
     <ImageButton
@@ -97,7 +100,8 @@
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:src="@drawable/setting" />
+        android:src="@drawable/setting"
+        android:contentDescription="Setting"/>
 
 
     <TextView
