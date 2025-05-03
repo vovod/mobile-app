@@ -129,10 +129,10 @@
                 android:orientation="vertical"
                 android:layout_marginTop="8dp">
 
-                <RadioButton android:id="@+id/radio1" android:text="Đáp án 1"/>
-                <RadioButton android:id="@+id/radio2" android:text="Đáp án 2"/>
-                <RadioButton android:id="@+id/radio3" android:text="Đáp án 3"/>
-                <RadioButton android:id="@+id/radio4" android:text="Đáp án 4"/>
+                <RadioButton android:id="@+id/radio1" android:text="Đáp án 1" android:layout_height="wrap_content" android:layout_width="match_parent"/>
+                <RadioButton android:id="@+id/radio2" android:text="Đáp án 2" android:layout_height="wrap_content" android:layout_width="match_parent"/>
+                <RadioButton android:id="@+id/radio3" android:text="Đáp án 3" android:layout_height="wrap_content" android:layout_width="match_parent"/>
+                <RadioButton android:id="@+id/radio4" android:text="Đáp án 4" android:layout_height="wrap_content" android:layout_width="match_parent"/>
             </RadioGroup>
         </LinearLayout>
 
