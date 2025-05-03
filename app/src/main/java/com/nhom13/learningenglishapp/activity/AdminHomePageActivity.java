@@ -3,6 +3,7 @@ package com.nhom13.learningenglishapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ public class AdminHomePageActivity extends AppCompatActivity {
 
     private ImageButton igbQlTu;
     private ImageButton igbQlUser;
+    private ImageButton igbQlQuiz;
 
 
     @Override
@@ -23,6 +25,7 @@ public class AdminHomePageActivity extends AppCompatActivity {
         // Ánh xạ các view
         igbQlTu = findViewById(R.id.igbQLTuVung);
         igbQlUser = findViewById(R.id.igbQuanLyUser);
+        igbQlQuiz = findViewById(R.id.igbQuanLyQuiz);
 
         // Thiết lập sự kiện click cho các mục quản lý
         igbQlTu.setOnClickListener(v -> {
@@ -32,6 +35,11 @@ public class AdminHomePageActivity extends AppCompatActivity {
 
         igbQlUser.setOnClickListener(v -> {
             Intent intent = new Intent(AdminHomePageActivity.this, ManageUserActivity.class);
+            startActivity(intent);
+        });
+
+        igbQlQuiz.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminHomePageActivity.this, ManageQuizActivity.class);
             startActivity(intent);
         });
     }
