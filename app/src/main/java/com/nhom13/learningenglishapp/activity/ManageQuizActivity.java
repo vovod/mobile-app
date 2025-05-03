@@ -6,10 +6,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -26,6 +31,7 @@ import com.nhom13.learningenglishapp.database.models.Quiz;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter.OnQuizListener {
 
@@ -92,60 +98,157 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
     private void showAddQuizDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_add_quiz, null);
+        View dialogView = inflater.inflate(R.layout.dialog_add_question, null);
         builder.setView(dialogView);
 
-        EditText etCorrectAnswer = dialogView.findViewById(R.id.etCorrectAnswer);
-        EditText etWrongAnswer = dialogView.findViewById(R.id.etWrongAnswer);
-        ImageView imgQuiz = dialogView.findViewById(R.id.imgQuiz);
-        Button btnSelectImage = dialogView.findViewById(R.id.btnSelectImage);
-        Button btnSave = dialogView.findViewById(R.id.btnSave);
-        Button btnCancel = dialogView.findViewById(R.id.btnCancel);
+        // Ánh xạ các view
+        Spinner spinnerQuestionType = dialogView.findViewById(R.id.spinnerQuestionType);
+        LinearLayout layoutTrueFalse = dialogView.findViewById(R.id.layoutTrueFalse);
+        LinearLayout layoutGuessImage = dialogView.findViewById(R.id.layoutGuessImage);
+        Button buttonSaveQuestion = dialogView.findViewById(R.id.buttonSaveQuestion);
 
-        // Lưu trữ ImageView để cập nhật sau khi chọn hình ảnh
-        selectedImageView = imgQuiz;
+        // Layout Đúng/Sai
+        EditText editTextTrueFalseQuestion = dialogView.findViewById(R.id.editTextTrueFalseQuestion);
+        ImageView imageTrueFalse = dialogView.findViewById(R.id.imageTrueFalse);
+        Button buttonAddImageTrueFalse = dialogView.findViewById(R.id.buttonAddImageTrueFalse);
+        RadioButton radioTrue = dialogView.findViewById(R.id.radioTrue);
+        RadioButton radioFalse = dialogView.findViewById(R.id.radioFalse);
+
+        // Layout Đoán hình ảnh
+        ImageView imageGuess = dialogView.findViewById(R.id.imageGuess);
+        Button buttonAddImageGuess = dialogView.findViewById(R.id.buttonAddImageGuess);
+        EditText answer1 = dialogView.findViewById(R.id.answer1);
+        EditText answer2 = dialogView.findViewById(R.id.answer2);
+        EditText answer3 = dialogView.findViewById(R.id.answer3);
+        EditText answer4 = dialogView.findViewById(R.id.answer4);
+        RadioButton radio1 = dialogView.findViewById(R.id.radio1);
+        RadioButton radio2 = dialogView.findViewById(R.id.radio2);
+        RadioButton radio3 = dialogView.findViewById(R.id.radio3);
+        RadioButton radio4 = dialogView.findViewById(R.id.radio4);
+
+        // Thiết lập Spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.question_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerQuestionType.setAdapter(adapter);
+
+        // Xử lý sự kiện thay đổi loại câu hỏi
+        spinnerQuestionType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Hiển thị layout tương ứng với loại câu hỏi
+                if (position == 0) { // Đúng/Sai
+                    layoutTrueFalse.setVisibility(View.VISIBLE);
+                    layoutGuessImage.setVisibility(View.GONE);
+                    selectedImageView = imageTrueFalse;
+                } else { // Đoán hình ảnh
+                    layoutTrueFalse.setVisibility(View.GONE);
+                    layoutGuessImage.setVisibility(View.VISIBLE);
+                    selectedImageView = imageGuess;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Không làm gì
+            }
+        });
+
+        // Mặc định hiển thị layout Đúng/Sai
+        layoutTrueFalse.setVisibility(View.VISIBLE);
+        layoutGuessImage.setVisibility(View.GONE);
+        selectedImageView = imageTrueFalse;
         selectedImageUri = null;
 
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        btnSelectImage.setOnClickListener(v -> {
+        // Xử lý sự kiện chọn hình ảnh cho Đúng/Sai
+        buttonAddImageTrueFalse.setOnClickListener(v -> {
             imagePickerLauncher.launch("image/*");
         });
 
-        btnSave.setOnClickListener(v -> {
-            String correctAnswer = etCorrectAnswer.getText().toString().trim();
-            String wrongAnswer = etWrongAnswer.getText().toString().trim();
+        // Xử lý sự kiện chọn hình ảnh cho Đoán hình ảnh
+        buttonAddImageGuess.setOnClickListener(v -> {
+            imagePickerLauncher.launch("image/*");
+        });
 
-            if (correctAnswer.isEmpty()) {
-                Toast.makeText(this, "Vui lòng nhập đáp án đúng", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (wrongAnswer.isEmpty()) {
-                Toast.makeText(this, "Vui lòng nhập đáp án sai", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        // Xử lý sự kiện lưu câu hỏi
+        buttonSaveQuestion.setOnClickListener(v -> {
+            int selectedQuestionType = spinnerQuestionType.getSelectedItemPosition();
 
             if (selectedImageUri == null) {
                 Toast.makeText(this, "Vui lòng chọn hình ảnh", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            Quiz quiz = new Quiz(correctAnswer, wrongAnswer, "");
-            boolean success = quizDao.insertQuiz(quiz, selectedImageUri);
+            if (selectedQuestionType == 0) { // Đúng/Sai
+                String question = editTextTrueFalseQuestion.getText().toString().trim();
+                if (question.isEmpty()) {
+                    Toast.makeText(this, "Vui lòng nhập câu hỏi", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            if (success) {
-                Toast.makeText(this, "Thêm quiz thành công", Toast.LENGTH_SHORT).show();
-                loadQuizData();
-                dialog.dismiss();
-            } else {
-                Toast.makeText(this, "Thêm quiz thất bại", Toast.LENGTH_SHORT).show();
+                if (!radioTrue.isChecked() && !radioFalse.isChecked()) {
+                    Toast.makeText(this, "Vui lòng chọn đáp án đúng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String correctAnswer = radioTrue.isChecked() ? "true" : "false";
+                String wrongAnswer = radioTrue.isChecked() ? "false" : "true";
+
+                Quiz quiz = new Quiz(correctAnswer, wrongAnswer, "");
+                boolean success = quizDao.insertQuiz(quiz, selectedImageUri);
+
+                if (success) {
+                    Toast.makeText(this, "Thêm quiz thành công", Toast.LENGTH_SHORT).show();
+                    loadQuizData();
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(this, "Thêm quiz thất bại", Toast.LENGTH_SHORT).show();
+                }
+            } else { // Đoán hình ảnh
+                String ans1 = answer1.getText().toString().trim();
+                String ans2 = answer2.getText().toString().trim();
+                String ans3 = answer3.getText().toString().trim();
+                String ans4 = answer4.getText().toString().trim();
+
+                if (ans1.isEmpty() || ans2.isEmpty() || ans3.isEmpty() || ans4.isEmpty()) {
+                    Toast.makeText(this, "Vui lòng nhập đầy đủ các đáp án", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!radio1.isChecked() && !radio2.isChecked() && !radio3.isChecked() && !radio4.isChecked()) {
+                    Toast.makeText(this, "Vui lòng chọn đáp án đúng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String correctAnswer = "";
+                if (radio1.isChecked()) correctAnswer = ans1;
+                else if (radio2.isChecked()) correctAnswer = ans2;
+                else if (radio3.isChecked()) correctAnswer = ans3;
+                else if (radio4.isChecked()) correctAnswer = ans4;
+
+                // Chọn một đáp án sai ngẫu nhiên
+                List<String> wrongAnswers = new ArrayList<>();
+                if (!radio1.isChecked()) wrongAnswers.add(ans1);
+                if (!radio2.isChecked()) wrongAnswers.add(ans2);
+                if (!radio3.isChecked()) wrongAnswers.add(ans3);
+                if (!radio4.isChecked()) wrongAnswers.add(ans4);
+
+                String wrongAnswer = wrongAnswers.get(new Random().nextInt(wrongAnswers.size()));
+
+                Quiz quiz = new Quiz(correctAnswer, wrongAnswer, "");
+                boolean success = quizDao.insertQuiz(quiz, selectedImageUri);
+
+                if (success) {
+                    Toast.makeText(this, "Thêm quiz thành công", Toast.LENGTH_SHORT).show();
+                    loadQuizData();
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(this, "Thêm quiz thất bại", Toast.LENGTH_SHORT).show();
+                }
             }
-        });
-
-        btnCancel.setOnClickListener(v -> {
-            dialog.dismiss();
         });
     }
 
