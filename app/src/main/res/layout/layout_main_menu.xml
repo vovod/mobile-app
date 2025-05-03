@@ -39,39 +39,76 @@
             android:layout_marginTop="10dp"
             android:clipToPadding="false"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
 
             <LinearLayout
-                android:id="@+id/item1"
-                android:layout_width="200dp"
-                android:layout_height="250dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginBottom="20dp">
 
-                <ImageButton
-                    android:id="@+id/img_tudien"
-                    android:layout_width="170dp"
-                    android:layout_height="200dp"
-                    android:background="@drawable/reading"
-                    android:scaleType="centerInside"
-                    android:contentDescription="Tự điển"/>
-
-                <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/corner_shape"
-                    android:elevation="6dp"
+                <LinearLayout
+                    android:id="@+id/item1"
+                    android:layout_width="200dp"
+                    android:layout_height="250dp"
                     android:gravity="center"
-                    android:padding="5dp"
-                    android:text="Học Tiếng Anh"
-                    android:textAllCaps="false"
-                    android:textColor="@color/purple_700"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
 
+                    <ImageButton
+                        android:id="@+id/img_tudien"
+                        android:layout_width="170dp"
+                        android:layout_height="200dp"
+                        android:background="@drawable/reading"
+                        android:scaleType="centerInside"
+                        android:contentDescription="Tự điển"/>
+
+                    <TextView
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/corner_shape"
+                        android:elevation="6dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Học Tiếng Anh"
+                        android:textAllCaps="false"
+                        android:textColor="@color/purple_700"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/item3"
+                    android:layout_width="200dp"
+                    android:layout_height="250dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/img_kiemtra"
+                        android:layout_width="170dp"
+                        android:layout_height="200dp"
+                        android:background="@drawable/jigsaw"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Kiểm tra"/>
+
+                    <TextView
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/corner_shape"
+                        android:elevation="6dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Chơi game"
+                        android:textAllCaps="false"
+                        android:textColor="@color/purple_700"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/item2"
@@ -92,42 +129,10 @@
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/corner_shape"
-
                     android:elevation="6dp"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="Video Tiếng Anh"
-                    android:textAllCaps="false"
-                    android:textColor="@color/purple_700"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/item3"
-                android:layout_width="200dp"
-                android:layout_height="250dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/img_kiemtra"
-                    android:layout_width="170dp"
-                    android:layout_height="200dp"
-                    android:background="@drawable/jigsaw"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="Kiểm tra"/>
-
-                <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/corner_shape"
-                    android:elevation="6dp"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="Chơi game"
                     android:textAllCaps="false"
                     android:textColor="@color/purple_700"
                     android:textSize="20sp"
