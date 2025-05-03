@@ -27,7 +27,7 @@ public class ManageUserActivity extends AppCompatActivity implements UserAdapter
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quanlyngdung);
+        setContentView(R.layout.activity_user_management);
 
         // Khởi tạo DAO
         userDao = new UserDao(this);

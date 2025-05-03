@@ -61,7 +61,7 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gamexemvachon);
+        setContentView(R.layout.activity_game_seeandchoose);
         
         // Nhận dữ liệu từ intent
         if (getIntent().hasExtra("username")) {

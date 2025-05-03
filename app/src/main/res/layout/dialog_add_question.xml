@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Spinner chọn loại câu hỏi -->
+        <TextView
+            android:text="Chọn loại câu hỏi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:id="@+id/spinnerQuestionType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Layout Đúng/Sai -->
+        <LinearLayout
+            android:id="@+id/layoutTrueFalse"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingTop="16dp">
+
+            <EditText
+                android:id="@+id/editTextTrueFalseQuestion"
+                android:hint="Nhập câu hỏi"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imageTrueFalse"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:background="#ccc"
+                android:contentDescription="Ảnh minh họa" />
+
+            <Button
+                android:id="@+id/buttonAddImageTrueFalse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thêm hình ảnh"
+                android:layout_marginTop="4dp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <RadioButton
+                    android:id="@+id/radioTrue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đúng" />
+
+                <RadioButton
+                    android:id="@+id/radioFalse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sai" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <!-- Layout Đoán hình ảnh -->
+        <LinearLayout
+            android:id="@+id/layoutGuessImage"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:id="@+id/imageGuess"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#ccc"
+                android:contentDescription="Ảnh cần đoán" />
+
+            <Button
+                android:id="@+id/buttonAddImageGuess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thêm hình ảnh"
+                android:layout_marginTop="4dp"/>
+
+            <EditText
+                android:id="@+id/answer1"
+                android:hint="Đáp án 1"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <EditText
+                android:id="@+id/answer2"
+                android:hint="Đáp án 2"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/answer3"
+                android:hint="Đáp án 3"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/answer4"
+                android:hint="Đáp án 4"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <RadioGroup
+                android:id="@+id/radioCorrectAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp">
+
+                <RadioButton android:id="@+id/radio1" android:text="Đáp án 1"/>
+                <RadioButton android:id="@+id/radio2" android:text="Đáp án 2"/>
+                <RadioButton android:id="@+id/radio3" android:text="Đáp án 3"/>
+                <RadioButton android:id="@+id/radio4" android:text="Đáp án 4"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <!-- Nút Lưu -->
+        <Button
+            android:id="@+id/buttonSaveQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lưu câu hỏi"
+            android:layout_marginTop="24dp"/>
+    </LinearLayout>
+</ScrollView>

@@ -1,7 +1,6 @@
 package com.nhom13.learningenglishapp.activity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -44,7 +43,7 @@ public class ManageWordActivity extends AppCompatActivity implements WordAdapter
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quanlytuvung);
+        setContentView(R.layout.activity_word_management);
 
         // Khởi tạo các DAO
         vocabularyDao = new VocabularyDao(this);
