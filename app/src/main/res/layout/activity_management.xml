@@ -8,113 +8,139 @@
     android:background="@drawable/bg_admin_home"
     android:orientation="vertical">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
-        tools:ignore="NotSibling">
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layoutAnimation="@anim/layout_slide_up"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="NotSibling" />
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.621">
+        app:layout_constraintVertical_bias="0.3">
 
+        <!-- Hàng trên: Quản lý từ vựng và Quản lý người dùng -->
         <LinearLayout
-            android:id="@+id/itemQlTu"
-            android:layout_width="200dp"
-            android:layout_height="250dp"
-            android:layout_marginHorizontal="10dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/igbQLTuVung"
-                android:layout_width="170dp"
-                android:layout_height="200dp"
-                android:background="@drawable/item_shadow"
-                android:scaleType="centerInside"
-                android:src="@drawable/abc"
-                android:contentDescription="Quản lý từ vựng"/>
-
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/corner_shape"
-                android:elevation="6dp"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="Quản lý từ vựng"
-                android:textAllCaps="false"
-                android:textColor="@color/purple_700"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/itemQlUser"
-            android:layout_width="200dp"
-            android:layout_height="250dp"
-            android:layout_marginHorizontal="10dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/igbQuanLyUser"
-                android:layout_width="170dp"
-                android:layout_height="200dp"
-                android:background="@drawable/item_shadow"
-                android:scaleType="centerInside"
-                android:src="@drawable/usermanager"
-                android:contentDescription="Quản lý người dùng"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/corner_shape"
-                android:elevation="6dp"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="Quản lý người dùng"
-                android:textAllCaps="false"
-                android:textColor="@color/purple_700"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/topRow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@android:color/transparent" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="20dp">
+
+            <!-- Quản lý từ vựng -->
+            <LinearLayout
+                android:id="@+id/itemQlTu"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:layout_marginHorizontal="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/igbQLTuVung"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/item_shadow"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/abc"
+                    android:contentDescription="Quản lý từ vựng"/>
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corner_shape"
+                    android:elevation="6dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Quản lý từ vựng"
+                    android:textAllCaps="false"
+                    android:textColor="@color/purple_700"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Quản lý người dùng -->
+            <LinearLayout
+                android:id="@+id/itemQlUser"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:layout_marginHorizontal="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/igbQuanLyUser"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/item_shadow"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/usermanager"
+                    android:contentDescription="Quản lý người dùng"/>
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corner_shape"
+                    android:elevation="6dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Quản lý người dùng"
+                    android:textAllCaps="false"
+                    android:textColor="@color/purple_700"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Hàng dưới: Quản lý Quiz -->
+        <LinearLayout
+            android:id="@+id/bottomRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Quản lý Quiz -->
+            <LinearLayout
+                android:id="@+id/itemQlQuiz"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:layout_marginHorizontal="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/igbQuanLyQuiz"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/item_shadow"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/question"
+                    android:contentDescription="Quản lý Quiz"/>
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corner_shape"
+                    android:elevation="6dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Quản lý Quiz"
+                    android:textAllCaps="false"
+                    android:textColor="@color/purple_700"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -154,13 +180,14 @@
         android:contentDescription="Trở về"/>
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:background="@drawable/corner_shape"
         android:elevation="6dp"
         android:gravity="center"
         android:padding="5dp"
-        android:text="DANH SÁCH LOẠI TỪ"
+        android:text="QUẢN LÝ HỆ THỐNG"
         android:textAllCaps="false"
         android:textColor="@color/purple_700"
         android:textSize="20sp"
