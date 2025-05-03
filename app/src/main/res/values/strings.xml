@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">LearningEnglishApp</string>
+
+    <!-- Question types for quiz -->
+    <string-array name="question_types">
+        <item>Đúng/Sai</item>
+        <item>Đoán hình ảnh</item>
+    </string-array>
 </resources>
