@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nhom13.learningenglishapp.R;
+import com.nhom13.learningenglishapp.activity.LoginActivity;
 
 public class UserHomePageActivity extends AppCompatActivity {
 
@@ -56,7 +56,11 @@ public class UserHomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("Go to videoTiengAnh");
-                Toast.makeText(UserHomePageActivity.this, "Chức năng Video Tiếng Anh đang được phát triển", Toast.LENGTH_SHORT).show();
+                // Chuyển đến VideoListActivity
+                Intent intent = new Intent(UserHomePageActivity.this, VideoListActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("score", score);
+                startActivity(intent);
             }
         });
 

@@ -170,9 +170,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void insertSampleData(SQLiteDatabase db) {
         try {
+            // Chèn dữ liệu mẫu cho users, chapters, vocabulary, quiz
             InputStream inputStream = context.getAssets().open("sample_data.sql");
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.trim().isEmpty()) {
+                    db.execSQL(line);
+                }
+            }
+            reader.close();
+
+            // Chèn dữ liệu mẫu cho videos
+            inputStream = context.getAssets().open("sample_videos.sql");
+            reader = new BufferedReader(new InputStreamReader(inputStream));
             while ((line = reader.readLine()) != null) {
                 if (!line.trim().isEmpty()) {
                     db.execSQL(line);

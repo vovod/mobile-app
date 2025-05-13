@@ -108,19 +108,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <!-- Đã ẩn đáp án 3 và 4 theo yêu cầu -->
             <EditText
                 android:id="@+id/answer3"
                 android:hint="Đáp án 3"
                 android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/answer4"
                 android:hint="Đáp án 4"
                 android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <RadioGroup
                 android:id="@+id/radioCorrectAnswer"
@@ -131,8 +134,9 @@
 
                 <RadioButton android:id="@+id/radio1" android:text="Đáp án 1" android:layout_height="wrap_content" android:layout_width="match_parent"/>
                 <RadioButton android:id="@+id/radio2" android:text="Đáp án 2" android:layout_height="wrap_content" android:layout_width="match_parent"/>
-                <RadioButton android:id="@+id/radio3" android:text="Đáp án 3" android:layout_height="wrap_content" android:layout_width="match_parent"/>
-                <RadioButton android:id="@+id/radio4" android:text="Đáp án 4" android:layout_height="wrap_content" android:layout_width="match_parent"/>
+                <!-- Đã ẩn radio button cho đáp án 3 và 4 -->
+                <RadioButton android:id="@+id/radio3" android:text="Đáp án 3" android:layout_height="wrap_content" android:layout_width="match_parent" android:visibility="gone"/>
+                <RadioButton android:id="@+id/radio4" android:text="Đáp án 4" android:layout_height="wrap_content" android:layout_width="match_parent" android:visibility="gone"/>
             </RadioGroup>
         </LinearLayout>
 

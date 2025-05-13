@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nhom13.learningenglishapp.R;
+import com.nhom13.learningenglishapp.activity.LoginActivity;
 
 public class GameActivity extends AppCompatActivity {
 

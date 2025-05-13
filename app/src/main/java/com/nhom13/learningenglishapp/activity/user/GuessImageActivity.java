@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom13.learningenglishapp.R;
+import com.nhom13.learningenglishapp.activity.LoginActivity;
 import com.nhom13.learningenglishapp.adapters.AnswerAdapter;
 import com.nhom13.learningenglishapp.database.dao.QuizDao;
 import com.nhom13.learningenglishapp.database.dao.UserDao;
@@ -37,19 +38,19 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
 
     private static final int TOTAL_QUESTIONS = 10;
     private static final int TIME_PER_QUESTION = 10000; // 10 seconds per question
-    
+
     private ImageButton btnBack, btnSetting, btnSpeak;
     private TextView tvScore, tvCurrentQuestion, tvQuestion;
     private ImageView imgAnswer;
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
-    
+
     private QuizDao quizDao;
     private UserDao userDao;
     private List<Quiz> quizList;
     private List<String> answerOptions;
     private AnswerAdapter answerAdapter;
-    
+
     private int currentQuestionIndex = 0;
     private int score = 0;
     private int userId = 0;
@@ -62,7 +63,7 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_seeandchoose);
-        
+
         // Nhận dữ liệu từ intent
         if (getIntent().hasExtra("username")) {
             username = getIntent().getStringExtra("username");
@@ -73,11 +74,11 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
         if (getIntent().hasExtra("userId")) {
             userId = getIntent().getIntExtra("userId", 0);
         }
-        
+
         // Khởi tạo DAO
         quizDao = new QuizDao(this);
         userDao = new UserDao(this);
-        
+
         // Ánh xạ các view
         btnBack = findViewById(R.id.btnBacKDH);
         btnSetting = findViewById(R.id.btnSettingGameDH);
@@ -88,13 +89,13 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
         imgAnswer = findViewById(R.id.imgDapAn);
         progressBar = findViewById(R.id.progressBarCount);
         recyclerView = findViewById(R.id.rcvTraLoiDH);
-        
+
         // Thiết lập RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         answerOptions = new ArrayList<>();
         answerAdapter = new AnswerAdapter(this, answerOptions, this);
         recyclerView.setAdapter(answerAdapter);
-        
+
         // Thiết lập TextToSpeech
         textToSpeech = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
@@ -106,71 +107,71 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
                 Toast.makeText(this, "Khởi tạo TextToSpeech thất bại", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
         // Thiết lập sự kiện click cho các nút
         btnBack.setOnClickListener(v -> {
             showExitConfirmDialog();
         });
-        
+
         btnSetting.setOnClickListener(v -> {
             showSettingDialog();
         });
-        
+
         btnSpeak.setOnClickListener(v -> {
             speakQuestion();
         });
-        
+
         // Cập nhật điểm số hiện tại
         tvScore.setText(String.valueOf(score));
-        
+
         // Tải câu hỏi và bắt đầu trò chơi
         loadQuizzes();
     }
-    
+
     private void loadQuizzes() {
         // Lấy 10 câu hỏi ngẫu nhiên từ cơ sở dữ liệu
         quizList = quizDao.getRandomQuizzes(TOTAL_QUESTIONS);
-        
+
         // Nếu không đủ 10 câu hỏi, lấy tất cả câu hỏi có sẵn
         if (quizList.size() < TOTAL_QUESTIONS) {
             quizList = quizDao.getAllQuizzes();
         }
-        
+
         // Nếu vẫn không có câu hỏi nào, hiển thị thông báo và quay lại
         if (quizList.isEmpty()) {
             Toast.makeText(this, "Không có câu hỏi nào", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-        
+
         // Bắt đầu với câu hỏi đầu tiên
         showQuestion(0);
     }
-    
+
     private void showQuestion(int index) {
         // Đặt lại trạng thái
         isAnswered = false;
-        
+
         // Hủy timer cũ nếu có
         if (timer != null) {
             timer.cancel();
         }
-        
+
         // Kiểm tra xem đã hết câu hỏi chưa
         if (index >= quizList.size()) {
             showGameOverDialog();
             return;
         }
-        
+
         // Lấy câu hỏi hiện tại
         Quiz currentQuiz = quizList.get(index);
-        
+
         // Cập nhật số câu hỏi hiện tại
         tvCurrentQuestion.setText((index + 1) + "/" + quizList.size());
-        
+
         // Hiển thị câu hỏi
         tvQuestion.setText("What is this?");
-        
+
         // Hiển thị hình ảnh
         if (currentQuiz.getImagePath() != null && !currentQuiz.getImagePath().isEmpty()) {
             File imgFile = new File(currentQuiz.getImagePath());
@@ -182,43 +183,25 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
         } else {
             imgAnswer.setImageResource(R.drawable.question);
         }
-        
-        // Tạo danh sách đáp án
+
+        // Tạo danh sách đáp án - chỉ hiển thị 2 đáp án: đúng và sai
         answerOptions.clear();
         answerOptions.add(currentQuiz.getCorrectAnswer());
         answerOptions.add(currentQuiz.getWrongAnswer());
-        
-        // Thêm 2 đáp án ngẫu nhiên từ các câu hỏi khác nếu có đủ câu hỏi
-        if (quizList.size() >= 3) {
-            List<String> additionalAnswers = new ArrayList<>();
-            Random random = new Random();
-            while (additionalAnswers.size() < 2) {
-                int randomIndex = random.nextInt(quizList.size());
-                if (randomIndex != index) {
-                    String answer = quizList.get(randomIndex).getCorrectAnswer();
-                    if (!answer.equals(currentQuiz.getCorrectAnswer()) && 
-                        !answer.equals(currentQuiz.getWrongAnswer()) && 
-                        !additionalAnswers.contains(answer)) {
-                        additionalAnswers.add(answer);
-                    }
-                }
-            }
-            answerOptions.addAll(additionalAnswers);
-        }
-        
+
         // Xáo trộn đáp án
         Collections.shuffle(answerOptions);
-        
+
         // Cập nhật adapter
         answerAdapter.notifyDataSetChanged();
-        
+
         // Đặt lại ProgressBar
         progressBar.setProgress(100);
-        
+
         // Bắt đầu đếm ngược
         startTimer();
     }
-    
+
     private void startTimer() {
         timer = new CountDownTimer(TIME_PER_QUESTION, 100) {
             @Override
@@ -226,7 +209,7 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
                 int progress = (int) (millisUntilFinished * 100 / TIME_PER_QUESTION);
                 progressBar.setProgress(progress);
             }
-            
+
             @Override
             public void onFinish() {
                 if (!isAnswered) {
@@ -238,17 +221,17 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
             }
         }.start();
     }
-    
+
     @Override
     public void onAnswerClick(String answer) {
         // Đánh dấu đã trả lời
         isAnswered = true;
-        
+
         // Hủy timer
         if (timer != null) {
             timer.cancel();
         }
-        
+
         // Kiểm tra đáp án
         Quiz currentQuiz = quizList.get(currentQuestionIndex);
         if (answer.equals(currentQuiz.getCorrectAnswer())) {
@@ -260,33 +243,33 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
             // Đáp án sai
             Toast.makeText(this, "Sai! Đáp án đúng là: " + currentQuiz.getCorrectAnswer(), Toast.LENGTH_SHORT).show();
         }
-        
+
         // Chờ 1 giây trước khi chuyển sang câu hỏi tiếp theo
         new android.os.Handler().postDelayed(() -> {
             currentQuestionIndex++;
             showQuestion(currentQuestionIndex);
         }, 1000);
     }
-    
+
     private void speakQuestion() {
         if (textToSpeech != null) {
             textToSpeech.speak(tvQuestion.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, null);
         }
     }
-    
+
     private void showSettingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_setting, null);
         builder.setView(dialogView);
-        
+
         // Khởi tạo nút đăng xuất
         Button logoutButton = dialogView.findViewById(R.id.igbLogOut);
-        
+
         // Tạo và hiển thị dialog
         AlertDialog dialog = builder.create();
         dialog.show();
-        
+
         // Xử lý sự kiện click nút đăng xuất
         logoutButton.setOnClickListener(v -> {
             dialog.dismiss();
@@ -297,7 +280,7 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
             Toast.makeText(GuessImageActivity.this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
         });
     }
-    
+
     private void showExitConfirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Xác nhận thoát");
@@ -313,7 +296,7 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
         builder.setNegativeButton("Hủy", null);
         builder.show();
     }
-    
+
     private void showGameOverDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Kết thúc trò chơi");
@@ -327,7 +310,7 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
                     userDao.updateScore(username, user.getScore() + score);
                 }
             }
-            
+
             // Quay về màn hình chính
             Intent intent = new Intent(GuessImageActivity.this, GameActivity.class);
             intent.putExtra("username", username);
@@ -337,7 +320,7 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
         });
         builder.show();
     }
-    
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

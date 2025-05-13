@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.admin;
 
 import android.os.Bundle;
 import android.widget.ImageButton;

@@ -1,9 +1,8 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +14,8 @@ public class AdminHomePageActivity extends AppCompatActivity {
     private ImageButton igbQlTu;
     private ImageButton igbQlUser;
     private ImageButton igbQlQuiz;
+    private ImageButton igbQlVideo;
+    private ImageButton btnAddLoai;
 
 
     @Override
@@ -26,6 +27,8 @@ public class AdminHomePageActivity extends AppCompatActivity {
         igbQlTu = findViewById(R.id.igbQLTuVung);
         igbQlUser = findViewById(R.id.igbQuanLyUser);
         igbQlQuiz = findViewById(R.id.igbQuanLyQuiz);
+        igbQlVideo = findViewById(R.id.igbQuanLyVideo);
+        btnAddLoai = findViewById(R.id.btnAddLoai);
 
         // Thiết lập sự kiện click cho các mục quản lý
         igbQlTu.setOnClickListener(v -> {
@@ -40,6 +43,17 @@ public class AdminHomePageActivity extends AppCompatActivity {
 
         igbQlQuiz.setOnClickListener(v -> {
             Intent intent = new Intent(AdminHomePageActivity.this, ManageQuizActivity.class);
+            startActivity(intent);
+        });
+
+        igbQlVideo.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminHomePageActivity.this, ManageVideoActivity.class);
+            startActivity(intent);
+        });
+
+        // Xử lý sự kiện click cho nút thêm loại (quản lý chapter)
+        btnAddLoai.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminHomePageActivity.this, ManageChapterActivity.class);
             startActivity(intent);
         });
     }

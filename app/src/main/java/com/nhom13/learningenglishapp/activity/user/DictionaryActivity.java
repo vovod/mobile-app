@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.nhom13.learningenglishapp.R;
+import com.nhom13.learningenglishapp.activity.LoginActivity;
 import com.nhom13.learningenglishapp.adapters.AlphabetAdapter;
 import com.nhom13.learningenglishapp.database.dao.VocabularyDao;
 import com.nhom13.learningenglishapp.database.models.Vocabulary;

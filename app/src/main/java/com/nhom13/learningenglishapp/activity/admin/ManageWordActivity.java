@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.admin;
 
 import android.app.AlertDialog;
 import android.net.Uri;

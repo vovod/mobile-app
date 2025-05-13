@@ -1,7 +1,6 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.admin;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -210,15 +209,14 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
             } else { // Đoán hình ảnh
                 String ans1 = answer1.getText().toString().trim();
                 String ans2 = answer2.getText().toString().trim();
-                String ans3 = answer3.getText().toString().trim();
-                String ans4 = answer4.getText().toString().trim();
+                // Không sử dụng đáp án 3 và 4 nữa
 
-                if (ans1.isEmpty() || ans2.isEmpty() || ans3.isEmpty() || ans4.isEmpty()) {
+                if (ans1.isEmpty() || ans2.isEmpty()) {
                     Toast.makeText(this, "Vui lòng nhập đầy đủ các đáp án", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (!radio1.isChecked() && !radio2.isChecked() && !radio3.isChecked() && !radio4.isChecked()) {
+                if (!radio1.isChecked() && !radio2.isChecked()) {
                     Toast.makeText(this, "Vui lòng chọn đáp án đúng", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -226,17 +224,9 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
                 String correctAnswer = "";
                 if (radio1.isChecked()) correctAnswer = ans1;
                 else if (radio2.isChecked()) correctAnswer = ans2;
-                else if (radio3.isChecked()) correctAnswer = ans3;
-                else if (radio4.isChecked()) correctAnswer = ans4;
 
-                // Chọn một đáp án sai ngẫu nhiên
-                List<String> wrongAnswers = new ArrayList<>();
-                if (!radio1.isChecked()) wrongAnswers.add(ans1);
-                if (!radio2.isChecked()) wrongAnswers.add(ans2);
-                if (!radio3.isChecked()) wrongAnswers.add(ans3);
-                if (!radio4.isChecked()) wrongAnswers.add(ans4);
-
-                String wrongAnswer = wrongAnswers.get(new Random().nextInt(wrongAnswers.size()));
+                // Chỉ có 2 đáp án nên đáp án sai là đáp án còn lại
+                String wrongAnswer = radio1.isChecked() ? ans2 : ans1;
 
                 Quiz quiz = new Quiz(correctAnswer, wrongAnswer, "");
                 boolean success = quizDao.insertQuiz(quiz, selectedImageUri);

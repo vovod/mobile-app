@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -33,46 +35,71 @@
         </activity>
 
         <activity
-            android:name=".activity.AdminHomePageActivity"
+            android:name=".activity.admin.AdminHomePageActivity"
             android:exported="true">
 
         </activity>
 
         <activity
-            android:name=".activity.UserHomePageActivity"
+            android:name=".activity.user.UserHomePageActivity"
             android:exported="true">
 
         </activity>
 
         <activity
-            android:name=".activity.ManageUserActivity"
+            android:name=".activity.admin.ManageUserActivity"
             android:exported="true">
 
         </activity>
 
         <activity
-            android:name=".activity.ManageWordActivity"
+            android:name=".activity.admin.ManageWordActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".activity.DictionaryActivity"
+            android:name=".activity.user.DictionaryActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".activity.GameActivity"
+            android:name=".activity.user.GameActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".activity.GuessImageActivity"
+            android:name=".activity.user.GuessImageActivity"
             android:exported="true">
 
         </activity>
 
         <activity
-            android:name=".activity.ManageQuizActivity"
+            android:name=".activity.admin.ManageQuizActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activity.admin.ManageVideoActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activity.admin.ManageChapterActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activity.user.VideoListActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activity.user.PlayVideoActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true">
 
         </activity>
