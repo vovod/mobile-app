@@ -150,4 +150,22 @@ public class ChapterDao {
 
         return success;
     }
+
+    // Trong class ChapterDao
+
+    // Lấy tổng số chương
+    public int getTotalChapterCount() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int count = 0;
+        String countQuery = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_CHAPTERS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return count;
+    }
+
 }

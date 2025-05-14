@@ -132,4 +132,22 @@ public class VideoDao {
 
         return success;
     }
+
+    // Trong class VideoDao
+
+    // Lấy tổng số video
+    public int getTotalVideoCount() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int count = 0;
+        String countQuery = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_VIDEOS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return count;
+    }
+
 }

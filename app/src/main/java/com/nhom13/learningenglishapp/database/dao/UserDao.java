@@ -175,4 +175,60 @@ public class UserDao {
                 DatabaseHelper.KEY_USER_USERNAME + " = ?",
                 new String[]{username}) > 0;
     }
+
+    // Trong class UserDao
+
+    // Lấy tổng số người dùng (không bao gồm admin)
+    public int getTotalUserCount() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int count = 0;
+        String countQuery = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_USERS +
+                " WHERE " + DatabaseHelper.KEY_USER_USERNAME + " != 'admin'";
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        // Không đóng db ở đây vì dbHelper quản lý lifecycle của db
+        return count;
+    }
+
+    // Lấy danh sách người dùng theo điểm giảm dần (Top N users)
+    public List<User> getTopUsersByScore(int limit) {
+        List<User> users = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_USERS +
+                " WHERE " + DatabaseHelper.KEY_USER_USERNAME + " != 'admin'" +
+                " ORDER BY " + DatabaseHelper.KEY_USER_SCORE + " DESC" +
+                " LIMIT " + limit;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    User user = new User();
+                    user.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_ID)));
+                    user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_USERNAME)));
+                    user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_PASSWORD)));
+                    user.setScore(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_SCORE)));
+                    users.add(user);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        // Không đóng db ở đây
+        return users;
+    }
+
+// Cần đảm bảo phương thức `getAllNonAdminUsers()` đã có trong file của bạn, nó cũng sẽ hữu ích.
+// Nếu chưa có, hãy thêm nó. Dựa trên tệp bạn gửi, nó đã có rồi.
 }
