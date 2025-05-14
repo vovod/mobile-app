@@ -104,6 +104,12 @@
 
         </activity>
 
+        <activity
+            android:name=".activity.admin.AdminStatisticsActivity"
+            android:exported="true">
+
+        </activity>
+
     </application>
 
 </manifest>
