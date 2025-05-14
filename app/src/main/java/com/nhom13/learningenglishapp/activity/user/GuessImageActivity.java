@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -28,6 +28,7 @@ import com.nhom13.learningenglishapp.database.dao.QuizDao;
 import com.nhom13.learningenglishapp.database.dao.UserDao;
 import com.nhom13.learningenglishapp.database.models.Quiz;
 import com.nhom13.learningenglishapp.database.models.User;
+import com.nhom13.learningenglishapp.activity.LoginActivity;
 
 import java.io.IOException;
 import java.io.InputStream;

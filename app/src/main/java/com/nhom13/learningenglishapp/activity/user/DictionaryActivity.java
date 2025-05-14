@@ -1,4 +1,4 @@
-package com.nhom13.learningenglishapp.activity;
+package com.nhom13.learningenglishapp.activity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -24,6 +24,7 @@ import com.nhom13.learningenglishapp.R;
 import com.nhom13.learningenglishapp.adapters.AlphabetAdapter;
 import com.nhom13.learningenglishapp.database.dao.VocabularyDao;
 import com.nhom13.learningenglishapp.database.models.Vocabulary;
+import com.nhom13.learningenglishapp.activity.LoginActivity;
 
 import java.io.IOException; // Thêm dòng này
 import java.io.InputStream; // Thêm dòng này
