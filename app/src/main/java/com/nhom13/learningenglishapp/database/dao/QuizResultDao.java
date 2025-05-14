@@ -211,4 +211,69 @@ public class QuizResultDao {
                 KEY_RESULT_USER_ID + " = ?",
                 new String[]{String.valueOf(userId)}) > 0;
     }
+
+    // Trong class QuizResultDao
+
+    // Lấy tổng số lượt game đã chơi (tổng số bản ghi trong bảng quiz_results)
+    public int getTotalGamesPlayed() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int count = 0;
+        String countQuery = "SELECT COUNT(*) FROM " + TABLE_QUIZ_RESULTS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return count;
+    }
+
+    // Lấy tổng số câu hỏi đã trả lời (tổng cột total_questions từ tất cả các bản ghi)
+    public int getTotalQuestionsAttempted() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int total = 0;
+        String sumQuery = "SELECT SUM(" + KEY_RESULT_TOTAL_QUESTIONS + ") FROM " + TABLE_QUIZ_RESULTS;
+        Cursor cursor = db.rawQuery(sumQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                total = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return total;
+    }
+
+    // Lấy tổng số câu trả lời đúng (tổng cột correct_answers từ tất cả các bản ghi)
+    public int getTotalCorrectAnswers() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int total = 0;
+        String sumQuery = "SELECT SUM(" + KEY_RESULT_CORRECT_ANSWERS + ") FROM " + TABLE_QUIZ_RESULTS;
+        Cursor cursor = db.rawQuery(sumQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                total = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return total;
+    }
+
+    // Lấy điểm trung bình mỗi game
+    public double getAverageScore() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        double average = 0;
+        String avgQuery = "SELECT AVG(" + KEY_RESULT_SCORE + ") FROM " + TABLE_QUIZ_RESULTS;
+        Cursor cursor = db.rawQuery(avgQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                average = cursor.getDouble(0);
+            }
+            cursor.close();
+        }
+        return average;
+    }
+
+// Phương thức getQuizResultsByUser() và getUserHighScore() đã có sẵn, chúng ta sẽ không dùng trực tiếp trên màn hình tổng quan này nhưng chúng rất hữu ích.
+
 }

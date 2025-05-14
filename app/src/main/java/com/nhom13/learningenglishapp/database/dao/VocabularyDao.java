@@ -226,4 +226,38 @@ public class VocabularyDao {
 
         return success;
     }
+
+    // Trong class VocabularyDao
+
+    // Lấy tổng số từ vựng
+    public int getTotalVocabularyCount() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int count = 0;
+        String countQuery = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_VOCABULARY;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return count;
+    }
+
+    // (Tùy chọn) Lấy số lượng từ vựng theo chương
+    public int getVocabularyCountByChapter(int chapterId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int count = 0;
+        String countQuery = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_VOCABULARY +
+                " WHERE " + DatabaseHelper.KEY_VOCABULARY_CHAPTER_ID + " = ?";
+        Cursor cursor = db.rawQuery(countQuery, new String[]{String.valueOf(chapterId)});
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return count;
+    }
+
 }
