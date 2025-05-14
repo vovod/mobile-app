@@ -7,6 +7,8 @@ DELETE FROM users;
 -- Chèn dữ liệu cho bảng users
 INSERT INTO users (username, password, score) VALUES ('admin', 'admin', 0);
 INSERT INTO users (username, password, score) VALUES ('user', 'user', 100);
+INSERT INTO users (username, password, score) VALUES ('huhu', '123', 100);
+
 
 -- Chèn dữ liệu cho bảng chapters từ chapters.json
 INSERT INTO chapters (id, name, image_path) VALUES (1, 'Alphabet', 'images/chapters/alphabet.png');

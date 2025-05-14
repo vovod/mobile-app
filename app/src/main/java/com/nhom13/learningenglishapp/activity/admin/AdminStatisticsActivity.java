@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,12 +23,14 @@ import com.nhom13.learningenglishapp.database.dao.VideoDao;
 import com.nhom13.learningenglishapp.database.models.User;
 
 import java.util.List;
-import java.util.Locale; // Để định dạng số thập phân
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
-public class AdminStatisticsActivity extends AppCompatActivity {
+public class AdminStatisticsActivity extends AppCompatActivity implements UserAdapter.OnUserClickListener {
 
     private TextView tvTotalUsers, tvTotalChapters, tvTotalVocabulary, tvTotalQuizzes, tvTotalVideos;
     private TextView tvTotalGamesPlayed, tvTotalQuestionsAttempted, tvTotalCorrectAnswers, tvAverageScore;
+    private TextView tvActiveUsersLast7Days, tvScoreRange0_100, tvScoreRange101_500, tvScoreRange501_Plus;
     private RecyclerView rcvTopUsers;
     private ImageButton btnBack;
 
@@ -37,6 +40,8 @@ public class AdminStatisticsActivity extends AppCompatActivity {
     private QuizDao quizDao;
     private VideoDao videoDao;
     private QuizResultDao quizResultDao;
+
+    private static final String TAG = "AdminStatsActivity"; // Thêm TAG cho logging
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +58,11 @@ public class AdminStatisticsActivity extends AppCompatActivity {
         tvTotalQuestionsAttempted = findViewById(R.id.tvTotalQuestionsAttempted);
         tvTotalCorrectAnswers = findViewById(R.id.tvTotalCorrectAnswers);
         tvAverageScore = findViewById(R.id.tvAverageScore);
+        tvActiveUsersLast7Days = findViewById(R.id.tvActiveUsersLast7Days);
+        tvScoreRange0_100 = findViewById(R.id.tvScoreRange0_100);
+        tvScoreRange101_500 = findViewById(R.id.tvScoreRange101_500);
+        tvScoreRange501_Plus = findViewById(R.id.tvScoreRange501_Plus);
+
         rcvTopUsers = findViewById(R.id.rcvTopUsers);
         btnBack = findViewById(R.id.btnBack);
 
@@ -66,15 +76,14 @@ public class AdminStatisticsActivity extends AppCompatActivity {
 
         // Thiết lập RecyclerView cho Top Users
         rcvTopUsers.setLayoutManager(new LinearLayoutManager(this));
-        // Sử dụng null cho OnUserDeleteListener vì admin không xóa user từ màn hình thống kê
-        UserAdapter topUserAdapter = new UserAdapter(this, null, null);
+        UserAdapter topUserAdapter = new UserAdapter(this, null, null, this);
         rcvTopUsers.setAdapter(topUserAdapter);
 
         // Tải và hiển thị dữ liệu thống kê
         loadStatisticsData();
 
         // Thiết lập sự kiện cho nút Back
-        btnBack.setOnClickListener(v -> finish()); // Đóng Activity hiện tại để quay về AdminHomePageActivity
+        btnBack.setOnClickListener(v -> finish());
     }
 
     private void loadStatisticsData() {
@@ -82,7 +91,7 @@ public class AdminStatisticsActivity extends AppCompatActivity {
         int totalUsers = userDao.getTotalUserCount();
         int totalChapters = chapterDao.getTotalChapterCount();
         int totalVocabulary = vocabularyDao.getTotalVocabularyCount();
-        int totalQuizzes = quizDao.getQuizCount(); // Sử dụng phương thức đã có
+        int totalQuizzes = quizDao.getQuizCount();
         int totalVideos = videoDao.getTotalVideoCount();
 
         tvTotalUsers.setText("Tổng số người dùng: " + totalUsers);
@@ -100,16 +109,42 @@ public class AdminStatisticsActivity extends AppCompatActivity {
         tvTotalGamesPlayed.setText("Tổng số lượt Game đã chơi: " + totalGamesPlayed);
         tvTotalQuestionsAttempted.setText("Tổng số câu hỏi đã trả lời: " + totalQuestionsAttempted);
         tvTotalCorrectAnswers.setText("Tổng số câu trả lời đúng: " + totalCorrectAnswers);
-        // Định dạng điểm trung bình
         tvAverageScore.setText(String.format(Locale.getDefault(), "Điểm trung bình mỗi game: %.2f", averageScore));
 
-        // Top Users (Lấy top 5 chẳng hạn)
+        // Thống kê người dùng hoạt động
+        tvActiveUsersLast7Days.setText("Người dùng hoạt động (7 ngày): - (Cần cập nhật DB)");
+
+        // Thống kê phân phối điểm
+        int count0_100 = userDao.getUserCountByScoreRange(0, 100);
+        int count101_500 = userDao.getUserCountByScoreRange(101, 500);
+        int count501_Plus = userDao.getUserCountByScoreRange(501, Integer.MAX_VALUE);
+
+        tvScoreRange0_100.setText("Điểm 0-100: " + count0_100);
+        tvScoreRange101_500.setText("Điểm 101-500: " + count101_500);
+        tvScoreRange501_Plus.setText("Điểm >500: " + count501_Plus);
+
+        // Top Users (Lấy top 5)
         List<User> topUsers = userDao.getTopUsersByScore(5);
-        // Cập nhật dữ liệu cho adapter của RecyclerView
+
+        // Thêm log chi tiết cho topUsers
+        Log.d(TAG, "Fetched topUsers list size: " + topUsers.size());
+        for (int i = 0; i < topUsers.size(); i++) {
+            User user = topUsers.get(i);
+            Log.d(TAG, "Top User " + (i + 1) + ": " + user.getUsername() + " (Score: " + user.getScore() + ")");
+        }
+
         ((UserAdapter) rcvTopUsers.getAdapter()).updateData(topUsers);
 
         if (topUsers.isEmpty()) {
-            // Có thể hiển thị thông báo nếu không có user nào để hiển thị top
+            Log.d(TAG, "No non-admin users found for Top Users list (list is empty).");
         }
+    }
+
+    @Override
+    public void onUserClick(User user) {
+        Toast.makeText(this, "Xem chi tiết người dùng: " + user.getUsername(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(AdminStatisticsActivity.this, AdminUserDetailActivity.class);
+        intent.putExtra("userId", user.getId());
+        startActivity(intent);
     }
 }

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log; // Import Log for debugging
 
 import com.nhom13.learningenglishapp.database.DatabaseHelper;
 import com.nhom13.learningenglishapp.database.models.User;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class UserDao {
     private DatabaseHelper dbHelper;
+    private static final String TAG = "UserDao"; // Tag for logging
 
     public UserDao(Context context) {
         dbHelper = DatabaseHelper.getInstance(context);
@@ -20,32 +22,33 @@ public class UserDao {
 
     public boolean createUser(User user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
+        long id = -1;
         try {
             ContentValues values = new ContentValues();
             values.put(DatabaseHelper.KEY_USER_USERNAME, user.getUsername());
             values.put(DatabaseHelper.KEY_USER_PASSWORD, user.getPassword());
             values.put(DatabaseHelper.KEY_USER_SCORE, user.getScore());
+            // Nếu cột last_login_timestamp có tồn tại, bạn có thể thêm giá trị mặc định ở đây
+            // values.put(DatabaseHelper.KEY_USER_LAST_LOGIN, System.currentTimeMillis()); // hoặc 0
 
-            // Insert the new row, returning the primary key value of the new row
-            long id = db.insert(DatabaseHelper.TABLE_USERS, null, values);
-            return id != -1;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            if (db != null && db.isOpen()) {
-                db.close();
+            id = db.insert(DatabaseHelper.TABLE_USERS, null, values);
+            if (id != -1) {
+                Log.d(TAG, "Created user: " + user.getUsername() + " with id: " + id);
+            } else {
+                Log.e(TAG, "Failed to create user: " + user.getUsername());
             }
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error creating user: " + user.getUsername(), e);
+        } finally {
+            // DatabaseHelper manages db lifecycle, no need to close here
         }
+        return id != -1;
     }
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-
-        // SELECT * FROM users
         String USERS_SELECT_QUERY = "SELECT * FROM " + DatabaseHelper.TABLE_USERS;
-
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(USERS_SELECT_QUERY, null);
 
@@ -57,28 +60,27 @@ public class UserDao {
                     user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_USERNAME)));
                     user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_PASSWORD)));
                     user.setScore(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_SCORE)));
+                    // Nếu cột last_login_timestamp tồn tại và bạn muốn lấy nó
+                    // user.setLastLoginTimestamp(cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_LAST_LOGIN)));
 
                     users.add(user);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error getting all users", e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
+            // DatabaseHelper manages db lifecycle, no need to close here
         }
-
         return users;
     }
 
     public List<User> getAllNonAdminUsers() {
         List<User> users = new ArrayList<>();
-
-        // SELECT * FROM users WHERE username != 'admin'
         String USERS_SELECT_QUERY = "SELECT * FROM " + DatabaseHelper.TABLE_USERS +
                 " WHERE " + DatabaseHelper.KEY_USER_USERNAME + " != 'admin'";
-
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(USERS_SELECT_QUERY, null);
 
@@ -90,27 +92,58 @@ public class UserDao {
                     user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_USERNAME)));
                     user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_PASSWORD)));
                     user.setScore(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_SCORE)));
+                    // Nếu cột last_login_timestamp tồn tại và bạn muốn lấy nó
+                    // user.setLastLoginTimestamp(cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_LAST_LOGIN)));
 
                     users.add(user);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error getting all non-admin users", e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
+            // DatabaseHelper manages db lifecycle, no need to close here
         }
-
         return users;
     }
 
+    // --- Phương thức mới: Lấy người dùng bằng ID ---
+    public User getUserById(int id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_USERS +
+                " WHERE " + DatabaseHelper.KEY_USER_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+
+        User user = null;
+        try {
+            if (cursor.moveToFirst()) {
+                user = new User();
+                user.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_ID)));
+                user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_USERNAME)));
+                user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_PASSWORD)));
+                user.setScore(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_SCORE)));
+                // Nếu cột last_login_timestamp tồn tại và bạn muốn lấy nó
+                // user.setLastLoginTimestamp(cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_LAST_LOGIN)));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting user by ID: " + id, e);
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+            // DatabaseHelper manages db lifecycle
+        }
+        return user;
+    }
+    // -----------------------------------------------
+
+
     public User getUserByUsername(String username) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_USERS +
                 " WHERE " + DatabaseHelper.KEY_USER_USERNAME + " = ?";
-
         Cursor cursor = db.rawQuery(query, new String[]{username});
 
         User user = null;
@@ -121,24 +154,24 @@ public class UserDao {
                 user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_USERNAME)));
                 user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_PASSWORD)));
                 user.setScore(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_SCORE)));
+                // Nếu cột last_login_timestamp tồn tại và bạn muốn lấy nó
+                // user.setLastLoginTimestamp(cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_LAST_LOGIN)));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error getting user by username: " + username, e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
+            // DatabaseHelper manages db lifecycle
         }
-
         return user;
     }
 
     public boolean checkUsername(String username) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-
         String query = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_USERS +
                 " WHERE " + DatabaseHelper.KEY_USER_USERNAME + " = ?";
-
         Cursor cursor = db.rawQuery(query, new String[]{username});
 
         try {
@@ -146,37 +179,58 @@ public class UserDao {
                 int count = cursor.getInt(0);
                 return count == 0; // Return true if username doesn't exist
             }
-            return true;
+            return true; // Fallback return
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
+            // DatabaseHelper manages db lifecycle
         }
     }
 
     public boolean updateScore(String username, int score) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.KEY_USER_SCORE, score);
 
-        // Updating row
-        int result = db.update(DatabaseHelper.TABLE_USERS, values,
-                DatabaseHelper.KEY_USER_USERNAME + " = ?",
-                new String[]{username});
-
+        int result = 0; // Initialize result
+        try {
+            // Updating row
+            result = db.update(DatabaseHelper.TABLE_USERS, values,
+                    DatabaseHelper.KEY_USER_USERNAME + " = ?",
+                    new String[]{username});
+            if (result > 0) {
+                Log.d(TAG, "Updated score for user: " + username + " to " + score);
+            } else {
+                Log.w(TAG, "Score update failed for user: " + username + " (user not found or no changes)");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error updating score for user: " + username, e);
+        } finally {
+            // DatabaseHelper manages db lifecycle
+        }
         return result > 0;
     }
 
     public boolean deleteUser(String username) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        return db.delete(DatabaseHelper.TABLE_USERS,
-                DatabaseHelper.KEY_USER_USERNAME + " = ?",
-                new String[]{username}) > 0;
+        int result = 0; // Initialize result
+        try {
+            result = db.delete(DatabaseHelper.TABLE_USERS,
+                    DatabaseHelper.KEY_USER_USERNAME + " = ?",
+                    new String[]{username});
+            if (result > 0) {
+                Log.d(TAG, "Deleted user: " + username);
+            } else {
+                Log.w(TAG, "User deletion failed: " + username + " (user not found)");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error deleting user: " + username, e);
+        } finally {
+            // DatabaseHelper manages db lifecycle
+        }
+        return result > 0;
     }
-
-    // Trong class UserDao
 
     // Lấy tổng số người dùng (không bao gồm admin)
     public int getTotalUserCount() {
@@ -185,13 +239,18 @@ public class UserDao {
         String countQuery = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_USERS +
                 " WHERE " + DatabaseHelper.KEY_USER_USERNAME + " != 'admin'";
         Cursor cursor = db.rawQuery(countQuery, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
                 count = cursor.getInt(0);
             }
-            cursor.close();
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting total user count", e);
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+            // DatabaseHelper manages db lifecycle
         }
-        // Không đóng db ở đây vì dbHelper quản lý lifecycle của db
         return count;
     }
 
@@ -215,20 +274,68 @@ public class UserDao {
                     user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_USERNAME)));
                     user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_PASSWORD)));
                     user.setScore(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_SCORE)));
+                    // Nếu cột last_login_timestamp tồn tại và bạn muốn lấy nó
+                    // user.setLastLoginTimestamp(cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_USER_LAST_LOGIN)));
                     users.add(user);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error getting top users by score", e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
+            // DatabaseHelper manages db lifecycle
         }
-        // Không đóng db ở đây
         return users;
     }
 
-// Cần đảm bảo phương thức `getAllNonAdminUsers()` đã có trong file của bạn, nó cũng sẽ hữu ích.
-// Nếu chưa có, hãy thêm nó. Dựa trên tệp bạn gửi, nó đã có rồi.
+    // --- Phương thức mới: Lấy số lượng user trong các khoảng điểm ---
+    public int getUserCountByScoreRange(int minScore, int maxScore) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int count = 0;
+        String countQuery;
+        String[] selectionArgs;
+
+        // Xây dựng query tùy thuộc vào khoảng điểm cuối
+        if (maxScore == Integer.MAX_VALUE) { // Khoảng điểm không có giới hạn trên (score >= minScore)
+            countQuery = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_USERS +
+                    " WHERE " + DatabaseHelper.KEY_USER_SCORE + " >= ?" +
+                    " AND " + DatabaseHelper.KEY_USER_USERNAME + " != 'admin'";
+            selectionArgs = new String[]{String.valueOf(minScore)};
+        } else { // Khoảng điểm có giới hạn trên (score >= minScore AND score <= maxScore)
+            countQuery = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_USERS +
+                    " WHERE " + DatabaseHelper.KEY_USER_SCORE + " >= ? AND " +
+                    DatabaseHelper.KEY_USER_SCORE + " <= ?" +
+                    " AND " + DatabaseHelper.KEY_USER_USERNAME + " != 'admin'";
+            selectionArgs = new String[]{String.valueOf(minScore), String.valueOf(maxScore)};
+        }
+
+
+        Cursor cursor = db.rawQuery(countQuery, selectionArgs);
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting user count by score range", e);
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+            // DatabaseHelper manages db lifecycle
+        }
+        return count;
+    }
+    // ---------------------------------------------------------------
+
+    // Phương thức getActiveUserCount và updateLastLoginTimestamp (bỏ đi vì user không muốn sửa DatabaseHelper)
+    // Nếu bạn muốn thêm lại tính năng user hoạt động sau này, bạn sẽ cần thêm cột vào DBHelper
+    // và uncomment/triển khai lại các phương thức này.
+
+    // Phương thức đã bỏ:
+    // public boolean updateLastLoginTimestamp(String username, long timestamp) { ... }
+    // public int getActiveUserCount(long thresholdTimestamp) { ... }
+
+
 }

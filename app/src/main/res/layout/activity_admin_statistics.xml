@@ -150,6 +150,60 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Thống kê người dùng"
+                android:textColor="@color/purple_700"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tvActiveUsersLast7Days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Người dùng hoạt động (7 ngày): -"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phân phối điểm:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/tvScoreRange0_100"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Điểm 0-100: -"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/tvScoreRange101_500"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Điểm 101-500: -"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/tvScoreRange501_Plus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Điểm >500: -"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Top Người dùng theo điểm"
                 android:textColor="@color/purple_700"
                 android:textSize="20sp"
@@ -159,9 +213,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvTopUsers"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="1000dp"
                 android:nestedScrollingEnabled="false"
-                tools:listitem="@layout/item_user"/> </LinearLayout>
+                tools:listitem="@layout/item_user"/>
+
+        </LinearLayout>
 
     </ScrollView>
 
