@@ -2,7 +2,10 @@ package com.nhom13.learningenglishapp.activity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap; // Thêm dòng này
+import android.graphics.BitmapFactory; // Thêm dòng này
 import android.os.Bundle;
+import android.util.Log; // Thêm dòng này
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.nhom13.learningenglishapp.R;
-import com.nhom13.learningenglishapp.activity.LoginActivity;
 import com.nhom13.learningenglishapp.adapters.AlphabetAdapter;
 import com.nhom13.learningenglishapp.database.dao.VocabularyDao;
 import com.nhom13.learningenglishapp.database.models.Vocabulary;
+import com.nhom13.learningenglishapp.activity.LoginActivity;
 
+import java.io.IOException; // Thêm dòng này
+import java.io.InputStream; // Thêm dòng này
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +75,7 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         alphabetAdapter = new AlphabetAdapter(this, vocabularyList, this);
         recyclerView.setAdapter(alphabetAdapter);
-        
+
         // Tải dữ liệu từ vựng
         loadVocabularyData();
 
@@ -93,28 +98,43 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
         vocabularyList.clear();
         vocabularyList.addAll(vocabularyDao.getAllVocabulary());
         alphabetAdapter.notifyDataSetChanged();
-        
+
         // Hiển thị từ vựng đầu tiên nếu có
         if (!vocabularyList.isEmpty()) {
             displayVocabulary(vocabularyList.get(0));
         }
     }
-    
+
     @Override
     public void onVocabularyClick(Vocabulary vocabulary) {
         // Hiển thị từ vựng được chọn
         displayVocabulary(vocabulary);
     }
 
+    // Trong DictionaryActivity.java
     private void displayVocabulary(Vocabulary vocabulary) {
-        // Hiển thị hình ảnh
         if (vocabulary.getImagePath() != null && !vocabulary.getImagePath().isEmpty()) {
-            imgWordView.setImageURI(android.net.Uri.parse(vocabulary.getImagePath()));
+            InputStream inputStream = null; // Khởi tạo để có thể đóng trong finally
+            try {
+                // Giả sử vocabulary.getImagePath() là "images/alphabet/a.png"
+                inputStream = getAssets().open(vocabulary.getImagePath());
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                imgWordView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                Log.e("DictionaryActivity", "Error loading image from assets: " + vocabulary.getImagePath(), e);
+                imgWordView.setImageResource(R.drawable.abc); // Ảnh mặc định nếu lỗi
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close(); // Luôn đóng InputStream
+                    } catch (IOException e) {
+                        Log.e("DictionaryActivity", "Error closing InputStream", e);
+                    }
+                }
+            }
         } else {
             imgWordView.setImageResource(R.drawable.abc);
         }
-
-        // Hiển thị tên
         tvNameColor.setText(vocabulary.getWord());
     }
 

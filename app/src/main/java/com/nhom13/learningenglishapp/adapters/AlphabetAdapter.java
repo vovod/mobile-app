@@ -1,7 +1,9 @@
 package com.nhom13.learningenglishapp.adapters;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.Bitmap; // Thêm dòng này
+import android.graphics.BitmapFactory; // Thêm dòng này
+import android.util.Log; // Thêm dòng này (nếu chưa có, để dùng Log.e)
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nhom13.learningenglishapp.R;
 import com.nhom13.learningenglishapp.database.models.Vocabulary;
 
-import java.io.File;
+import java.io.File; // Dòng này bạn đã có nhưng không còn cần thiết nếu tải từ assets
+import java.io.IOException; // Thêm dòng này
+import java.io.InputStream; // Thêm dòng này
 import java.util.List;
 
 public class AlphabetAdapter extends RecyclerView.Adapter<AlphabetAdapter.AlphabetViewHolder> {
@@ -41,26 +45,35 @@ public class AlphabetAdapter extends RecyclerView.Adapter<AlphabetAdapter.Alphab
         return new AlphabetViewHolder(view);
     }
 
+    // Trong AlphabetAdapter.java
     @Override
     public void onBindViewHolder(@NonNull AlphabetViewHolder holder, int position) {
         Vocabulary vocabulary = vocabularyList.get(position);
-        
-        // Hiển thị từ vựng
         holder.tvAlphabet.setText(vocabulary.getWord());
-        
-        // Hiển thị hình ảnh nếu có
+
         if (vocabulary.getImagePath() != null && !vocabulary.getImagePath().isEmpty()) {
-            File imgFile = new File(vocabulary.getImagePath());
-            if (imgFile.exists()) {
-                holder.imgAlphabet.setImageURI(Uri.fromFile(imgFile));
-            } else {
-                holder.imgAlphabet.setImageResource(R.drawable.abc);
+            InputStream inputStream = null; // Khởi tạo để có thể đóng trong finally
+            try {
+                // Giả sử vocabulary.getImagePath() là "images/alphabet/a.png"
+                inputStream = context.getAssets().open(vocabulary.getImagePath());
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                holder.imgAlphabet.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                Log.e("AlphabetAdapter", "Error loading image from assets: " + vocabulary.getImagePath(), e);
+                holder.imgAlphabet.setImageResource(R.drawable.abc); // Ảnh mặc định nếu lỗi
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close(); // Luôn đóng InputStream
+                    } catch (IOException e) {
+                        Log.e("AlphabetAdapter", "Error closing InputStream", e);
+                    }
+                }
             }
         } else {
             holder.imgAlphabet.setImageResource(R.drawable.abc);
         }
-        
-        // Xử lý sự kiện click
+
         holder.cardView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onVocabularyClick(vocabulary);
