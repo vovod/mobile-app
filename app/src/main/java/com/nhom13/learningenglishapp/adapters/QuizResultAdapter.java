@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nhom13.learningenglishapp.R;
 import com.nhom13.learningenglishapp.database.models.QuizResult;
 
-import java.text.SimpleDateFormat; // Import SimpleDateFormat
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale; // Import Locale
-import java.util.Date; // Import Date
+import java.util.Locale;
+import java.util.Date;
 
 public class QuizResultAdapter extends RecyclerView.Adapter<QuizResultAdapter.QuizResultViewHolder> {
 
@@ -38,18 +38,16 @@ public class QuizResultAdapter extends RecyclerView.Adapter<QuizResultAdapter.Qu
     public void onBindViewHolder(@NonNull QuizResultViewHolder holder, int position) {
         QuizResult result = quizResultList.get(position);
 
-        // Hiển thị thông tin kết quả quiz
-        holder.tvGameNumber.setText("Ván " + (position + 1)); // Số thứ tự ván chơi
+
+        holder.tvGameNumber.setText("Ván " + (position + 1));
         holder.tvScore.setText("Điểm: " + result.getScore());
         holder.tvCorrectAnswers.setText("Đúng: " + result.getCorrectAnswers() + "/" + result.getTotalQuestions());
 
-        // Định dạng và hiển thị ngày chơi
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         holder.tvDate.setText("Ngày chơi: " + sdf.format(new Date(result.getDate())));
 
-        // (Tùy chọn) Hiển thị thêm thông tin nếu cần
-        // Ví dụ: Tỷ lệ đúng
-        // holder.tvPercentage.setText(String.format(Locale.getDefault(), "Tỷ lệ đúng: %.1f%%", result.getPercentageCorrect()));
+
     }
 
     @Override
@@ -63,15 +61,15 @@ public class QuizResultAdapter extends RecyclerView.Adapter<QuizResultAdapter.Qu
     }
 
     public static class QuizResultViewHolder extends RecyclerView.ViewHolder {
-        TextView tvGameNumber, tvScore, tvCorrectAnswers, tvDate; // Thêm các TextView cần thiết
+        TextView tvGameNumber, tvScore, tvCorrectAnswers, tvDate;
 
         public QuizResultViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvGameNumber = itemView.findViewById(R.id.tvGameNumber); // Sẽ tạo ID này trong item_quiz_result
-            tvScore = itemView.findViewById(R.id.tvScore); // Sẽ tạo ID này trong item_quiz_result
-            tvCorrectAnswers = itemView.findViewById(R.id.tvCorrectAnswers); // Sẽ tạo ID này trong item_quiz_result
-            tvDate = itemView.findViewById(R.id.tvDate); // Sẽ tạo ID này trong item_quiz_result
-            // Ánh xạ thêm các view khác nếu có
+            tvGameNumber = itemView.findViewById(R.id.tvGameNumber);
+            tvScore = itemView.findViewById(R.id.tvScore);
+            tvCorrectAnswers = itemView.findViewById(R.id.tvCorrectAnswers);
+            tvDate = itemView.findViewById(R.id.tvDate);
+
         }
     }
 }

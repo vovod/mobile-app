@@ -30,7 +30,7 @@ public class QuizResultDao {
         this.context = context;
         dbHelper = DatabaseHelper.getInstance(context);
 
-        // Make sure the table exists
+
         createTableIfNotExists();
     }
 
@@ -63,7 +63,7 @@ public class QuizResultDao {
             values.put(KEY_RESULT_CORRECT_ANSWERS, result.getCorrectAnswers());
             values.put(KEY_RESULT_DATE, result.getDate());
 
-            // Insert the new row
+
             long id = db.insert(TABLE_QUIZ_RESULTS, null, values);
             return id != -1;
         } catch (Exception e) {
@@ -212,9 +212,6 @@ public class QuizResultDao {
                 new String[]{String.valueOf(userId)}) > 0;
     }
 
-    // Trong class QuizResultDao
-
-    // Lấy tổng số lượt game đã chơi (tổng số bản ghi trong bảng quiz_results)
     public int getTotalGamesPlayed() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         int count = 0;
@@ -229,7 +226,7 @@ public class QuizResultDao {
         return count;
     }
 
-    // Lấy tổng số câu hỏi đã trả lời (tổng cột total_questions từ tất cả các bản ghi)
+
     public int getTotalQuestionsAttempted() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         int total = 0;
@@ -244,7 +241,7 @@ public class QuizResultDao {
         return total;
     }
 
-    // Lấy tổng số câu trả lời đúng (tổng cột correct_answers từ tất cả các bản ghi)
+
     public int getTotalCorrectAnswers() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         int total = 0;
@@ -259,7 +256,7 @@ public class QuizResultDao {
         return total;
     }
 
-    // Lấy điểm trung bình mỗi game
+
     public double getAverageScore() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         double average = 0;
@@ -274,6 +271,5 @@ public class QuizResultDao {
         return average;
     }
 
-// Phương thức getQuizResultsByUser() và getUserHighScore() đã có sẵn, chúng ta sẽ không dùng trực tiếp trên màn hình tổng quan này nhưng chúng rất hữu ích.
 
 }

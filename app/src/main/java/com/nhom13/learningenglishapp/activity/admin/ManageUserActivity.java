@@ -29,25 +29,25 @@ public class ManageUserActivity extends AppCompatActivity implements UserAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_management);
 
-        // Khởi tạo DAO
+
         userDao = new UserDao(this);
 
-        // Khởi tạo danh sách người dùng
+
         userList = new ArrayList<>();
 
-        // Ánh xạ các view
+
         recyclerView = findViewById(R.id.lv_listUser);
         btnBack = findViewById(R.id.btnBackListUser);
 
-        // Thiết lập RecyclerView
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userAdapter = new UserAdapter(this, userList, this);
         recyclerView.setAdapter(userAdapter);
 
-        // Thiết lập sự kiện click cho nút quay lại
+
         btnBack.setOnClickListener(v -> finish());
 
-        // Tải dữ liệu người dùng
+
         loadUserData();
     }
 
@@ -63,7 +63,7 @@ public class ManageUserActivity extends AppCompatActivity implements UserAdapter
 
     @Override
     public void onUserDeleted() {
-        // Cập nhật lại danh sách sau khi xóa
+
         loadUserData();
     }
 }

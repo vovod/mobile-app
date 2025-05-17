@@ -26,7 +26,7 @@ public class QuizDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         try {
-            // Save image to local storage and get the path
+
             String imagePath = "";
             if (imageUri != null) {
                 imagePath = FileUtils.saveImageToInternalStorage(context, imageUri, "quiz_" + System.currentTimeMillis());
@@ -37,7 +37,7 @@ public class QuizDao {
             values.put(DatabaseHelper.KEY_QUIZ_WRONG_ANSWER, quiz.getWrongAnswer());
             values.put(DatabaseHelper.KEY_QUIZ_IMAGE_PATH, imagePath);
 
-            // Insert the new row
+
             long id = db.insert(DatabaseHelper.TABLE_QUIZ, null, values);
             return id != -1;
         } catch (Exception e) {
@@ -117,19 +117,19 @@ public class QuizDao {
             values.put(DatabaseHelper.KEY_QUIZ_CORRECT_ANSWER, quiz.getCorrectAnswer());
             values.put(DatabaseHelper.KEY_QUIZ_WRONG_ANSWER, quiz.getWrongAnswer());
 
-            // Update image if a new one is provided
+
             if (newImageUri != null) {
                 String imagePath = FileUtils.saveImageToInternalStorage(context, newImageUri,
                         "quiz_update_" + System.currentTimeMillis());
                 values.put(DatabaseHelper.KEY_QUIZ_IMAGE_PATH, imagePath);
 
-                // Delete old image if it exists
+
                 if (quiz.getImagePath() != null && !quiz.getImagePath().isEmpty()) {
                     FileUtils.deleteImageFromInternalStorage(context, quiz.getImagePath());
                 }
             }
 
-            // Updating row
+
             int result = db.update(DatabaseHelper.TABLE_QUIZ, values,
                     DatabaseHelper.KEY_QUIZ_ID + " = ?",
                     new String[]{String.valueOf(quiz.getId())});
@@ -144,15 +144,15 @@ public class QuizDao {
     public boolean deleteQuiz(int quizId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // First get the quiz to retrieve the image path
+
         Quiz quiz = getQuizById(quizId);
 
-        // Delete the quiz from database
+
         boolean success = db.delete(DatabaseHelper.TABLE_QUIZ,
                 DatabaseHelper.KEY_QUIZ_ID + " = ?",
                 new String[]{String.valueOf(quizId)}) > 0;
 
-        // If successful and there's an image, delete it from storage
+
         if (success && quiz != null && quiz.getImagePath() != null && !quiz.getImagePath().isEmpty()) {
             FileUtils.deleteImageFromInternalStorage(context, quiz.getImagePath());
         }
@@ -160,7 +160,7 @@ public class QuizDao {
         return success;
     }
 
-    // Thêm phương thức để lấy số lượng quiz
+
     public int getQuizCount() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String countQuery = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_QUIZ;
@@ -177,7 +177,7 @@ public class QuizDao {
         return count;
     }
 
-    // Phương thức để lấy quiz ngẫu nhiên
+
     public Quiz getRandomQuiz() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -204,7 +204,7 @@ public class QuizDao {
         return quiz;
     }
 
-    // Phương thức để lấy một số lượng quiz ngẫu nhiên
+
     public List<Quiz> getRandomQuizzes(int limit) {
         List<Quiz> quizzes = new ArrayList<>();
 

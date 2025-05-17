@@ -28,7 +28,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private OnUserDeleteListener onUserDeleteListener;
     private OnUserClickListener onUserClickListener;
 
-    private static final String TAG = "UserAdapter"; // Tag cho Log
+    private static final String TAG = "UserAdapter";
 
     public interface OnUserClickListener {
         void onUserClick(User user);
@@ -40,14 +40,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public UserAdapter(Context context, List<User> userList, OnUserDeleteListener deleteListener, OnUserClickListener clickListener) {
         this.context = context;
-        // Khởi tạo userList rỗng nếu được truyền null
         this.userList = userList != null ? userList : new java.util.ArrayList<>();
         this.userDao = new UserDao(context);
         this.onUserDeleteListener = deleteListener;
         this.onUserClickListener = clickListener;
     }
 
-    // Constructor cũ
+
     public UserAdapter(Context context, List<User> userList, OnUserDeleteListener listener) {
         this(context, userList, listener, null);
     }
@@ -61,27 +60,24 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        // --- THÊM LOG VÀO ĐÂY ---
+
         Log.d(TAG, "onBindViewHolder called for position: " + position + " with list size: " + userList.size());
         if (position >= userList.size()) {
             Log.e(TAG, "onBindViewHolder called with invalid position: " + position);
-            return; // Tránh crash nếu có lỗi
+            return;
         }
         // ------------------------
 
         User user = userList.get(position);
 
-        // --- THÊM LOG ĐỂ KIỂM TRA DỮ LIỆU CỦA TỪNG ITEM ---
+
         Log.d(TAG, "Binding user: " + user.getUsername() + " with score: " + user.getScore() + " at position: " + position);
-        // -------------------------------------------------
+
 
 
         holder.tvUsername.setText(user.getUsername());
         holder.tvScore.setText(String.valueOf(user.getScore()));
 
-        // imgUser không còn trong layout item_user.xml bạn gửi, nhưng giữ lại khai báo biến
-        // Nếu bạn muốn hiển thị ảnh user, bạn cần thêm ImageView vào item_user.xml và logic load ảnh ở đây
-        // holder.imgUser.setImageResource(R.drawable.usermanager); // Ảnh mặc định
 
 
         if (onUserDeleteListener != null) {
@@ -107,8 +103,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         builder.setPositiveButton("Xóa", (dialog, which) -> {
             boolean success = userDao.deleteUser(username);
             if (success) {
-                // Cập nhật UI sau khi xóa
-                // Trước tiên, kiểm tra xem position còn hợp lệ không
+
                 if (position >= 0 && position < userList.size()) {
                     userList.remove(position);
                     notifyItemRemoved(position);
@@ -119,7 +114,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                     }
                 } else {
                     Log.e(TAG, "Attempted to remove item with invalid position: " + position);
-                    // Có thể cần tải lại toàn bộ dữ liệu nếu position không hợp lệ
+
                 }
 
             } else {
@@ -132,18 +127,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public int getItemCount() {
-        // --- THÊM LOG VÀO ĐÂY ---
+
         int count = userList != null ? userList.size() : 0;
         Log.d(TAG, "getItemCount returns: " + count);
         return count;
-        // -----------------------
+
     }
 
     public void updateData(List<User> newUserList) {
         this.userList = newUserList;
-        // --- THÊM LOG VÀO ĐÂY ---
+
         Log.d(TAG, "updateData called with new list size: " + (newUserList != null ? newUserList.size() : 0));
-        // -----------------------
+
         notifyDataSetChanged();
     }
 

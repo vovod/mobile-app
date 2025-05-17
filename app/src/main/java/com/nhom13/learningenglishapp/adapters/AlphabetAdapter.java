@@ -45,26 +45,26 @@ public class AlphabetAdapter extends RecyclerView.Adapter<AlphabetAdapter.Alphab
         return new AlphabetViewHolder(view);
     }
 
-    // Trong AlphabetAdapter.java
+
     @Override
     public void onBindViewHolder(@NonNull AlphabetViewHolder holder, int position) {
         Vocabulary vocabulary = vocabularyList.get(position);
         holder.tvAlphabet.setText(vocabulary.getWord());
 
         if (vocabulary.getImagePath() != null && !vocabulary.getImagePath().isEmpty()) {
-            InputStream inputStream = null; // Khởi tạo để có thể đóng trong finally
+            InputStream inputStream = null;
             try {
-                // Giả sử vocabulary.getImagePath() là "images/alphabet/a.png"
+
                 inputStream = context.getAssets().open(vocabulary.getImagePath());
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 holder.imgAlphabet.setImageBitmap(bitmap);
             } catch (IOException e) {
                 Log.e("AlphabetAdapter", "Error loading image from assets: " + vocabulary.getImagePath(), e);
-                holder.imgAlphabet.setImageResource(R.drawable.abc); // Ảnh mặc định nếu lỗi
+                holder.imgAlphabet.setImageResource(R.drawable.abc);
             } finally {
                 if (inputStream != null) {
                     try {
-                        inputStream.close(); // Luôn đóng InputStream
+                        inputStream.close();
                     } catch (IOException e) {
                         Log.e("AlphabetAdapter", "Error closing InputStream", e);
                     }

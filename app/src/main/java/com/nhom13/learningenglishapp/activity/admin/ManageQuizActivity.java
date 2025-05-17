@@ -59,26 +59,26 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_quiz);
 
-        // Khởi tạo DAO
+
         quizDao = new QuizDao(this);
 
-        // Khởi tạo danh sách quiz
+
         quizList = new ArrayList<>();
 
-        // Ánh xạ các view
+
         recyclerView = findViewById(R.id.rcvQuiz);
         btnBack = findViewById(R.id.btnBack);
         btnAdd = findViewById(R.id.btnAddQuiz);
 
-        // Thiết lập RecyclerView
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         quizAdapter = new QuizAdapter(this, quizList, this);
         recyclerView.setAdapter(quizAdapter);
 
-        // Tải dữ liệu quiz
+
         loadQuizData();
 
-        // Thiết lập sự kiện click cho các nút
+
         btnBack.setOnClickListener(v -> {
             finish();
         });
@@ -100,20 +100,20 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
         View dialogView = inflater.inflate(R.layout.dialog_add_question, null);
         builder.setView(dialogView);
 
-        // Ánh xạ các view
+
         Spinner spinnerQuestionType = dialogView.findViewById(R.id.spinnerQuestionType);
         LinearLayout layoutTrueFalse = dialogView.findViewById(R.id.layoutTrueFalse);
         LinearLayout layoutGuessImage = dialogView.findViewById(R.id.layoutGuessImage);
         Button buttonSaveQuestion = dialogView.findViewById(R.id.buttonSaveQuestion);
 
-        // Layout Đúng/Sai
+
         EditText editTextTrueFalseQuestion = dialogView.findViewById(R.id.editTextTrueFalseQuestion);
         ImageView imageTrueFalse = dialogView.findViewById(R.id.imageTrueFalse);
         Button buttonAddImageTrueFalse = dialogView.findViewById(R.id.buttonAddImageTrueFalse);
         RadioButton radioTrue = dialogView.findViewById(R.id.radioTrue);
         RadioButton radioFalse = dialogView.findViewById(R.id.radioFalse);
 
-        // Layout Đoán hình ảnh
+
         ImageView imageGuess = dialogView.findViewById(R.id.imageGuess);
         Button buttonAddImageGuess = dialogView.findViewById(R.id.buttonAddImageGuess);
         EditText answer1 = dialogView.findViewById(R.id.answer1);
@@ -125,22 +125,22 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
         RadioButton radio3 = dialogView.findViewById(R.id.radio3);
         RadioButton radio4 = dialogView.findViewById(R.id.radio4);
 
-        // Thiết lập Spinner
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.question_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerQuestionType.setAdapter(adapter);
 
-        // Xử lý sự kiện thay đổi loại câu hỏi
+
         spinnerQuestionType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Hiển thị layout tương ứng với loại câu hỏi
+
                 if (position == 0) { // Đúng/Sai
                     layoutTrueFalse.setVisibility(View.VISIBLE);
                     layoutGuessImage.setVisibility(View.GONE);
                     selectedImageView = imageTrueFalse;
-                } else { // Đoán hình ảnh
+                } else {
                     layoutTrueFalse.setVisibility(View.GONE);
                     layoutGuessImage.setVisibility(View.VISIBLE);
                     selectedImageView = imageGuess;
@@ -149,11 +149,11 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Không làm gì
+
             }
         });
 
-        // Mặc định hiển thị layout Đúng/Sai
+
         layoutTrueFalse.setVisibility(View.VISIBLE);
         layoutGuessImage.setVisibility(View.GONE);
         selectedImageView = imageTrueFalse;
@@ -162,17 +162,17 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Xử lý sự kiện chọn hình ảnh cho Đúng/Sai
+
         buttonAddImageTrueFalse.setOnClickListener(v -> {
             imagePickerLauncher.launch("image/*");
         });
 
-        // Xử lý sự kiện chọn hình ảnh cho Đoán hình ảnh
+
         buttonAddImageGuess.setOnClickListener(v -> {
             imagePickerLauncher.launch("image/*");
         });
 
-        // Xử lý sự kiện lưu câu hỏi
+
         buttonSaveQuestion.setOnClickListener(v -> {
             int selectedQuestionType = spinnerQuestionType.getSelectedItemPosition();
 
@@ -181,7 +181,7 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
                 return;
             }
 
-            if (selectedQuestionType == 0) { // Đúng/Sai
+            if (selectedQuestionType == 0) {
                 String question = editTextTrueFalseQuestion.getText().toString().trim();
                 if (question.isEmpty()) {
                     Toast.makeText(this, "Vui lòng nhập câu hỏi", Toast.LENGTH_SHORT).show();
@@ -206,10 +206,10 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
                 } else {
                     Toast.makeText(this, "Thêm quiz thất bại", Toast.LENGTH_SHORT).show();
                 }
-            } else { // Đoán hình ảnh
+            } else {
                 String ans1 = answer1.getText().toString().trim();
                 String ans2 = answer2.getText().toString().trim();
-                // Không sử dụng đáp án 3 và 4 nữa
+
 
                 if (ans1.isEmpty() || ans2.isEmpty()) {
                     Toast.makeText(this, "Vui lòng nhập đầy đủ các đáp án", Toast.LENGTH_SHORT).show();
@@ -225,7 +225,7 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
                 if (radio1.isChecked()) correctAnswer = ans1;
                 else if (radio2.isChecked()) correctAnswer = ans2;
 
-                // Chỉ có 2 đáp án nên đáp án sai là đáp án còn lại
+
                 String wrongAnswer = radio1.isChecked() ? ans2 : ans1;
 
                 Quiz quiz = new Quiz(correctAnswer, wrongAnswer, "");
@@ -255,16 +255,16 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
         Button btnSave = dialogView.findViewById(R.id.btnSave);
         Button btnCancel = dialogView.findViewById(R.id.btnCancel);
 
-        // Hiển thị thông tin quiz hiện tại
+
         etCorrectAnswer.setText(quiz.getCorrectAnswer());
         etWrongAnswer.setText(quiz.getWrongAnswer());
 
-        // Hiển thị hình ảnh nếu có
+
         if (quiz.getImagePath() != null && !quiz.getImagePath().isEmpty()) {
             imgQuiz.setImageURI(Uri.parse(quiz.getImagePath()));
         }
 
-        // Lưu trữ ImageView để cập nhật sau khi chọn hình ảnh
+
         selectedImageView = imgQuiz;
         selectedImageUri = null;
 

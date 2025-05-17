@@ -7,14 +7,25 @@ public class Video implements Serializable {
     private String title;
     private String thumbnailUrl;
     private String videoUrl;
+    private int viewCount;
 
     public Video() {
+        this.viewCount = 0;
     }
 
     public Video(String title, String thumbnailUrl, String videoUrl) {
         this.title = title;
         this.thumbnailUrl = thumbnailUrl;
         this.videoUrl = videoUrl;
+        this.viewCount = 0;
+    }
+
+
+    public Video(String title, String thumbnailUrl, String videoUrl, int viewCount) {
+        this.title = title;
+        this.thumbnailUrl = thumbnailUrl;
+        this.videoUrl = videoUrl;
+        this.viewCount = viewCount;
     }
 
     public int getId() {
@@ -48,4 +59,14 @@ public class Video implements Serializable {
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }
+
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
 }

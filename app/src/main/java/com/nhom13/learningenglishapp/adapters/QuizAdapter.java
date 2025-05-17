@@ -46,13 +46,13 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
     public void onBindViewHolder(@NonNull QuizViewHolder holder, int position) {
         Quiz quiz = quizList.get(position);
         
-        // Hiển thị đáp án đúng
+
         holder.tvCorrectAnswer.setText("Đáp án đúng: " + quiz.getCorrectAnswer());
         
-        // Hiển thị đáp án sai
+
         holder.tvWrongAnswer.setText("Đáp án sai: " + quiz.getWrongAnswer());
         
-        // Hiển thị hình ảnh nếu có
+
         if (quiz.getImagePath() != null && !quiz.getImagePath().isEmpty()) {
             File imgFile = new File(quiz.getImagePath());
             if (imgFile.exists()) {
@@ -64,14 +64,14 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             holder.imgQuiz.setImageResource(R.drawable.question);
         }
         
-        // Xử lý sự kiện click
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onQuizClick(quiz);
             }
         });
         
-        // Xử lý sự kiện click nút xóa
+
         holder.btnDelete.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onQuizDeleteClick(quiz);

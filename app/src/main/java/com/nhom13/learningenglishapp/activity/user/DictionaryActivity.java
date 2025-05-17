@@ -2,10 +2,10 @@ package com.nhom13.learningenglishapp.activity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Bitmap; // Thêm dòng này
-import android.graphics.BitmapFactory; // Thêm dòng này
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log; // Thêm dòng này
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +26,8 @@ import com.nhom13.learningenglishapp.database.dao.VocabularyDao;
 import com.nhom13.learningenglishapp.database.models.Vocabulary;
 import com.nhom13.learningenglishapp.activity.LoginActivity;
 
-import java.io.IOException; // Thêm dòng này
-import java.io.InputStream; // Thêm dòng này
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_dictionary);
 
-        // Nhận dữ liệu từ intent
+
         if (getIntent().hasExtra("username")) {
             username = getIntent().getStringExtra("username");
         }
@@ -57,13 +57,13 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
             score = getIntent().getIntExtra("score", 0);
         }
 
-        // Khởi tạo DAO
+
         vocabularyDao = new VocabularyDao(this);
 
-        // Khởi tạo danh sách từ vựng
+
         vocabularyList = new ArrayList<>();
 
-        // Ánh xạ các view
+
         recyclerView = findViewById(R.id.rcv_alphabet);
         btnHome = findViewById(R.id.btnhomedict);
         btnSetting = findViewById(R.id.btnsetting);
@@ -71,17 +71,17 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
         tvNameColor = findViewById(R.id.tv_namecolor);
         animBalloon = findViewById(R.id.anim_ballon);
 
-        // Thiết lập RecyclerView
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         alphabetAdapter = new AlphabetAdapter(this, vocabularyList, this);
         recyclerView.setAdapter(alphabetAdapter);
 
-        // Tải dữ liệu từ vựng
+
         loadVocabularyData();
 
-        // Thiết lập sự kiện click cho các nút
+
         btnHome.setOnClickListener(v -> {
-            // Quay về màn hình chính
+
             Intent intent = new Intent(DictionaryActivity.this, UserHomePageActivity.class);
             intent.putExtra("username", username);
             intent.putExtra("score", score);
@@ -99,34 +99,67 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
         vocabularyList.addAll(vocabularyDao.getAllVocabulary());
         alphabetAdapter.notifyDataSetChanged();
 
-        // Hiển thị từ vựng đầu tiên nếu có
+
         if (!vocabularyList.isEmpty()) {
-            displayVocabulary(vocabularyList.get(0));
+            Vocabulary firstVocab = vocabularyList.get(0);
+            displayVocabulary(firstVocab);
+            if (firstVocab != null) {
+                vocabularyDao.incrementViewCount(firstVocab.getId());
+                Log.d("DictionaryActivity", "Incremented view count for first vocab: " + firstVocab.getWord());
+            }
         }
     }
 
     @Override
     public void onVocabularyClick(Vocabulary vocabulary) {
-        // Hiển thị từ vựng được chọn
+
         displayVocabulary(vocabulary);
+
+        if (vocabulary != null) {
+            vocabularyDao.incrementViewCount(vocabulary.getId());
+            Log.d("DictionaryActivity", "Incremented view count for clicked vocab: " + vocabulary.getWord());
+        }
     }
 
-    // Trong DictionaryActivity.java
     private void displayVocabulary(Vocabulary vocabulary) {
+        if (vocabulary == null) {
+            imgWordView.setImageResource(R.drawable.abc);
+            tvNameColor.setText("");
+            return;
+        }
+
         if (vocabulary.getImagePath() != null && !vocabulary.getImagePath().isEmpty()) {
-            InputStream inputStream = null; // Khởi tạo để có thể đóng trong finally
+            InputStream inputStream = null;
             try {
-                // Giả sử vocabulary.getImagePath() là "images/alphabet/a.png"
-                inputStream = getAssets().open(vocabulary.getImagePath());
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                imgWordView.setImageBitmap(bitmap);
+
+                if (!vocabulary.getImagePath().startsWith("/")) {
+                    inputStream = getAssets().open(vocabulary.getImagePath());
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    imgWordView.setImageBitmap(bitmap);
+                } else {
+                    try {
+                        inputStream = getAssets().open(vocabulary.getImagePath());
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        imgWordView.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        Log.w("DictionaryActivity", "Image not found in assets, trying as file path: " + vocabulary.getImagePath());
+                        Bitmap bitmap = BitmapFactory.decodeFile(vocabulary.getImagePath());
+                        if (bitmap != null) {
+                            imgWordView.setImageBitmap(bitmap);
+                        } else {
+                            Log.e("DictionaryActivity", "Error loading image as file: " + vocabulary.getImagePath());
+                            imgWordView.setImageResource(R.drawable.abc);
+                        }
+                    }
+                }
+
             } catch (IOException e) {
-                Log.e("DictionaryActivity", "Error loading image from assets: " + vocabulary.getImagePath(), e);
+                Log.e("DictionaryActivity", "Error loading image: " + vocabulary.getImagePath(), e);
                 imgWordView.setImageResource(R.drawable.abc); // Ảnh mặc định nếu lỗi
             } finally {
                 if (inputStream != null) {
                     try {
-                        inputStream.close(); // Luôn đóng InputStream
+                        inputStream.close();
                     } catch (IOException e) {
                         Log.e("DictionaryActivity", "Error closing InputStream", e);
                     }
@@ -144,20 +177,17 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
         View dialogView = inflater.inflate(R.layout.dialog_setting, null);
         builder.setView(dialogView);
 
-        // Khởi tạo nút đăng xuất
         Button logoutButton = dialogView.findViewById(R.id.igbLogOut);
 
-        // Tạo và hiển thị dialog
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Xử lý sự kiện click nút đăng xuất
         logoutButton.setOnClickListener(v -> {
             dialog.dismiss();
-            // Chuyển về màn hình đăng nhập
             Intent intent = new Intent(DictionaryActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish();
+            finishAffinity();
             Toast.makeText(DictionaryActivity.this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
         });
     }

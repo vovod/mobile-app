@@ -7,15 +7,26 @@ public class Vocabulary implements Serializable {
     private String word;
     private int chapterId;
     private String imagePath;
-    private Chapter chapter; // Not stored in DB, for ease of use
+    private Chapter chapter;
+    private int viewCount;
 
     public Vocabulary() {
+        this.viewCount = 0;
     }
 
     public Vocabulary(String word, int chapterId, String imagePath) {
         this.word = word;
         this.chapterId = chapterId;
         this.imagePath = imagePath;
+        this.viewCount = 0;
+    }
+
+
+    public Vocabulary(String word, int chapterId, String imagePath, int viewCount) {
+        this.word = word;
+        this.chapterId = chapterId;
+        this.imagePath = imagePath;
+        this.viewCount = viewCount;
     }
 
     public int getId() {
@@ -57,4 +68,14 @@ public class Vocabulary implements Serializable {
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
     }
+
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
 }

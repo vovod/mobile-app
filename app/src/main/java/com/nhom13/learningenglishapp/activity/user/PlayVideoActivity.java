@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nhom13.learningenglishapp.R;
+import com.nhom13.learningenglishapp.database.dao.VideoDao; // <<<<<<<<<< THÊM IMPORT
 import com.nhom13.learningenglishapp.database.models.Video;
 import com.nhom13.learningenglishapp.utils.YouTubeHelper;
 
@@ -28,6 +29,8 @@ public class PlayVideoActivity extends AppCompatActivity {
     private WebView webView;
     private ProgressBar progressBar;
     private String videoId;
+    private VideoDao videoDao;
+    private Video currentVideo;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -35,11 +38,13 @@ public class PlayVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_video);
 
-        // Ánh xạ view
+        videoDao = new VideoDao(this);
+
+
         webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
 
-        // Cấu hình WebView
+
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -51,19 +56,30 @@ public class PlayVideoActivity extends AppCompatActivity {
             }
         });
 
-        // Lấy dữ liệu video từ intent
-        if (getIntent().hasExtra("video")) {
-            Video video = (Video) getIntent().getSerializableExtra("video");
-            String rawVideoUrl = video.getVideoUrl();
 
-            // Trích xuất ID video từ URL hoặc sử dụng trực tiếp nếu đã là ID
+        if (getIntent().hasExtra("video")) {
+            currentVideo = (Video) getIntent().getSerializableExtra("video");
+            if (currentVideo == null) {
+                Toast.makeText(this, "Lỗi: Dữ liệu video không hợp lệ.", Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+            }
+
+            String rawVideoUrl = currentVideo.getVideoUrl();
+
+
             videoId = YouTubeHelper.extractYouTubeId(rawVideoUrl);
 
-            // Log để debug
+
             Log.d(TAG, "Raw Video URL: " + rawVideoUrl);
             Log.d(TAG, "Extracted Video ID: " + videoId);
 
-            // Tải video YouTube trong WebView
+
+            videoDao.incrementViewCount(currentVideo.getId());
+            Log.d(TAG, "Incremented view count for video ID: " + currentVideo.getId() + ", Title: " + currentVideo.getTitle());
+
+
+
             loadYouTubeVideo(videoId);
         } else {
             Toast.makeText(this, "Không tìm thấy thông tin video", Toast.LENGTH_SHORT).show();
@@ -72,18 +88,18 @@ public class PlayVideoActivity extends AppCompatActivity {
     }
 
     private void loadYouTubeVideo(String videoId) {
-        // Kiểm tra videoId
+
         if (videoId == null || videoId.isEmpty()) {
             Toast.makeText(this, "ID video không hợp lệ", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        // Hiển thị ProgressBar trong khi tải
+
         progressBar.setVisibility(View.VISIBLE);
 
         try {
-            // Tạo HTML để nhúng video YouTube
+
             String html = "<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "<head>\n" +
@@ -97,22 +113,25 @@ public class PlayVideoActivity extends AppCompatActivity {
                     "</head>\n" +
                     "<body>\n" +
                     "    <div class=\"container\">\n" +
-                    "        <iframe src=\"https://www.youtube.com/embed/" + videoId + "?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+
+                    "        <iframe src=\"https://www.youtube.com/embed/" + (videoId != null ? videoId : "") + "?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>\n" +
                     "    </div>\n" +
                     "</body>\n" +
                     "</html>";
 
-            // Tải HTML vào WebView - sử dụng loadDataWithBaseURL thay vì loadData
+
             webView.loadDataWithBaseURL("https://www.youtube.com", html, "text/html", "UTF-8", null);
 
-            // Đặt lắng nghe lỗi
+
             webView.setWebViewClient(new WebViewClient() {
                 @Override
                 public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                     super.onReceivedError(view, request, error);
-                    Log.e(TAG, "WebView error, trying fallback method");
-                    // Phương pháp 2 (dự phòng): Nếu phương pháp 1 không hoạt động, hãy thử mở trực tiếp URL
-                    webView.loadUrl("https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0");
+                    Log.e(TAG, "WebView error, trying fallback method. Error: " + error.getDescription());
+
+                    if (videoId != null && !videoId.isEmpty()) {
+                        webView.loadUrl("https://www.youtube.com/watch?v=" + videoId + "&autoplay=1&rel=0");
+                    }
                 }
 
                 @Override
@@ -124,35 +143,37 @@ public class PlayVideoActivity extends AppCompatActivity {
             Log.e(TAG, "Error loading YouTube video: " + e.getMessage());
             Toast.makeText(this, "Lỗi khi tải video: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-            // Phương pháp 3 (dự phòng cuối cùng): Mở trong ứng dụng YouTube hoặc trình duyệt
-            showFallbackOptions(videoId);
+
+            if (videoId != null && !videoId.isEmpty()) {
+                showFallbackOptions(videoId);
+            }
         }
     }
 
     private void showFallbackOptions(final String videoId) {
-        // Tạo dialog hiển thị các tùy chọn dự phòng
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Không thể phát video trong ứng dụng");
         builder.setMessage("Bạn muốn mở video trong ứng dụng YouTube hoặc trình duyệt?");
 
-        // Nút mở trong YouTube
+
         builder.setPositiveButton("YouTube", (dialog, which) -> {
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + videoId));
                 startActivity(intent);
                 finish();
             } catch (Exception e) {
-                // Nếu không có ứng dụng YouTube, mở trong trình duyệt
+
                 openInBrowser(videoId);
             }
         });
 
-        // Nút mở trong trình duyệt
+
         builder.setNegativeButton("Trình duyệt", (dialog, which) -> {
             openInBrowser(videoId);
         });
 
-        // Nút hủy
+
         builder.setNeutralButton("Hủy", (dialog, which) -> {
             dialog.dismiss();
             finish();

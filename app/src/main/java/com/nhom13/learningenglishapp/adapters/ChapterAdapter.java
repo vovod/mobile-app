@@ -46,11 +46,11 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
     public void onBindViewHolder(@NonNull ChapterViewHolder holder, int position) {
         Chapter chapter = chapterList.get(position);
         
-        // Hiển thị ID và tên chapter
+
         holder.tvChapterId.setText("ID: " + chapter.getId());
         holder.tvChapterName.setText(chapter.getName());
         
-        // Hiển thị hình ảnh nếu có
+
         if (chapter.getImagePath() != null && !chapter.getImagePath().isEmpty()) {
             File imgFile = new File(chapter.getImagePath());
             if (imgFile.exists()) {
@@ -62,14 +62,14 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
             holder.imgChapter.setImageResource(R.drawable.abc);
         }
         
-        // Xử lý sự kiện click
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onChapterClick(chapter);
             }
         });
         
-        // Xử lý sự kiện click nút xóa
+
         holder.btnDelete.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onChapterDeleteClick(chapter);

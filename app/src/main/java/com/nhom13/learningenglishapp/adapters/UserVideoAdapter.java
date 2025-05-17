@@ -44,10 +44,10 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.Vide
     public void onBindViewHolder(@NonNull VideoViewHolder holder, int position) {
         Video video = videoList.get(position);
 
-        // Hiển thị tiêu đề video
+
         holder.tvTitle.setText(video.getTitle());
 
-        // Hiển thị thumbnail
+
         if (video.getThumbnailUrl() != null && !video.getThumbnailUrl().isEmpty()) {
             Picasso.with(context)
                 .load(video.getThumbnailUrl())
@@ -58,7 +58,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.Vide
             holder.imgThumbnail.setImageResource(R.drawable.video);
         }
 
-        // Xử lý sự kiện click
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onVideoClick(video);

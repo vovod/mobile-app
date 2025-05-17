@@ -53,26 +53,26 @@ public class ManageChapterActivity extends AppCompatActivity implements ChapterA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_chapter);
 
-        // Khởi tạo DAO
+
         chapterDao = new ChapterDao(this);
 
-        // Khởi tạo danh sách chapter
+
         chapterList = new ArrayList<>();
 
-        // Ánh xạ các view
+
         recyclerView = findViewById(R.id.rcvChapter);
         btnBack = findViewById(R.id.btnBack);
         btnAdd = findViewById(R.id.btnAddChapter);
 
-        // Thiết lập RecyclerView
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         chapterAdapter = new ChapterAdapter(this, chapterList, this);
         recyclerView.setAdapter(chapterAdapter);
 
-        // Tải dữ liệu chapter
+
         loadChapterData();
 
-        // Thiết lập sự kiện click cho các nút
+
         btnBack.setOnClickListener(v -> {
             finish();
         });
@@ -101,7 +101,7 @@ public class ManageChapterActivity extends AppCompatActivity implements ChapterA
         Button btnSave = dialogView.findViewById(R.id.btnSave);
         Button btnCancel = dialogView.findViewById(R.id.btnCancel);
 
-        // Lưu trữ ImageView để cập nhật sau khi chọn hình ảnh
+
         selectedImageView = imgChapter;
         selectedImageUri = null;
 
@@ -166,17 +166,17 @@ public class ManageChapterActivity extends AppCompatActivity implements ChapterA
         Button btnSave = dialogView.findViewById(R.id.btnSave);
         Button btnCancel = dialogView.findViewById(R.id.btnCancel);
 
-        // Hiển thị thông tin chapter hiện tại
+
         etChapterId.setText(String.valueOf(chapter.getId()));
-        etChapterId.setEnabled(false); // Không cho phép sửa ID
+        etChapterId.setEnabled(false);
         etChapterName.setText(chapter.getName());
 
-        // Hiển thị hình ảnh nếu có
+
         if (chapter.getImagePath() != null && !chapter.getImagePath().isEmpty()) {
             imgChapter.setImageURI(Uri.parse(chapter.getImagePath()));
         }
 
-        // Lưu trữ ImageView để cập nhật sau khi chọn hình ảnh
+
         selectedImageView = imgChapter;
         selectedImageUri = null;
 

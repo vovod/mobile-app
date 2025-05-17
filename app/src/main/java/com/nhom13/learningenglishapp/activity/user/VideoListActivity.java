@@ -38,7 +38,7 @@ public class VideoListActivity extends AppCompatActivity implements UserVideoAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_list);
 
-        // Nhận dữ liệu từ intent
+
         if (getIntent().hasExtra("username")) {
             username = getIntent().getStringExtra("username");
         }
@@ -46,26 +46,26 @@ public class VideoListActivity extends AppCompatActivity implements UserVideoAda
             score = getIntent().getIntExtra("score", 0);
         }
 
-        // Khởi tạo DAO
+
         videoDao = new VideoDao(this);
 
-        // Khởi tạo danh sách video
+
         videoList = new ArrayList<>();
 
-        // Ánh xạ các view
+
         recyclerView = findViewById(R.id.rcvVideo);
         btnBack = findViewById(R.id.btnBack);
         btnSetting = findViewById(R.id.btnSetting);
 
-        // Thiết lập RecyclerView
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         videoAdapter = new UserVideoAdapter(this, videoList, this);
         recyclerView.setAdapter(videoAdapter);
 
-        // Tải dữ liệu video
+
         loadVideoData();
 
-        // Thiết lập sự kiện click cho các nút
+
         btnBack.setOnClickListener(v -> {
             // Quay về màn hình chính
             Intent intent = new Intent(VideoListActivity.this, UserHomePageActivity.class);
@@ -88,7 +88,7 @@ public class VideoListActivity extends AppCompatActivity implements UserVideoAda
 
     @Override
     public void onVideoClick(Video video) {
-        // Mở video để xem
+
         Intent intent = new Intent(VideoListActivity.this, PlayVideoActivity.class);
         intent.putExtra("video", video);
         startActivity(intent);
@@ -100,17 +100,17 @@ public class VideoListActivity extends AppCompatActivity implements UserVideoAda
         View dialogView = inflater.inflate(R.layout.dialog_setting, null);
         builder.setView(dialogView);
 
-        // Khởi tạo nút đăng xuất
+
         Button logoutButton = dialogView.findViewById(R.id.igbLogOut);
 
-        // Tạo và hiển thị dialog
+
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Xử lý sự kiện click nút đăng xuất
+
         logoutButton.setOnClickListener(v -> {
             dialog.dismiss();
-            // Chuyển về màn hình đăng nhập
+
             Intent intent = new Intent(VideoListActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();

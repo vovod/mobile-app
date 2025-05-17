@@ -45,42 +45,42 @@ public class ManageWordActivity extends AppCompatActivity implements WordAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_management);
 
-        // Khởi tạo các DAO
+
         vocabularyDao = new VocabularyDao(this);
         chapterDao = new ChapterDao(this);
 
-        // Khởi tạo danh sách từ vựng
+
         vocabularyList = new ArrayList<>();
 
-        // Ánh xạ các view
+
         recyclerView = findViewById(R.id.rcv_listTV);
         btnBack = findViewById(R.id.btnBackListWords);
         btnAddWord = findViewById(R.id.btnAddWord);
 
-        // Thiết lập RecyclerView
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         wordAdapter = new WordAdapter(this, vocabularyList, this);
         recyclerView.setAdapter(wordAdapter);
 
-        // Đăng ký launcher để chọn hình ảnh
+
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 uri -> {
                     if (uri != null) {
                         selectedImageUri = uri;
-                        // Hiển thị hình ảnh đã chọn trong dialog
+
                         if (selectedImageView != null) {
                             selectedImageView.setImageURI(selectedImageUri);
                         }
                     }
                 });
 
-        // Thiết lập sự kiện click cho các nút
+
         btnBack.setOnClickListener(v -> finish());
 
         btnAddWord.setOnClickListener(v -> showAddWordDialog());
 
-        // Tải dữ liệu từ vựng
+
         loadVocabularyData();
     }
 
@@ -90,7 +90,7 @@ public class ManageWordActivity extends AppCompatActivity implements WordAdapter
         wordAdapter.notifyDataSetChanged();
     }
 
-    private ImageView selectedImageView; // Biến tạm để lưu trữ ImageView trong dialog
+    private ImageView selectedImageView;
 
     private void showAddWordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -105,11 +105,11 @@ public class ManageWordActivity extends AppCompatActivity implements WordAdapter
         Button btnSave = dialogView.findViewById(R.id.btnSave);
         Button btnCancel = dialogView.findViewById(R.id.btnCancel);
 
-        // Lưu trữ ImageView để cập nhật sau khi chọn hình ảnh
+
         selectedImageView = imgWord;
         selectedImageUri = null;
 
-        // Tải danh sách chương
+
         List<Chapter> chapters = chapterDao.getAllChapters();
         ArrayAdapter<Chapter> chapterAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, chapters);
@@ -165,26 +165,26 @@ public class ManageWordActivity extends AppCompatActivity implements WordAdapter
         Button btnSave = dialogView.findViewById(R.id.btnSave);
         Button btnCancel = dialogView.findViewById(R.id.btnCancel);
 
-        // Hiển thị thông tin từ vựng hiện tại
+
         etWord.setText(vocabulary.getWord());
 
-        // Hiển thị hình ảnh nếu có
+
         if (vocabulary.getImagePath() != null && !vocabulary.getImagePath().isEmpty()) {
             imgWord.setImageURI(Uri.parse(vocabulary.getImagePath()));
         }
 
-        // Lưu trữ ImageView để cập nhật sau khi chọn hình ảnh
+
         selectedImageView = imgWord;
         selectedImageUri = null;
 
-        // Tải danh sách chương
+
         List<Chapter> chapters = chapterDao.getAllChapters();
         ArrayAdapter<Chapter> chapterAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, chapters);
         chapterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerChapter.setAdapter(chapterAdapter);
 
-        // Chọn chương hiện tại
+
         for (int i = 0; i < chapters.size(); i++) {
             if (chapters.get(i).getId() == vocabulary.getChapterId()) {
                 spinnerChapter.setSelection(i);

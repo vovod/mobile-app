@@ -156,13 +156,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:id="@+id/tvActiveUsersLast7Days"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Người dùng hoạt động (7 ngày): -"
-                android:textSize="16sp"
-                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -200,7 +193,46 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"/>
 
+            <TextView
+                android:id="@+id/tvTopVocabularyLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Từ vựng được xem nhiều nhất"
+                android:textColor="@color/purple_700"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"/>
 
+            <LinearLayout
+                android:id="@+id/layoutTopVocabulary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tvTopVideosLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Video được xem nhiều nhất"
+                android:textColor="@color/purple_700"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/layoutTopVideos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -213,8 +245,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvTopUsers"
                 android:layout_width="match_parent"
-                android:layout_height="1000dp"
-                android:nestedScrollingEnabled="false"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp" android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/item_user"/>
 
         </LinearLayout>

@@ -26,7 +26,7 @@ public class ChapterDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         try {
-            // Save image to local storage and get the path
+
             String imagePath = "";
             if (imageUri != null) {
                 imagePath = FileUtils.saveImageToInternalStorage(context, imageUri, "chapter_" + chapter.getId());
@@ -37,7 +37,7 @@ public class ChapterDao {
             values.put(DatabaseHelper.KEY_CHAPTER_NAME, chapter.getName());
             values.put(DatabaseHelper.KEY_CHAPTER_IMAGE_PATH, imagePath);
 
-            // Insert the new row
+
             long id = db.insert(DatabaseHelper.TABLE_CHAPTERS, null, values);
             return id != -1;
         } catch (Exception e) {
@@ -114,13 +114,13 @@ public class ChapterDao {
             ContentValues values = new ContentValues();
             values.put(DatabaseHelper.KEY_CHAPTER_NAME, chapter.getName());
 
-            // Update image if a new one is provided
+
             if (newImageUri != null) {
                 String imagePath = FileUtils.saveImageToInternalStorage(context, newImageUri, "chapter_" + chapter.getId());
                 values.put(DatabaseHelper.KEY_CHAPTER_IMAGE_PATH, imagePath);
             }
 
-            // Updating row
+
             int result = db.update(DatabaseHelper.TABLE_CHAPTERS, values,
                     DatabaseHelper.KEY_CHAPTER_ID + " = ?",
                     new String[]{String.valueOf(chapter.getId())});
@@ -135,15 +135,15 @@ public class ChapterDao {
     public boolean deleteChapter(int chapterId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // First get the chapter to retrieve the image path
+
         Chapter chapter = getChapterById(chapterId);
 
-        // Delete the chapter from database
+
         boolean success = db.delete(DatabaseHelper.TABLE_CHAPTERS,
                 DatabaseHelper.KEY_CHAPTER_ID + " = ?",
                 new String[]{String.valueOf(chapterId)}) > 0;
 
-        // If successful and there's an image, delete it from storage
+
         if (success && chapter != null && chapter.getImagePath() != null && !chapter.getImagePath().isEmpty()) {
             FileUtils.deleteImageFromInternalStorage(context, chapter.getImagePath());
         }
@@ -151,9 +151,6 @@ public class ChapterDao {
         return success;
     }
 
-    // Trong class ChapterDao
-
-    // Lấy tổng số chương
     public int getTotalChapterCount() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         int count = 0;

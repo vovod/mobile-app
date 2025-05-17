@@ -54,7 +54,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
             holder.tvChapter.setText("Chương " + vocabulary.getChapterId());
         }
 
-        // Hiển thị hình ảnh nếu có
+
         if (vocabulary.getImagePath() != null && !vocabulary.getImagePath().isEmpty()) {
             File imgFile = new File(vocabulary.getImagePath());
             if (imgFile.exists()) {
@@ -66,7 +66,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
             holder.imgWord.setImageResource(R.drawable.abc);
         }
 
-        // Thiết lập sự kiện click cho các nút
+
         holder.btnEditWord.setOnClickListener(v -> {
             if (onWordListener != null) {
                 onWordListener.onEditClick(position);

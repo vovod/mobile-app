@@ -28,11 +28,11 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_login);
 
         ud = new UserDao(this);
-        usernameEditText = findViewById(R.id.editTextEmail); // Thay đổi ID nếu bạn đặt khác
+        usernameEditText = findViewById(R.id.editTextEmail);
         passwordEditText = findViewById(R.id.editTextPassword);
         loginButton = findViewById(R.id.buttonLogin);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                //Kiểm tra tài khoản mật khẩu
+
                 boolean isLogin = checkLogin(username, password);
                 if(isLogin == true){
                     if(checkAdmin(username,password)==true){
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Chuyển tới RegisterActivity
+
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
@@ -76,18 +76,18 @@ public class LoginActivity extends AppCompatActivity {
         User user =ud.getUserByUsername(usernameInput);
 
         if (user == null) {
-            // Username không tồn tại
+
             System.out.println("Username không tồn tại");
             Toast.makeText(this, "Username không tồn tại", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             if (user.getPassword().equals(passwordInput)) {
-                // Đăng nhập thành công
+
                 System.out.println("Đăng nhập thành công");
                 Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                 return true;
             } else {
-                // Sai mật khẩu
+
                 System.out.println("Sai mật khẩu");
                 Toast.makeText(this, "Sai mật khẩu", Toast.LENGTH_SHORT).show();
                 return false;
@@ -102,19 +102,19 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
     private void GoToNextUserActivity(String username, int score) {
-        // Chuyển tới Activity khác
+
         Intent intent = new Intent(LoginActivity.this, UserHomePageActivity.class);
         intent.putExtra("username", username);
         intent.putExtra("score", score);
         startActivity(intent);
-        finish(); // đóng LoginActivity nếu muốn
+        finish();
     }
 
     private void GoToNextAdminActivity() {
-        // Chuyển tới Activity khác
+
         Intent intent = new Intent(LoginActivity.this, AdminHomePageActivity.class);
         startActivity(intent);
-        finish(); // đóng LoginActivity nếu muốn
+        finish();
         System.out.println("Admin");
     }
 }

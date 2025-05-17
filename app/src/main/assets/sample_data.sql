@@ -4,21 +4,20 @@ DELETE FROM vocabulary;
 DELETE FROM chapters;
 DELETE FROM users;
 
--- Chèn dữ liệu cho bảng users
+
 INSERT INTO users (username, password, score) VALUES ('admin', 'admin', 0);
 INSERT INTO users (username, password, score) VALUES ('user', 'user', 100);
 INSERT INTO users (username, password, score) VALUES ('huhu', '123', 100);
 
 
--- Chèn dữ liệu cho bảng chapters từ chapters.json
+
 INSERT INTO chapters (id, name, image_path) VALUES (1, 'Alphabet', 'images/chapters/alphabet.png');
 INSERT INTO chapters (id, name, image_path) VALUES (2, 'Colors', 'images/chapters/color.png');
 INSERT INTO chapters (id, name, image_path) VALUES (3, 'Fruits', 'images/chapters/fruits.png');
 INSERT INTO chapters (id, name, image_path) VALUES (4, 'Animals', 'images/chapters/animal.png');
 INSERT INTO chapters (id, name, image_path) VALUES (5, 'Shapes', 'images/chapters/shapes.png');
 
--- Chèn dữ liệu cho bảng vocabulary từ vocabulary.json
--- Chapter 1: Alphabet
+
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('A', 1, 'images/alphabet/a.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('B', 1, 'images/alphabet/b.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('C', 1, 'images/alphabet/c.png');
@@ -46,7 +45,7 @@ INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('X', 1, 'images/al
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('Y', 1, 'images/alphabet/y.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('Z', 1, 'images/alphabet/z.png');
 
--- Chapter 2: Colors
+
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('black', 2, 'images/colors/black.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('blue', 2, 'images/colors/blue.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('brown', 2, 'images/colors/brown.png');
@@ -59,7 +58,7 @@ INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('violet', 2, 'imag
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('white', 2, 'images/colors/white.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('yellow', 2, 'images/colors/yellow.png');
 
--- Chapter 3: Fruits
+
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('apple', 3, 'images/fruits/apple.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('avocado', 3, 'images/fruits/avocado.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('banana', 3, 'images/fruits/banana.png');
@@ -83,7 +82,7 @@ INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('raspberry', 3, 'i
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('strawberry', 3, 'images/fruits/strawberry.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('watermelon', 3, 'images/fruits/watermelon.png');
 
--- Chapter 4: Animals
+
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('bear', 4, 'images/animals/bear.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('chicken', 4, 'images/animals/chicken.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('cow', 4, 'images/animals/cow.png');
@@ -92,7 +91,7 @@ INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('duck', 4, 'images
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('lion', 4, 'images/animals/lion.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('pig', 4, 'images/animals/pig.png');
 
--- Chapter 5: Shapes
+
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('circle', 5, 'images/shapes/circle.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('cross', 5, 'images/shapes/cross.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('diamond', 5, 'images/shapes/diamond.png');
@@ -106,9 +105,7 @@ INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('square', 5, 'imag
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('star', 5, 'images/shapes/star.png');
 INSERT INTO vocabulary (word, chapter_id, image_path) VALUES ('triangle', 5, 'images/shapes/triangle.png');
 
--- Chèn dữ liệu cho bảng quiz từ quiz.json
--- Lưu ý: Cột 'id' trong bảng quiz là AUTOINCREMENT, nên không cần chèn giá trị cho nó.
--- Giá trị 'id' từ quiz.json sẽ không được sử dụng trực tiếp cho cột id của bảng SQL.
+
 INSERT INTO quiz (correct_answer, wrong_answer, image_path) VALUES ('He''s crying', 'He''s drinking', 'images/quiz/cry.png');
 INSERT INTO quiz (correct_answer, wrong_answer, image_path) VALUES ('He''s drinking', 'He''s eating', 'images/quiz/drinking.png');
 INSERT INTO quiz (correct_answer, wrong_answer, image_path) VALUES ('He''s eating', 'He''s reading', 'images/quiz/eating.png');

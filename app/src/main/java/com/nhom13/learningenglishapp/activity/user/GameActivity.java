@@ -31,7 +31,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
 
-        // Nhận dữ liệu từ intent
+
         if (getIntent().hasExtra("username")) {
             username = getIntent().getStringExtra("username");
         }
@@ -39,7 +39,7 @@ public class GameActivity extends AppCompatActivity {
             score = getIntent().getIntExtra("score", 0);
         }
 
-        // Ánh xạ các view
+
         btnHomeGame = findViewById(R.id.btnHomeGame);
         btnSettingGame = findViewById(R.id.btnSettingGame);
         itemYesNo = findViewById(R.id.item1);
@@ -47,9 +47,9 @@ public class GameActivity extends AppCompatActivity {
         igbYesNo = findViewById(R.id.igbYesNo);
         igbDoanHinh = findViewById(R.id.igbDoanHinh);
 
-        // Thiết lập sự kiện click cho nút Home
+
         btnHomeGame.setOnClickListener(v -> {
-            // Quay về màn hình chính
+
             Intent intent = new Intent(GameActivity.this, UserHomePageActivity.class);
             intent.putExtra("username", username);
             intent.putExtra("score", score);
@@ -57,20 +57,20 @@ public class GameActivity extends AppCompatActivity {
             finish();
         });
 
-        // Thiết lập sự kiện click cho nút Setting
+
         btnSettingGame.setOnClickListener(v -> {
             showSettingDialog();
         });
 
-        // Thiết lập sự kiện click cho game Đúng/Sai
+
         igbYesNo.setOnClickListener(v -> {
             Toast.makeText(this, "Chức năng Đúng/Sai đang được phát triển", Toast.LENGTH_SHORT).show();
-            // Ở đây bạn có thể thêm code để chuyển đến màn hình game Đúng/Sai
+
         });
 
-        // Thiết lập sự kiện click cho game Đoán Hình
+
         igbDoanHinh.setOnClickListener(v -> {
-            // Chuyển đến màn hình game Đoán Hình
+
             Intent intent = new Intent(GameActivity.this, GuessImageActivity.class);
             intent.putExtra("username", username);
             intent.putExtra("score", score);
@@ -84,17 +84,17 @@ public class GameActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_setting, null);
         builder.setView(dialogView);
 
-        // Khởi tạo nút đăng xuất
+
         Button logoutButton = dialogView.findViewById(R.id.igbLogOut);
 
-        // Tạo và hiển thị dialog
+
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Xử lý sự kiện click nút đăng xuất
+
         logoutButton.setOnClickListener(v -> {
             dialog.dismiss();
-            // Chuyển về màn hình đăng nhập
+
             Intent intent = new Intent(GameActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();

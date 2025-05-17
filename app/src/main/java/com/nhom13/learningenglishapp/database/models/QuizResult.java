@@ -69,7 +69,7 @@ public class QuizResult implements Serializable {
         this.date = date;
     }
 
-    // Calculate percentage of correct answers
+
     public float getPercentageCorrect() {
         if (totalQuestions == 0) return 0;
         return ((float) correctAnswers / totalQuestions) * 100;

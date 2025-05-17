@@ -35,26 +35,26 @@ public class ManageVideoActivity extends AppCompatActivity implements VideoAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_video);
 
-        // Khởi tạo DAO
+
         videoDao = new VideoDao(this);
 
-        // Khởi tạo danh sách video
+
         videoList = new ArrayList<>();
 
-        // Ánh xạ các view
+
         recyclerView = findViewById(R.id.rcvVideo);
         btnBack = findViewById(R.id.btnBack);
         btnAdd = findViewById(R.id.btnAddVideo);
 
-        // Thiết lập RecyclerView
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         videoAdapter = new VideoAdapter(this, videoList, this);
         recyclerView.setAdapter(videoAdapter);
 
-        // Tải dữ liệu video
+
         loadVideoData();
 
-        // Thiết lập sự kiện click cho các nút
+
         btnBack.setOnClickListener(v -> {
             finish();
         });
@@ -134,7 +134,7 @@ public class ManageVideoActivity extends AppCompatActivity implements VideoAdapt
         Button btnSave = dialogView.findViewById(R.id.btnSave);
         Button btnCancel = dialogView.findViewById(R.id.btnCancel);
 
-        // Hiển thị thông tin video hiện tại
+
         etTitle.setText(video.getTitle());
         etThumbnail.setText(video.getThumbnailUrl());
         etVideoUrl.setText(video.getVideoUrl());

@@ -2,7 +2,9 @@ package com.nhom13.learningenglishapp.activity.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
@@ -21,7 +23,10 @@ import com.nhom13.learningenglishapp.database.dao.UserDao;
 import com.nhom13.learningenglishapp.database.dao.VocabularyDao;
 import com.nhom13.learningenglishapp.database.dao.VideoDao;
 import com.nhom13.learningenglishapp.database.models.User;
+import com.nhom13.learningenglishapp.database.models.Vocabulary;
+import com.nhom13.learningenglishapp.database.models.Video;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -30,9 +35,13 @@ public class AdminStatisticsActivity extends AppCompatActivity implements UserAd
 
     private TextView tvTotalUsers, tvTotalChapters, tvTotalVocabulary, tvTotalQuizzes, tvTotalVideos;
     private TextView tvTotalGamesPlayed, tvTotalQuestionsAttempted, tvTotalCorrectAnswers, tvAverageScore;
-    private TextView tvActiveUsersLast7Days, tvScoreRange0_100, tvScoreRange101_500, tvScoreRange501_Plus;
+    private TextView tvScoreRange0_100, tvScoreRange101_500, tvScoreRange501_Plus;
     private RecyclerView rcvTopUsers;
     private ImageButton btnBack;
+
+
+    private TextView tvTopVocabularyLabel, tvTopVideosLabel;
+    private LinearLayout layoutTopVocabulary, layoutTopVideos;
 
     private UserDao userDao;
     private ChapterDao chapterDao;
@@ -41,14 +50,14 @@ public class AdminStatisticsActivity extends AppCompatActivity implements UserAd
     private VideoDao videoDao;
     private QuizResultDao quizResultDao;
 
-    private static final String TAG = "AdminStatsActivity"; // Thêm TAG cho logging
+    private static final String TAG = "AdminStatsActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_statistics);
 
-        // Ánh xạ Views
+
         tvTotalUsers = findViewById(R.id.tvTotalUsers);
         tvTotalChapters = findViewById(R.id.tvTotalChapters);
         tvTotalVocabulary = findViewById(R.id.tvTotalVocabulary);
@@ -58,7 +67,6 @@ public class AdminStatisticsActivity extends AppCompatActivity implements UserAd
         tvTotalQuestionsAttempted = findViewById(R.id.tvTotalQuestionsAttempted);
         tvTotalCorrectAnswers = findViewById(R.id.tvTotalCorrectAnswers);
         tvAverageScore = findViewById(R.id.tvAverageScore);
-        tvActiveUsersLast7Days = findViewById(R.id.tvActiveUsersLast7Days);
         tvScoreRange0_100 = findViewById(R.id.tvScoreRange0_100);
         tvScoreRange101_500 = findViewById(R.id.tvScoreRange101_500);
         tvScoreRange501_Plus = findViewById(R.id.tvScoreRange501_Plus);
@@ -66,7 +74,14 @@ public class AdminStatisticsActivity extends AppCompatActivity implements UserAd
         rcvTopUsers = findViewById(R.id.rcvTopUsers);
         btnBack = findViewById(R.id.btnBack);
 
-        // Khởi tạo DAOs
+
+        tvTopVocabularyLabel = findViewById(R.id.tvTopVocabularyLabel);
+        layoutTopVocabulary = findViewById(R.id.layoutTopVocabulary);
+        tvTopVideosLabel = findViewById(R.id.tvTopVideosLabel);
+        layoutTopVideos = findViewById(R.id.layoutTopVideos);
+
+
+
         userDao = new UserDao(this);
         chapterDao = new ChapterDao(this);
         vocabularyDao = new VocabularyDao(this);
@@ -74,20 +89,21 @@ public class AdminStatisticsActivity extends AppCompatActivity implements UserAd
         videoDao = new VideoDao(this);
         quizResultDao = new QuizResultDao(this);
 
-        // Thiết lập RecyclerView cho Top Users
+
         rcvTopUsers.setLayoutManager(new LinearLayoutManager(this));
-        UserAdapter topUserAdapter = new UserAdapter(this, null, null, this);
+
+        UserAdapter topUserAdapter = new UserAdapter(this, new ArrayList<>(), null, this);
         rcvTopUsers.setAdapter(topUserAdapter);
 
-        // Tải và hiển thị dữ liệu thống kê
+
         loadStatisticsData();
 
-        // Thiết lập sự kiện cho nút Back
+
         btnBack.setOnClickListener(v -> finish());
     }
 
     private void loadStatisticsData() {
-        // Thống kê chung
+
         int totalUsers = userDao.getTotalUserCount();
         int totalChapters = chapterDao.getTotalChapterCount();
         int totalVocabulary = vocabularyDao.getTotalVocabularyCount();
@@ -100,7 +116,7 @@ public class AdminStatisticsActivity extends AppCompatActivity implements UserAd
         tvTotalQuizzes.setText("Tổng số Quiz: " + totalQuizzes);
         tvTotalVideos.setText("Tổng số Video: " + totalVideos);
 
-        // Thống kê Game/Quiz
+
         int totalGamesPlayed = quizResultDao.getTotalGamesPlayed();
         int totalQuestionsAttempted = quizResultDao.getTotalQuestionsAttempted();
         int totalCorrectAnswers = quizResultDao.getTotalCorrectAnswers();
@@ -111,10 +127,10 @@ public class AdminStatisticsActivity extends AppCompatActivity implements UserAd
         tvTotalCorrectAnswers.setText("Tổng số câu trả lời đúng: " + totalCorrectAnswers);
         tvAverageScore.setText(String.format(Locale.getDefault(), "Điểm trung bình mỗi game: %.2f", averageScore));
 
-        // Thống kê người dùng hoạt động
-        tvActiveUsersLast7Days.setText("Người dùng hoạt động (7 ngày): - (Cần cập nhật DB)");
 
-        // Thống kê phân phối điểm
+
+
+
         int count0_100 = userDao.getUserCountByScoreRange(0, 100);
         int count101_500 = userDao.getUserCountByScoreRange(101, 500);
         int count501_Plus = userDao.getUserCountByScoreRange(501, Integer.MAX_VALUE);
@@ -123,21 +139,64 @@ public class AdminStatisticsActivity extends AppCompatActivity implements UserAd
         tvScoreRange101_500.setText("Điểm 101-500: " + count101_500);
         tvScoreRange501_Plus.setText("Điểm >500: " + count501_Plus);
 
-        // Top Users (Lấy top 5)
+
         List<User> topUsers = userDao.getTopUsersByScore(5);
-
-        // Thêm log chi tiết cho topUsers
-        Log.d(TAG, "Fetched topUsers list size: " + topUsers.size());
-        for (int i = 0; i < topUsers.size(); i++) {
-            User user = topUsers.get(i);
-            Log.d(TAG, "Top User " + (i + 1) + ": " + user.getUsername() + " (Score: " + user.getScore() + ")");
+        if (rcvTopUsers.getAdapter() != null) {
+            ((UserAdapter) rcvTopUsers.getAdapter()).updateData(topUsers);
         }
-
-        ((UserAdapter) rcvTopUsers.getAdapter()).updateData(topUsers);
-
         if (topUsers.isEmpty()) {
             Log.d(TAG, "No non-admin users found for Top Users list (list is empty).");
+
         }
+
+
+
+        List<Vocabulary> topViewedVocab = vocabularyDao.getTopViewedVocabulary(5);
+        layoutTopVocabulary.removeAllViews();
+        if (topViewedVocab != null && !topViewedVocab.isEmpty()) {
+            tvTopVocabularyLabel.setVisibility(View.VISIBLE);
+            layoutTopVocabulary.setVisibility(View.VISIBLE);
+            for (int i = 0; i < topViewedVocab.size(); i++) {
+                Vocabulary vocab = topViewedVocab.get(i);
+                TextView tv = new TextView(this);
+                tv.setText(String.format(Locale.getDefault(), "%d. %s (Chương: %s) - Lượt xem: %d",
+                        i + 1,
+                        vocab.getWord(),
+                        (vocab.getChapter() != null ? vocab.getChapter().getName() : String.valueOf(vocab.getChapterId())),
+                        vocab.getViewCount()));
+                tv.setTextSize(16);
+                tv.setPadding(8, 4, 8, 4);
+                layoutTopVocabulary.addView(tv);
+            }
+        } else {
+            tvTopVocabularyLabel.setVisibility(View.GONE);
+            layoutTopVocabulary.setVisibility(View.GONE);
+
+        }
+
+
+        List<Video> topViewedVideos = videoDao.getTopViewedVideos(5);
+        layoutTopVideos.removeAllViews();
+        if (topViewedVideos != null && !topViewedVideos.isEmpty()) {
+            tvTopVideosLabel.setVisibility(View.VISIBLE);
+            layoutTopVideos.setVisibility(View.VISIBLE);
+            for (int i = 0; i < topViewedVideos.size(); i++) {
+                Video video = topViewedVideos.get(i);
+                TextView tv = new TextView(this);
+                tv.setText(String.format(Locale.getDefault(), "%d. %s - Lượt xem: %d",
+                        i + 1,
+                        video.getTitle(),
+                        video.getViewCount()));
+                tv.setTextSize(16);
+                tv.setPadding(8, 4, 8, 4);
+                layoutTopVideos.addView(tv);
+            }
+        } else {
+            tvTopVideosLabel.setVisibility(View.GONE);
+            layoutTopVideos.setVisibility(View.GONE);
+
+        }
+
     }
 
     @Override
