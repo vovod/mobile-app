@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nhom13.learningenglishapp.R;
+import com.nhom13.learningenglishapp.activity.ChatbotActivity;
 import com.nhom13.learningenglishapp.activity.LoginActivity;
 import com.nhom13.learningenglishapp.database.dao.UserDao;
 import com.nhom13.learningenglishapp.database.models.User;
@@ -24,6 +25,7 @@ public class UserHomePageActivity extends AppCompatActivity {
     ImageButton btnVideoTiengAnh;
     ImageButton btnChoiGame;
     ImageButton btnTiengAnh;
+    ImageButton btnChatbot;
     String username;
     ImageButton Setting;
     TextView UserTextView, ScoreTextView;
@@ -43,6 +45,7 @@ public class UserHomePageActivity extends AppCompatActivity {
         btnVideoTiengAnh = findViewById(R.id.img_amnhac);
         btnChoiGame = findViewById(R.id.img_kiemtra);
         btnTiengAnh = findViewById(R.id.img_tudien);
+        btnChatbot = findViewById(R.id.img_chatbot);
         Setting = findViewById(R.id.btnsetting);
         UserTextView = findViewById(R.id.tvUser);
         ScoreTextView = findViewById(R.id.tvScore);
@@ -50,10 +53,8 @@ public class UserHomePageActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra("username")) {
             username = getIntent().getStringExtra("username");
-
             UserTextView.setText(username);
         } else {
-
             Toast.makeText(this, "Không tìm thấy thông tin người dùng.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -62,12 +63,10 @@ public class UserHomePageActivity extends AppCompatActivity {
         }
 
 
-
         btnVideoTiengAnh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("Go to videoTiengAnh");
-
                 Intent intent = new Intent(UserHomePageActivity.this, VideoListActivity.class);
                 intent.putExtra("username", username);
 
@@ -79,7 +78,6 @@ public class UserHomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("Go to choiGame");
-
                 Intent intent = new Intent(UserHomePageActivity.this, GameActivity.class);
                 intent.putExtra("username", username);
 
@@ -91,13 +89,29 @@ public class UserHomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("Go to tiengAnh");
-
                 Intent intent = new Intent(UserHomePageActivity.this, DictionaryActivity.class);
                 intent.putExtra("username", username);
 
                 startActivity(intent);
             }
         });
+
+
+        if (btnChatbot != null) {
+            btnChatbot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("UserHomePageActivity", "Chatbot button clicked");
+                    Intent intent = new Intent(UserHomePageActivity.this, ChatbotActivity.class);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            Log.e("UserHomePageActivity", "btnChatbot is null. Check layout ID 'img_chatbot'.");
+        }
+
+
         Setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +124,6 @@ public class UserHomePageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         if (username != null && !username.isEmpty()) {
             User user = userDao.getUserByUsername(username);
             if (user != null) {
@@ -118,11 +131,11 @@ public class UserHomePageActivity extends AppCompatActivity {
                 ScoreTextView.setText(String.valueOf(score));
                 Log.d("UserHomePage", "Score refreshed in onResume: " + score);
             } else {
-
                 Toast.makeText(this, "Tài khoản không tồn tại. Vui lòng đăng nhập lại.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish();
+                finishAffinity();
             }
         }
     }
@@ -133,17 +146,13 @@ public class UserHomePageActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_setting, null);
         builder.setView(dialogView);
 
-
         Button logoutButton = dialogView.findViewById(R.id.igbLogOut);
-
 
         AlertDialog dialog = builder.create();
         dialog.show();
 
-
         logoutButton.setOnClickListener(v -> {
             dialog.dismiss();
-
             Intent intent = new Intent(UserHomePageActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -151,5 +160,4 @@ public class UserHomePageActivity extends AppCompatActivity {
             Toast.makeText(UserHomePageActivity.this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
         });
     }
-
 }
