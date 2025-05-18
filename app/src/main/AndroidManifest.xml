@@ -114,6 +114,17 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".activity.ChatbotActivity"
+            android:exported="false"
+            android:label="Chatbot Hỗ Trợ"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:parentActivityName=".activity.user.UserHomePageActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.user.UserHomePageActivity" />
+        </activity>
+
 
     </application>
 
