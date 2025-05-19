@@ -1,7 +1,10 @@
 package com.nhom13.learningenglishapp.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,9 @@ import com.nhom13.learningenglishapp.R;
 import com.nhom13.learningenglishapp.database.models.Quiz;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.AsynchronousFileChannel;
 import java.util.List;
 
 public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder> {
@@ -23,10 +29,13 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
     private Context context;
     private List<Quiz> quizList;
     private OnQuizListener listener;
+    private ImageView imgAnswer;
+    private static final String TAG = "QuizAdapter";
 
     public interface OnQuizListener {
         void onQuizClick(Quiz quiz);
         void onQuizDeleteClick(Quiz quiz);
+
     }
 
     public QuizAdapter(Context context, List<Quiz> quizList, OnQuizListener listener) {
@@ -51,19 +60,37 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         
 
         holder.tvWrongAnswer.setText("Đáp án sai: " + quiz.getWrongAnswer());
-        
+
 
         if (quiz.getImagePath() != null && !quiz.getImagePath().isEmpty()) {
-            File imgFile = new File(quiz.getImagePath());
-            if (imgFile.exists()) {
-                holder.imgQuiz.setImageURI(Uri.fromFile(imgFile));
-            } else {
+            InputStream inputStream = null;
+            try {
+                if (quiz.getImagePath().startsWith("images/")) {
+                    // Hiển thị hình ảnh từ assets
+                    inputStream = context.getAssets().open(quiz.getImagePath());
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    holder.imgQuiz.setImageBitmap(bitmap);
+                } else {
+                    // Hiển thị hình ảnh từ đường dẫn file
+                    holder.imgQuiz.setImageURI(Uri.parse(quiz.getImagePath()));
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "Error loading image: " + quiz.getImagePath(), e);
                 holder.imgQuiz.setImageResource(R.drawable.question);
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        Log.e(TAG, "Error closing InputStream for image: " + quiz.getImagePath(), e);
+                    }
+                }
             }
         } else {
             holder.imgQuiz.setImageResource(R.drawable.question);
         }
-        
+
+
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
@@ -78,6 +105,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
