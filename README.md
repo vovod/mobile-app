@@ -57,37 +57,42 @@
 ## Cấu trúc dự án (Project Structure)
 
 Dự án được tổ chức theo cấu trúc chuẩn của một ứng dụng Android:
+
+```text
 mobile-app-main/
 ├── app/
 │   ├── src/
 │   │   ├── main/
-│   │   │   ├── java/com/nhom13/learningenglishapp/  # Mã nguồn chính
-│   │   │   │   ├── activity/                       # Các Activity (màn hình) của ứng dụng
-│   │   │   │   │   ├── admin/                      # Activity dành cho quản trị viên
-│   │   │   │   │   └── user/                       # Activity dành cho người dùng
-│   │   │   │   ├── adapters/                       # Adapters cho RecyclerViews
-│   │   │   │   ├── database/                       # Logic cơ sở dữ liệu (SQLite)
-│   │   │   │   │   ├── dao/                        # Data Access Objects
-│   │   │   │   │   └── models/                     # Các đối tượng mô hình dữ liệu
-│   │   │   │   └── utils/                          # Các lớp tiện ích (FileUtils, YouTubeHelper)
-│   │   │   ├── res/                                # Tài nguyên ứng dụng
-│   │   │   │   ├── layout/                         # Các file XML định nghĩa giao diện
-│   │   │   │   ├── drawable/                       # Hình ảnh, icon, style tùy chỉnh
-│   │   │   │   ├── values/                         # Strings, colors, themes
-│   │   │   │   ├── xml/                            # Các file XML cấu hình (backup_rules)
-│   │   │   │   ├── raw/                            # Các file dữ liệu thô (travelling.json)
-│   │   │   │   ├── anim/                           # Các file XML định nghĩa animation
-│   │   │   │   └── mipmap/                         # Các icon launcher
-│   │   │   ├── assets/                             # Các file tài sản
-│   │   │   │   ├── data/                           # Dữ liệu JSON (chapters.json, quiz.json, vocabulary.json)
-│   │   │   │   └── *.sql                           # Dữ liệu SQL mẫu (sample_data.sql, sample_videos.sql)
-│   │   │   └── AndroidManifest.xml                 # File kê khai ứng dụng
-│   │   ├── test/                                 # Mã nguồn cho Unit Tests
-│   │   └── androidTest/                          # Mã nguồn cho Instrumented Tests
-│   └── build.gradle                              # Cấu hình build cho module app
-├── gradle/                                         # Cấu hình Gradle Wrapper
-├── build.gradle                                    # Cấu hình build cho toàn bộ dự án
-└── ... (các file cấu hình khác)
+│   │   │   ├── java/com/nhom13/learningenglishapp/  
+│   │   │   │   ├── activity/                           
+│   │   │   │   │   ├── admin/                     
+│   │   │   │   │   └── user/                       
+│   │   │   │   ├── database/                    
+│   │   │   │   │   ├── dao/                       
+│   │   │   │   │   └── models/                     
+│   │   │   │   └── utils/                           
+│   │   │   ├── res/                                
+│   │   │   │   ├── layout/                         
+│   │   │   │   ├── drawable/                       
+│   │   │   │   ├── values/                         
+│   │   │   │   ├── xml/                            
+│   │   │   │   ├── raw/                            
+│   │   │   │   ├── anim/                           
+│   │   │   │   └── mipmap/                         
+│   │   │   ├── assets/                             
+│   │   │   │   ├── data/                           
+│   │   │   │   └── *.sql                           
+│   │   │   └── AndroidManifest.xml                 
+│   │   ├── test/                                 
+│   │   └── androidTest/                          
+│   └── build.gradle                              
+├── gradle/                                         
+│   └── wrapper/
+│       └── gradle-wrapper.properties             
+├── build.gradle                                    
+├── gradle.properties                               
+├── local.properties                                
+└── README.md               
 
 ## Yêu cầu và Cài đặt (Requirements and Setup)
 
