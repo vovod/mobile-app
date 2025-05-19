@@ -55,7 +55,7 @@ public class VideoDao {
                     video.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_TITLE)));
                     video.setThumbnailUrl(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_THUMBNAIL)));
                     video.setVideoUrl(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_URL)));
-                    video.setViewCount(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_VIEW_COUNT))); // <<<<<<<<<< LẤY VIEW COUNT
+                    video.setViewCount(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_VIEW_COUNT)));
                     videos.add(video);
                 } while (cursor.moveToNext());
             }
@@ -82,7 +82,7 @@ public class VideoDao {
                 video.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_TITLE)));
                 video.setThumbnailUrl(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_THUMBNAIL)));
                 video.setVideoUrl(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_URL)));
-                video.setViewCount(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_VIEW_COUNT))); // <<<<<<<<<< LẤY VIEW COUNT
+                video.setViewCount(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.KEY_VIDEO_VIEW_COUNT)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,7 +116,7 @@ public class VideoDao {
 
     public boolean deleteVideo(int videoId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // Delete the video from database
+
         boolean success = db.delete(DatabaseHelper.TABLE_VIDEOS,
                 DatabaseHelper.KEY_VIDEO_ID + " = ?",
                 new String[]{String.valueOf(videoId)}) > 0;

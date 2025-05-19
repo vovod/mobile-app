@@ -28,14 +28,14 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView LoginTextView;
     private UserDao ud;
 
-    // Regex cho username: chỉ cho phép chữ cái, số và gạch dưới
+
     private static final String USERNAME_PATTERN = "^[a-zA-Z0-9_]+$";
     private static final Pattern pattern = Pattern.compile(USERNAME_PATTERN);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_register);
 
         ud = new UserDao(this);
@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = PasswordRegister.getText().toString().trim();
                 String confirmPassword = ConfirmPasswordRegister.getText().toString().trim();
 
-                // Kiểm tra các trường rỗng
+
                 boolean hasError = false;
 
                 if (email.isEmpty()) {
@@ -72,12 +72,12 @@ public class RegisterActivity extends AppCompatActivity {
                     hasError = true;
                 }
 
-                // Nếu có lỗi trống, dừng xử lý
+
                 if (hasError) {
                     return;
                 }
 
-                // Kiểm tra mật khẩu và xác nhận mật khẩu
+
                 if (!password.equals(confirmPassword)) {
                     System.out.println("Mật khẩu không khớp");
                     ConfirmPasswordRegister.setError("Mật khẩu không khớp");

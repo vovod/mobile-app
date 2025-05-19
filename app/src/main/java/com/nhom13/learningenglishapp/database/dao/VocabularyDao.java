@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log; // <<<<<<<<<< THÊM IMPORT NẾU CHƯA CÓ
+import android.util.Log;
 
 import com.nhom13.learningenglishapp.database.DatabaseHelper;
 import com.nhom13.learningenglishapp.database.models.Chapter;

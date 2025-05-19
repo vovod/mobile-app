@@ -8,7 +8,7 @@ public class QuizResult implements Serializable {
     private int score;
     private int totalQuestions;
     private int correctAnswers;
-    private long date; // Timestamp in milliseconds
+    private long date;
 
     public QuizResult() {
     }

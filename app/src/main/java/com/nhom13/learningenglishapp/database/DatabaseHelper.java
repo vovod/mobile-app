@@ -14,12 +14,12 @@ import java.io.InputStreamReader;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
-    // Database Info
+
     private static final String DATABASE_NAME = "EnglishLearningDB";
 
     private static final int DATABASE_VERSION = 2;
 
-    // Table Names
+
     public static final String TABLE_USERS = "users";
     public static final String TABLE_CHAPTERS = "chapters";
     public static final String TABLE_VOCABULARY = "vocabulary";
@@ -27,38 +27,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_VIDEOS = "videos";
     public static final String TABLE_QUIZ_RESULTS = "quiz_results";
 
-    // User Table Columns
+
     public static final String KEY_USER_ID = "id";
     public static final String KEY_USER_USERNAME = "username";
     public static final String KEY_USER_PASSWORD = "password";
     public static final String KEY_USER_SCORE = "score";
 
-    // Chapter Table Columns
+
     public static final String KEY_CHAPTER_ID = "id";
     public static final String KEY_CHAPTER_NAME = "name";
     public static final String KEY_CHAPTER_IMAGE_PATH = "image_path";
 
-    // Vocabulary Table Columns
+
     public static final String KEY_VOCABULARY_ID = "id";
     public static final String KEY_VOCABULARY_WORD = "word";
     public static final String KEY_VOCABULARY_CHAPTER_ID = "chapter_id";
     public static final String KEY_VOCABULARY_IMAGE_PATH = "image_path";
     public static final String KEY_VOCABULARY_VIEW_COUNT = "view_count";
 
-    // Quiz Table Columns
+
     public static final String KEY_QUIZ_ID = "id";
     public static final String KEY_QUIZ_CORRECT_ANSWER = "correct_answer";
     public static final String KEY_QUIZ_WRONG_ANSWER = "wrong_answer";
     public static final String KEY_QUIZ_IMAGE_PATH = "image_path";
 
-    // Video Table Columns
+
     public static final String KEY_VIDEO_ID = "id";
     public static final String KEY_VIDEO_TITLE = "title";
     public static final String KEY_VIDEO_THUMBNAIL = "thumbnail";
     public static final String KEY_VIDEO_URL = "video_url";
     public static final String KEY_VIDEO_VIEW_COUNT = "view_count";
 
-    // Quiz Results Table Columns
+
     public static final String KEY_RESULT_ID = "id";
     public static final String KEY_RESULT_USER_ID = "user_id";
     public static final String KEY_RESULT_SCORE = "score";
@@ -336,7 +336,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         } catch (Exception e) {
             Log.e(TAG, "Error inserting hardcoded sample data", e);
-            throw e; // Ném lại lỗi để transaction có thể rollback nếu có vấn đề
+            throw e;
         }
     }
 
@@ -365,7 +365,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
-            // Clear existing data
+
             db.execSQL("DELETE FROM " + TABLE_QUIZ_RESULTS);
             db.execSQL("DELETE FROM " + TABLE_VOCABULARY);
             db.execSQL("DELETE FROM " + TABLE_QUIZ);

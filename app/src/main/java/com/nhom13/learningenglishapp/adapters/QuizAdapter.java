@@ -66,12 +66,12 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             InputStream inputStream = null;
             try {
                 if (quiz.getImagePath().startsWith("images/")) {
-                    // Hiển thị hình ảnh từ assets
+
                     inputStream = context.getAssets().open(quiz.getImagePath());
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     holder.imgQuiz.setImageBitmap(bitmap);
                 } else {
-                    // Hiển thị hình ảnh từ đường dẫn file
+
                     holder.imgQuiz.setImageURI(Uri.parse(quiz.getImagePath()));
                 }
             } catch (IOException e) {

@@ -188,7 +188,7 @@ public class UserDao {
 
         int result = 0;
         try {
-            // Updating row
+
             result = db.update(DatabaseHelper.TABLE_USERS, values,
                     DatabaseHelper.KEY_USER_USERNAME + " = ?",
                     new String[]{username});

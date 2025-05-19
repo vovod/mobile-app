@@ -1,9 +1,9 @@
 package com.nhom13.learningenglishapp.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap; // Thêm dòng này
-import android.graphics.BitmapFactory; // Thêm dòng này
-import android.util.Log; // Thêm dòng này (nếu chưa có, để dùng Log.e)
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nhom13.learningenglishapp.R;
 import com.nhom13.learningenglishapp.database.models.Vocabulary;
 
-import java.io.File; // Dòng này bạn đã có nhưng không còn cần thiết nếu tải từ assets
-import java.io.IOException; // Thêm dòng này
-import java.io.InputStream; // Thêm dòng này
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class AlphabetAdapter extends RecyclerView.Adapter<AlphabetAdapter.AlphabetViewHolder> {

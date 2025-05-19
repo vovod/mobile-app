@@ -67,7 +67,7 @@ public class VideoListActivity extends AppCompatActivity implements UserVideoAda
 
 
         btnBack.setOnClickListener(v -> {
-            // Quay về màn hình chính
+
             Intent intent = new Intent(VideoListActivity.this, UserHomePageActivity.class);
             intent.putExtra("username", username);
             intent.putExtra("score", score);

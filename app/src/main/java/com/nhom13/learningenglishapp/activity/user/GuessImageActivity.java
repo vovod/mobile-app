@@ -138,7 +138,7 @@ public class GuessImageActivity extends AppCompatActivity implements AnswerAdapt
         }
 
         if (index >= quizList.size()) {
-            // Game kết thúc
+
             showGameOverDialog();
             return;
         }

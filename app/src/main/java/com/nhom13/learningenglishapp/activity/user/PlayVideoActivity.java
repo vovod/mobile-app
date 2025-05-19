@@ -19,7 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nhom13.learningenglishapp.R;
-import com.nhom13.learningenglishapp.database.dao.VideoDao; // <<<<<<<<<< THÊM IMPORT
+import com.nhom13.learningenglishapp.database.dao.VideoDao;
 import com.nhom13.learningenglishapp.database.models.Video;
 import com.nhom13.learningenglishapp.utils.YouTubeHelper;
 

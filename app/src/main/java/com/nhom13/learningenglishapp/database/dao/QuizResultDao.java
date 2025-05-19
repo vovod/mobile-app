@@ -15,10 +15,10 @@ public class QuizResultDao {
     private DatabaseHelper dbHelper;
     private Context context;
 
-    // Table name
+
     private static final String TABLE_QUIZ_RESULTS = "quiz_results";
 
-    // Column names
+
     private static final String KEY_RESULT_ID = "id";
     private static final String KEY_RESULT_USER_ID = "user_id";
     private static final String KEY_RESULT_SCORE = "score";
