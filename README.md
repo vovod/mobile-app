@@ -92,7 +92,8 @@ mobile-app-main/
 ├── build.gradle                                    
 ├── gradle.properties                               
 ├── local.properties                                
-└── README.md               
+└── README.md   
+```          
 
 ## Yêu cầu và Cài đặt (Requirements and Setup)
 
