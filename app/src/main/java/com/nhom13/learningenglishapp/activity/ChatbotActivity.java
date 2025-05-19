@@ -1,17 +1,19 @@
 package com.nhom13.learningenglishapp.activity;
 
-import android.content.ActivityNotFoundException;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import com.nhom13.learningenglishapp.R;
+import com.nhom13.learningenglishapp.activity.user.UserHomePageActivity;
 import com.nhom13.learningenglishapp.adapters.MessageAdapter;
 import com.nhom13.learningenglishapp.database.models.Message;
 
@@ -53,21 +56,25 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
     private GenerativeModelFutures model;
     private Executor mainExecutor;
 
+    private ImageButton btnHomeChatbot, btnSettingChatbot;
+    private String username;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatbot);
 
-        Toolbar toolbar = findViewById(R.id.toolbarChatbot);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getIntent().hasExtra("username")) {
+            username = getIntent().getStringExtra("username");
         }
 
         rvChatMessages = findViewById(R.id.rvChatMessages);
         etChatMessage = findViewById(R.id.etChatMessage);
         btnSendMessage = findViewById(R.id.btnSendMessage);
+
+        btnHomeChatbot = findViewById(R.id.btnHomeChatbot);
+        btnSettingChatbot = findViewById(R.id.btnSettingChatbot);
 
         messageList = new ArrayList<>();
         messageAdapter = new MessageAdapter(messageList);
@@ -79,7 +86,7 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
         textToSpeech = new TextToSpeech(this, this);
         mainExecutor = Executors.newSingleThreadExecutor();
 
-        String apiKey = "API_Key_google_ai_studio"; //thay api vào đây hẹ hẹ
+        String apiKey = "API_key";
 
 
         if (apiKey == null || apiKey.isEmpty() || apiKey.equals("YOUR_GEMINI_API_KEY_HERE") || apiKey.equals("null")) {
@@ -105,6 +112,20 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
             } else {
                 Toast.makeText(ChatbotActivity.this, "Vui lòng nhập câu hỏi", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        btnHomeChatbot.setOnClickListener(v -> {
+            Intent intent = new Intent(ChatbotActivity.this, UserHomePageActivity.class);
+            if (username != null && !username.isEmpty()) {
+                intent.putExtra("username", username);
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        });
+
+        btnSettingChatbot.setOnClickListener(v -> {
+            showSettingDialog();
         });
 
         addBotMessage("Xin chào! Tôi là trợ lý học tiếng Anh. Bạn muốn hỏi gì về từ vựng (nghĩa, phát âm)?");
@@ -197,7 +218,6 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
     public void onInit(int status) {
         if (status == TextToSpeech.SUCCESS) {
             isTtsInitialized = true;
-
             int result = textToSpeech.setLanguage(Locale.US);
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 Log.w(TAG, "US English not supported or missing. Trying UK English.");
@@ -229,15 +249,11 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
         if (!isTtsInitialized) {
             Log.e(TAG, "TTS is not initialized. Cannot speak.");
             Toast.makeText(this, "TTS chưa sẵn sàng để phát âm.", Toast.LENGTH_SHORT).show();
-
             return;
         }
-
         if (textToSpeech != null && !textToSpeech.isSpeaking()) {
-
             Locale currentLang = textToSpeech.getLanguage();
             if (currentLang == null || (!currentLang.equals(Locale.US) && !currentLang.equals(Locale.UK) && !currentLang.equals(Locale.ENGLISH))) {
-
                 Log.w(TAG, "TTS language was not set to English. Attempting to set again.");
                 int result = textToSpeech.setLanguage(Locale.US);
                 if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -247,16 +263,57 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
                     }
                 }
             }
-
             textToSpeech.speak(word, TextToSpeech.QUEUE_FLUSH, null, word.hashCode() + "");
             Log.i(TAG, "TTS speaking word: " + word + " with language: " + textToSpeech.getLanguage());
-
         } else if (textToSpeech == null) {
             Log.e(TAG, "TextToSpeech is null (should not happen if isTtsInitialized is true).");
         } else if (textToSpeech.isSpeaking()) {
             Log.w(TAG, "TextToSpeech is already speaking.");
-
         }
+    }
+
+    private void showSettingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_setting, null);
+        builder.setView(dialogView);
+
+        Button logoutButton = dialogView.findViewById(R.id.igbLogOut);
+        ImageButton igbHomeDialog = dialogView.findViewById(R.id.igbHome);
+        ImageButton igbMusicDialog = dialogView.findViewById(R.id.igbMusic);
+        ImageButton igbExitDialog = dialogView.findViewById(R.id.igbExit);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        logoutButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent = new Intent(ChatbotActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finishAffinity();
+            Toast.makeText(ChatbotActivity.this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
+        });
+
+        igbHomeDialog.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent = new Intent(ChatbotActivity.this, UserHomePageActivity.class);
+            if (username != null && !username.isEmpty()) {
+                intent.putExtra("username", username);
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        });
+
+        igbMusicDialog.setOnClickListener(v -> {
+            Toast.makeText(this, "Chức năng Nhạc đang phát triển", Toast.LENGTH_SHORT).show();
+        });
+
+        igbExitDialog.setOnClickListener(v -> {
+            dialog.dismiss();
+            finishAffinity();
+        });
     }
 
     @Override
@@ -267,11 +324,5 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
             Log.i(TAG, "TextToSpeech đã được giải phóng.");
         }
         super.onDestroy();
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }
