@@ -18,6 +18,8 @@ import com.nhom13.learningenglishapp.R;
 import com.nhom13.learningenglishapp.database.dao.UserDao;
 import com.nhom13.learningenglishapp.database.models.User;
 
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
     private EditText UserNameRegister;
     private EditText PasswordRegister;
@@ -25,6 +27,11 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText ConfirmPasswordRegister;
     private TextView LoginTextView;
     private UserDao ud;
+
+    // Regex cho username: chỉ cho phép chữ cái, số và gạch dưới
+    private static final String USERNAME_PATTERN = "^[a-zA-Z0-9_]+$";
+    private static final Pattern pattern = Pattern.compile(USERNAME_PATTERN);
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,25 +47,52 @@ public class RegisterActivity extends AppCompatActivity {
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = UserNameRegister.getText().toString();
-                String password = PasswordRegister.getText().toString();
-                String confirmPassword = ConfirmPasswordRegister.getText().toString();
+                String email = UserNameRegister.getText().toString().trim();
+                String password = PasswordRegister.getText().toString().trim();
+                String confirmPassword = ConfirmPasswordRegister.getText().toString().trim();
+
+                // Kiểm tra các trường rỗng
+                boolean hasError = false;
+
+                if (email.isEmpty()) {
+                    UserNameRegister.setError("Tên đăng nhập không được để trống");
+                    hasError = true;
+                } else if (!isValidUsername(email)) {
+                    UserNameRegister.setError("Tên đăng nhập chỉ chấp nhận chữ cái, số và dấu gạch dưới");
+                    hasError = true;
+                }
+
+                if (password.isEmpty()) {
+                    PasswordRegister.setError("Mật khẩu không được để trống");
+                    hasError = true;
+                }
+
+                if (confirmPassword.isEmpty()) {
+                    ConfirmPasswordRegister.setError("Xác nhận mật khẩu không được để trống");
+                    hasError = true;
+                }
+
+                // Nếu có lỗi trống, dừng xử lý
+                if (hasError) {
+                    return;
+                }
+
+                // Kiểm tra mật khẩu và xác nhận mật khẩu
                 if (!password.equals(confirmPassword)) {
                     System.out.println("Mật khẩu không khớp");
-                    PasswordRegister.setError("Mật khẩu không khớp");
+                    ConfirmPasswordRegister.setError("Mật khẩu không khớp");
                 }
-                else{
-                    if(checkUsername(email,ud)==false){
+                else {
+                    if (!checkUsername(email, ud)) {
                         System.out.println("Tài khoản đã tồn tại");
                         UserNameRegister.setError("Tài khoản đã tồn tại");
                     }
-                    else{
+                    else {
                         ud.createUser(new User(email, password));
                         System.out.println("Đăng ký thành công");
                         Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                         ChangeToNextActivity();
                     }
-
                 }
             }
         });
@@ -79,13 +113,14 @@ public class RegisterActivity extends AppCompatActivity {
             return insets;
         });
     }
+    
+    private boolean isValidUsername(String username) {
+        return pattern.matcher(username).matches();
+    }
 
     private boolean checkUsername(String username, UserDao userDao) {
         User user = userDao.getUserByUsername(username);
-        if(user == null){
-            return true;
-        }
-        return false;
+        return user == null;
     }
 
     private void ChangeToNextActivity(){
