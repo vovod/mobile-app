@@ -5,23 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundLight"
-    tools:context=".activity.ChatbotActivity">  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbarChatbot"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    app:title="English Chatbot"
-    app:titleTextColor="@android:color/white"
-    android:elevation="4dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    tools:context=".activity.ChatbotActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutHeaderChatbot"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/purple_500" android:elevation="4dp">
+
+        <ImageButton
+            android:id="@+id/btnHomeChatbot"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Trang chủ"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tvChatbotTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="English Chatbot"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnHomeChatbot"
+            app:layout_constraintEnd_toStartOf="@id/btnSettingChatbot"/>
+
+        <ImageButton
+            android:id="@+id/btnSettingChatbot"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Cài đặt"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/setting"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChatMessages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/layoutChatMessage"
-        android:layout_below="@id/toolbarChatbot"
+        android:layout_below="@id/layoutHeaderChatbot"
         android:clipToPadding="false"
         android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
