@@ -37,6 +37,7 @@
             android:text="Learn and Play"
             android:textStyle="bold"
             android:textColor="@color/purple_700"
+
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnSettingGame"
@@ -68,31 +69,24 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/item_leaderboard_button_container"
-            android:layout_width="0dp"
+            android:id="@+id/item1"
+            android:layout_width="200dp"
             android:layout_height="250dp"
-            android:layout_weight="1"
             android:layout_marginHorizontal="10dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?android:attr/selectableItemBackground">
+            android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/igbShowLeaderboard"
+                android:id="@+id/igbYesNo"
                 android:layout_width="170dp"
                 android:layout_height="200dp"
                 android:background="@drawable/item_shadow"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bxh"
-                android:contentDescription="Bảng Xếp Hạng"
-                android:clickable="false"
-                android:focusable="false"/>
+                android:src="@drawable/yesno"
+                android:contentDescription="Đúng hay Sai"/>
 
             <TextView
                 android:layout_width="170dp"
@@ -101,18 +95,18 @@
                 android:elevation="6dp"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Bảng Xếp Hạng"
+                android:text="Đúng hay Sai"
                 android:textAllCaps="false"
                 android:textColor="@color/purple_700"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/item2"
-            android:layout_width="0dp"
+            android:layout_width="200dp"
             android:layout_height="250dp"
-            android:layout_weight="1"
             android:layout_marginHorizontal="10dp"
             android:gravity="center"
             android:orientation="vertical">
@@ -138,6 +132,11 @@
                 android:textColor="@color/purple_700"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
         </LinearLayout>
+
     </LinearLayout>
+
+
+
 </LinearLayout>
