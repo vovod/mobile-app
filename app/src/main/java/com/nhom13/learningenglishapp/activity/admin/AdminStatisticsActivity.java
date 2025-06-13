@@ -150,7 +150,6 @@ public class AdminStatisticsActivity extends AppCompatActivity implements UserAd
         }
 
 
-
         List<Vocabulary> topViewedVocab = vocabularyDao.getTopViewedVocabulary(5);
         layoutTopVocabulary.removeAllViews();
         if (topViewedVocab != null && !topViewedVocab.isEmpty()) {

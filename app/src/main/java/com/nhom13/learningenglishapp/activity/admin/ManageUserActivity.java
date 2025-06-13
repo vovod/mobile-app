@@ -1,5 +1,6 @@
 package com.nhom13.learningenglishapp.activity.admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import com.nhom13.learningenglishapp.database.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageUserActivity extends AppCompatActivity implements UserAdapter.OnUserDeleteListener {
+public class ManageUserActivity extends AppCompatActivity implements UserAdapter.OnUserDeleteListener, UserAdapter.OnUserClickListener {
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
     private List<User> userList;
@@ -41,7 +42,7 @@ public class ManageUserActivity extends AppCompatActivity implements UserAdapter
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userAdapter = new UserAdapter(this, userList, this);
+        userAdapter = new UserAdapter(this, userList, this, this);
         recyclerView.setAdapter(userAdapter);
 
 
@@ -65,5 +66,13 @@ public class ManageUserActivity extends AppCompatActivity implements UserAdapter
     public void onUserDeleted() {
 
         loadUserData();
+    }
+
+    @Override
+    public void onUserClick(User user) {
+        Toast.makeText(this, "Xem chi tiết người dùng: " + user.getUsername(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(ManageUserActivity.this, AdminUserDetailActivity.class);
+        intent.putExtra("userId", user.getId());
+        startActivity(intent);
     }
 }
