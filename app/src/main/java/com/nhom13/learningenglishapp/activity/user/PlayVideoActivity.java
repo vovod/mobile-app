@@ -43,18 +43,18 @@ public class PlayVideoActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
-
-
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+//
+//
+//        WebSettings webSettings = webView.getSettings();
+//        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setDomStorageEnabled(true);
+//        webView.setWebChromeClient(new WebChromeClient());
+//        webView.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public void onPageFinished(WebView view, String url) {
+//                progressBar.setVisibility(View.GONE);
+//            }
+//        });
 
 
         if (getIntent().hasExtra("video")) {
@@ -98,56 +98,59 @@ public class PlayVideoActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        try {
-
-            String html = "<!DOCTYPE html>\n" +
-                    "<html>\n" +
-                    "<head>\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n" +
-                    "    <style>\n" +
-                    "        body { margin: 0; padding: 0; background-color: #000; }\n" +
-                    "        .container { position: relative; width: 100%; height: 100vh; overflow: hidden; }\n" +
-                    "        iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }\n" +
-                    "    </style>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "    <div class=\"container\">\n" +
-
-                    "        <iframe src=\"https://www.youtube.com/embed/" + (videoId != null ? videoId : "") + "?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>\n" +
-                    "    </div>\n" +
-                    "</body>\n" +
-                    "</html>";
-
-
-            webView.loadDataWithBaseURL("https://www.youtube.com", html, "text/html", "UTF-8", null);
-
-
-            webView.setWebViewClient(new WebViewClient() {
-                @Override
-                public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                    super.onReceivedError(view, request, error);
-                    Log.e(TAG, "WebView error, trying fallback method. Error: " + error.getDescription());
-
-                    if (videoId != null && !videoId.isEmpty()) {
-                        webView.loadUrl("https://www.youtube.com/watch?v=" + videoId + "&autoplay=1&rel=0");
-                    }
-                }
-
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    progressBar.setVisibility(View.GONE);
-                }
-            });
-        } catch (Exception e) {
-            Log.e(TAG, "Error loading YouTube video: " + e.getMessage());
-            Toast.makeText(this, "Lỗi khi tải video: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-
-            if (videoId != null && !videoId.isEmpty()) {
-                showFallbackOptions(videoId);
-            }
+        if (videoId != null && !videoId.isEmpty()) {
+            webView.loadUrl("https://www.youtube.com/watch?v=" + videoId + "&autoplay=1&rel=0");
         }
+//        try {
+//
+//            String html = "<!DOCTYPE html>\n" +
+//                    "<html>\n" +
+//                    "<head>\n" +
+//                    "    <meta charset=\"UTF-8\">\n" +
+//                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n" +
+//                    "    <style>\n" +
+//                    "        body { margin: 0; padding: 0; background-color: #000; }\n" +
+//                    "        .container { position: relative; width: 100%; height: 100vh; overflow: hidden; }\n" +
+//                    "        iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }\n" +
+//                    "    </style>\n" +
+//                    "</head>\n" +
+//                    "<body>\n" +
+//                    "    <div class=\"container\">\n" +
+//
+//                    "        <iframe src=\"https://www.youtube.com/embed/" + (videoId != null ? videoId : "") + "?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+//                    "    </div>\n" +
+//                    "</body>\n" +
+//                    "</html>";
+//
+//
+//            webView.loadDataWithBaseURL("https://www.youtube.com", html, "text/html", "UTF-8", null);
+//
+//
+//            webView.setWebViewClient(new WebViewClient() {
+//                @Override
+//                public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+//                    super.onReceivedError(view, request, error);
+//                    Log.e(TAG, "WebView error, trying fallback method. Error: " + error.getDescription());
+//
+//                    if (videoId != null && !videoId.isEmpty()) {
+//                        webView.loadUrl("https://www.youtube.com/watch?v=" + videoId + "&autoplay=1&rel=0");
+//                    }
+//                }
+//
+//                @Override
+//                public void onPageFinished(WebView view, String url) {
+//                    progressBar.setVisibility(View.GONE);
+//                }
+//            });
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error loading YouTube video: " + e.getMessage());
+//            Toast.makeText(this, "Lỗi khi tải video: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//
+//            if (videoId != null && !videoId.isEmpty()) {
+//                showFallbackOptions(videoId);
+//            }
+//        }
     }
 
     private void showFallbackOptions(final String videoId) {

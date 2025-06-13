@@ -118,12 +118,10 @@ public class ManageQuizActivity extends AppCompatActivity implements QuizAdapter
         Button buttonAddImageGuess = dialogView.findViewById(R.id.buttonAddImageGuess);
         EditText answer1 = dialogView.findViewById(R.id.answer1);
         EditText answer2 = dialogView.findViewById(R.id.answer2);
-        EditText answer3 = dialogView.findViewById(R.id.answer3);
-        EditText answer4 = dialogView.findViewById(R.id.answer4);
+
         RadioButton radio1 = dialogView.findViewById(R.id.radio1);
         RadioButton radio2 = dialogView.findViewById(R.id.radio2);
-        RadioButton radio3 = dialogView.findViewById(R.id.radio3);
-        RadioButton radio4 = dialogView.findViewById(R.id.radio4);
+
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

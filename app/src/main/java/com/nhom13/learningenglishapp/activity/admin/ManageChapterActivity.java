@@ -26,7 +26,7 @@ import com.nhom13.learningenglishapp.database.models.Chapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageChapterActivity extends AppCompatActivity implements ChapterAdapter.OnChapterListener {
+public class    ManageChapterActivity extends AppCompatActivity implements ChapterAdapter.OnChapterListener {
 
     private RecyclerView recyclerView;
     private ChapterAdapter chapterAdapter;

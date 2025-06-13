@@ -111,8 +111,12 @@ public class ManageWordActivity extends AppCompatActivity implements WordAdapter
 
 
         List<Chapter> chapters = chapterDao.getAllChapters();
-        ArrayAdapter<Chapter> chapterAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, chapters);
+        List<String> chapterNames = new ArrayList<>();
+        for (Chapter chapter : chapters) {
+            chapterNames.add(chapter.getName());
+        }
+        ArrayAdapter<String> chapterAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, chapterNames);
         chapterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerChapter.setAdapter(chapterAdapter);
 

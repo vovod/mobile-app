@@ -2,6 +2,7 @@ package com.nhom13.learningenglishapp.activity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer; // Thêm import này
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -206,6 +208,8 @@ public class UserHomePageActivity extends AppCompatActivity {
         builder.setView(dialogView);
 
         Button logoutButton = dialogView.findViewById(R.id.igbLogOut);
+        SeekBar skbarVolume = dialogView.findViewById(R.id.skbarVolume);
+        AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);;
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -230,6 +234,26 @@ public class UserHomePageActivity extends AppCompatActivity {
             startActivity(intent);
             finishAffinity();
             Toast.makeText(UserHomePageActivity.this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
+        });
+
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+        skbarVolume.setMax(maxVolume);
+        skbarVolume.setProgress(currentVolume);
+
+        // Lắng nghe khi người dùng thay đổi SeekBar
+        skbarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
         });
     }
 }
