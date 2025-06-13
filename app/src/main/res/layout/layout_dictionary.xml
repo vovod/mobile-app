@@ -79,7 +79,8 @@
                 android:textColor="@color/black"
                 android:textSize="35sp"
                 android:textStyle="bold"
-                tools:text="Apple"/> <ImageButton
+                tools:text="Apple"/>
+            <ImageButton
             android:id="@+id/btnSpeakWord"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -87,10 +88,20 @@
             android:contentDescription="Phát âm"
             android:scaleType="fitCenter"
             android:layout_marginStart="16dp"
-            app:tint="@color/primaryDarkColor" /> </LinearLayout>
+            app:tint="@color/primaryDarkColor" />
+
+        </LinearLayout>
+        <Spinner
+            android:id="@+id/spnChapter"
+            app:layout_constraintTop_toBottomOf="@+id/layoutWordAndSpeaker"
+            app:layout_constraintLeft_toLeftOf="@+id/cardViewImage"
+            android:layout_width="350dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_bg"
+            android:popupBackground="@color/white"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <ImageButton
         android:id="@+id/btnhomedict"

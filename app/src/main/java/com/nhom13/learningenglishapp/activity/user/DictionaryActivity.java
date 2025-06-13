@@ -9,9 +9,12 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.nhom13.learningenglishapp.R;
 import com.nhom13.learningenglishapp.adapters.AlphabetAdapter;
+import com.nhom13.learningenglishapp.database.dao.ChapterDao;
 import com.nhom13.learningenglishapp.database.dao.VocabularyDao;
+import com.nhom13.learningenglishapp.database.models.Chapter;
 import com.nhom13.learningenglishapp.database.models.Vocabulary;
 import com.nhom13.learningenglishapp.activity.LoginActivity;
 
@@ -37,15 +42,19 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
 
     private RecyclerView recyclerView;
     private List<Vocabulary> vocabularyList;
+    private List<Vocabulary> filteredWords;
+    private List<Chapter> chapters;
+    private List<String> chapterNames;
     private VocabularyDao vocabularyDao;
+    private ChapterDao chapterDao;
     private AlphabetAdapter alphabetAdapter;
     private ImageButton btnHome, btnSetting;
     private ImageView imgWordView;
     private TextView tvNameColor;
     private LottieAnimationView animBalloon;
+    private Spinner spnChapter;
     private String username;
     private int score;
-
     private ImageButton btnSpeakWord;
     private TextToSpeech textToSpeech;
     private Vocabulary currentVocabulary;
@@ -63,7 +72,10 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
         }
 
         vocabularyDao = new VocabularyDao(this);
+        chapterDao = new ChapterDao(this);
+
         vocabularyList = new ArrayList<>();
+        filteredWords = new ArrayList<>();
 
         recyclerView = findViewById(R.id.rcv_alphabet);
         btnHome = findViewById(R.id.btnhomedict);
@@ -72,14 +84,15 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
         tvNameColor = findViewById(R.id.tv_namecolor);
         animBalloon = findViewById(R.id.anim_ballon);
         btnSpeakWord = findViewById(R.id.btnSpeakWord);
-
+        spnChapter = findViewById(R.id.spnChapter);
 
         textToSpeech = new TextToSpeech(this, this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        alphabetAdapter = new AlphabetAdapter(this, vocabularyList, this);
-        recyclerView.setAdapter(alphabetAdapter);
+//        alphabetAdapter = new AlphabetAdapter(this, vocabularyList, this);
+//        recyclerView.setAdapter(alphabetAdapter);
 
+        loadChapterData();
         loadVocabularyData();
 
         btnHome.setOnClickListener(v -> {
@@ -97,6 +110,24 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
         btnSpeakWord.setOnClickListener(v -> {
             speakCurrentWord();
         });
+
+        spnChapter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedChapter = chapterNames.get(position);
+                filteredWords.clear();
+                for (Vocabulary w : vocabularyList) {
+                    if (w.getChapter().getName().equals(selectedChapter)) {
+                        filteredWords.add(w);
+                    }
+                }
+                alphabetAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void loadVocabularyData() {
@@ -109,6 +140,21 @@ public class DictionaryActivity extends AppCompatActivity implements AlphabetAda
             displayVocabulary(firstVocab);
 
         }
+    }
+
+    private void loadChapterData() {
+        chapters = chapterDao.getAllChapters();
+        chapterNames = new ArrayList<>();
+        for (Chapter chapter : chapters) {
+            chapterNames.add(chapter.getName());
+        }
+        ArrayAdapter<String> chapterAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, chapterNames);
+        chapterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnChapter.setAdapter(chapterAdapter);
+
+        alphabetAdapter = new AlphabetAdapter(this, filteredWords, this);
+        recyclerView.setAdapter(alphabetAdapter);
     }
 
     @Override

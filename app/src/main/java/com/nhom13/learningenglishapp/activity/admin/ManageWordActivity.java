@@ -137,8 +137,8 @@ public class ManageWordActivity extends AppCompatActivity implements WordAdapter
                 Toast.makeText(this, "Vui lòng chọn chương", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            Chapter selectedChapter = (Chapter) spinnerChapter.getSelectedItem();
+            int i = spinnerChapter.getSelectedItemPosition();
+            Chapter selectedChapter = chapters.get(i);
             Vocabulary vocabulary = new Vocabulary(word, selectedChapter.getId(), "");
 
             boolean success = vocabularyDao.insertVocabulary(vocabulary, selectedImageUri);
